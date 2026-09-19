@@ -135,7 +135,7 @@ Prices are in USD, fixed per model and route; the live table at https://ai.topxe
 
 ### Comparisons
 
-- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Both relay requests on prepaid credit. OpenRouter lists hundreds of models at list price plus a top-up fee; TopxAI sells 13 models at 50% to 90% of list.
+- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare current model and route prices, including OpenRouter discounts: selected TopxAI shared routes cost less, Sol matches, and Kimi can cost more.
 - [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT, Grok or Kimi go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
 
 ### Privacy and policies
