@@ -2,9 +2,19 @@
 
 > The base URL, every endpoint with its auth header, working examples for the OpenAI and Anthropic SDKs, and what each error status means.
 
-This page is also published at https://ai.topxea.com/docs/connect-your-sdk (English and Chinese).
+Canonical page: https://ai.topxea.com/docs/connect-your-sdk
+
 
 Use the SDK you already have; the key goes where the provider's key would go. The **API endpoint** panel at the top of the **API keys** page lists every path with a copy button. **Copy base URL** copies the origin `https://ai.topxea.com` without `/v1`: right for the Anthropic SDK; OpenAI-style SDKs need `/v1` added, or copy the endpoint row.
+
+## Your first successful request
+
+1. Open [API keys](https://ai.topxea.com/keys) and create a key for the model family you want to test. A key's route and model limits determine what it can call; choosing a model in a client does not expand those permissions.
+2. Check [Wallet](https://ai.topxea.com/wallet). New accounts currently receive $0.50 of welcome credit. If your balance is positive, you can use it for a short test without first adding credit. A key's own quota must also cover the request reservation.
+3. Copy the matching example below, replace the placeholder with your key locally, and run it once. Keep the output limit small. Never paste your key into a support message or a public issue.
+4. Confirm that a response arrived, then open **Usage** to check the model, route and charge. A successful `/v1/models` response only confirms model discovery; it does not prove a generation succeeded.
+
+For a desktop client, follow the [Cherry Studio setup](use-topxai-with-cherry-studio.md). Start with one model on one route, then add more after the first call succeeds.
 
 ## Endpoints
 
@@ -27,6 +37,7 @@ client = OpenAI(base_url="https://ai.topxea.com/v1", api_key="sk-...")
 reply = client.chat.completions.create(
     model="claude-sonnet-5",
     messages=[{"role": "user", "content": "Say hello in one sentence."}],
+    max_tokens=64,
 )
 print(reply.choices[0].message.content)
 ```
