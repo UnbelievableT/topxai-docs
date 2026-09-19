@@ -1,0 +1,1678 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "TopxAI API",
+  "version": "2026-09-19",
+  "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi and Jev.",
+  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged; parameters not listed here pass through to the provider. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
+  "termsOfService": "https://ai.topxea.com/user-agreement",
+  "contact": {
+   "name": "TopxAI support",
+   "email": "support@topxea.com",
+   "url": "https://ai.topxea.com/docs"
+  },
+  "x-logo": {
+   "url": "https://ai.topxea.com/favicon.svg"
+  },
+  "license": {
+   "name": "Terms of use",
+   "url": "https://ai.topxea.com/user-agreement"
+  }
+ },
+ "externalDocs": {
+  "description": "Documentation",
+  "url": "https://ai.topxea.com/docs"
+ },
+ "servers": [
+  {
+   "url": "https://ai.topxea.com",
+   "description": "Production"
+  }
+ ],
+ "security": [
+  {
+   "bearerAuth": []
+  }
+ ],
+ "tags": [
+  {
+   "name": "OpenAI-compatible",
+   "description": "Chat Completions, Responses, Images, Video and the model list, with Authorization: Bearer <key>."
+  },
+  {
+   "name": "Anthropic-compatible",
+   "description": "The Messages API for the Claude models, with x-api-key or Authorization: Bearer."
+  },
+  {
+   "name": "TypeSafe",
+   "description": "System One: typed questions about a state, answered with probabilities."
+  },
+  {
+   "name": "Public",
+   "description": "No key needed."
+  }
+ ],
+ "paths": {
+  "/v1/chat/completions": {
+   "post": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "createChatCompletion",
+    "summary": "Chat Completions",
+    "description": "OpenAI Chat Completions for every text model except Jev. GLM-5.3-Abliterated and kimi-k3 are served here only. Streaming with stream: true returns server-sent events.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ChatCompletionRequest"
+       },
+       "example": {
+        "model": "claude-sonnet-5",
+        "messages": [
+         {
+          "role": "user",
+          "content": "Say hello in one sentence."
+         }
+        ]
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The provider's chat completion, unchanged; usage carries the token counts the charge was settled from.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ChatCompletionResponse"
+        }
+       },
+       "text/event-stream": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/responses": {
+   "post": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "createResponse",
+    "summary": "Responses",
+    "description": "OpenAI Responses API for gpt-6-astra, gpt-5.6-sol and grok-4.6. Codex CLI uses this endpoint.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ResponsesRequest"
+       },
+       "example": {
+        "model": "gpt-5.6-sol",
+        "input": "Say hello in one sentence."
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The provider's response object, unchanged.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       },
+       "text/event-stream": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/messages": {
+   "post": {
+    "tags": [
+     "Anthropic-compatible"
+    ],
+    "operationId": "createMessage",
+    "summary": "Messages",
+    "description": "Anthropic Messages API for the Claude models. Send the key as x-api-key (the Anthropic SDK does) or as a Bearer token; a raw request also needs anthropic-version and max_tokens. Prompt caching (cache_control) is forwarded and billed at the cache-read and cache-write prices.",
+    "security": [
+     {
+      "anthropicKey": []
+     },
+     {
+      "bearerAuth": []
+     }
+    ],
+    "parameters": [
+     {
+      "name": "anthropic-version",
+      "in": "header",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "example": "2023-06-01"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MessagesRequest"
+       },
+       "example": {
+        "model": "claude-sonnet-5",
+        "max_tokens": 256,
+        "messages": [
+         {
+          "role": "user",
+          "content": "Say hello in one sentence."
+         }
+        ]
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The provider's message, unchanged.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       },
+       "text/event-stream": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/images/generations": {
+   "post": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "createImage",
+    "summary": "Image generation",
+    "description": "OpenAI Images for gpt-image-2.5-sunburst and gpt-image-2.5-flare. Billed per image: $0.03 at the 1K tier, $0.05 at the 2K tier, chosen from the pixel count of size (WIDTHxHEIGHT). n multiplies the fee and may be 1 to 128.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ImageRequest"
+       },
+       "example": {
+        "model": "gpt-image-2.5-flare",
+        "prompt": "A lighthouse at dawn, watercolour",
+        "size": "1024x1024",
+        "n": 1
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The provider's image response: data[] with url or b64_json.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/images/edits": {
+   "post": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "editImage",
+    "summary": "Image edit",
+    "description": "OpenAI image edits (multipart form) for the GPT Image 2.5 models; priced like generation by the size tier.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "type": "object",
+        "required": [
+         "model",
+         "image",
+         "prompt"
+        ],
+        "properties": {
+         "model": {
+          "type": "string",
+          "enum": [
+           "gpt-image-2.5-sunburst",
+           "gpt-image-2.5-flare"
+          ]
+         },
+         "image": {
+          "type": "string",
+          "format": "binary"
+         },
+         "prompt": {
+          "type": "string"
+         },
+         "size": {
+          "type": "string",
+          "example": "1024x1024"
+         },
+         "n": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 128
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The provider's image response.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/videos/generations": {
+   "post": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "createVideo",
+    "summary": "Video generation",
+    "description": "Submit a grok-imagine-video-1.5 job. Billed per requested second at the moment the provider accepts the job: $0.05 at 480p, $0.10 at 720p, $0.20 at 1080p. A failed job is refunded on the first poll that sees the failure.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/VideoRequest"
+       },
+       "example": {
+        "model": "grok-imagine-video-1.5",
+        "prompt": "A paper boat drifting down a rain gutter",
+        "duration": 8,
+        "resolution": "720p"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "The accepted job: request_id and model.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "request_id": {
+           "type": "string"
+          },
+          "model": {
+           "type": "string"
+          }
+         },
+         "additionalProperties": true
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/videos/{request_id}": {
+   "get": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "getVideo",
+    "summary": "Video job status",
+    "description": "The provider's status document. pending, queued, processing, running and in_progress mean keep polling; done, failed and expired are final. Any key of the same account can poll.",
+    "parameters": [
+     {
+      "name": "request_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "The status document.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Unknown id, or another account's job.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/videos/{request_id}/content": {
+   "get": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "getVideoContent",
+    "summary": "Video file",
+    "description": "The finished video.",
+    "parameters": [
+     {
+      "name": "request_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "The video bytes.",
+      "content": {
+       "video/mp4": {
+        "schema": {
+         "type": "string",
+         "format": "binary"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Unknown id, another account's job, or not finished.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/systemone": {
+   "post": {
+    "tags": [
+     "TypeSafe"
+    ],
+    "operationId": "systemOne",
+    "summary": "System One (Jev)",
+    "description": "TypeSafe's System One: typed questions about a state, answered with probabilities instead of text. Models jev-1.13.0, jev-latest, jev-preview. $0.04494 per 1M input tokens, output free. /v1/system_one is accepted as a second spelling. The body must be at most 1 MiB with model, state and a non-empty questions object.",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SystemOneRequest"
+       },
+       "example": {
+        "model": "jev-latest",
+        "state": "I have asked three times now. Can I please just talk to a real person?",
+        "questions": {
+         "is_human_escalation": {
+          "type": "noul",
+          "instructions": "Is the customer asking for a human agent?"
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "TypeSafe's answers, unchanged, with usage.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SystemOneResponse"
+        },
+        "example": {
+         "model": "jev-latest",
+         "answers": {
+          "is_human_escalation": {
+           "type": "noul",
+           "noul": 0.99
+          }
+         },
+         "usage": {
+          "input_tokens": 43,
+          "output_tokens": 0
+         }
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "TypeSafe's validation detail, as written.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "The body failed validation; the message says which field.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "The balance is empty.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "The model is not sold here, is not on this key's route, or is excluded by the key's model limits.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; Retry-After gives the wait in seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "description": "No line can serve the model right now, or the provider is overloaded; retry.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/models": {
+   "get": {
+    "tags": [
+     "OpenAI-compatible"
+    ],
+    "operationId": "listModels",
+    "summary": "Models this key can call",
+    "description": "The OpenAI model list, filtered to the models the key's route serves.",
+    "responses": {
+     "200": {
+      "description": "The list.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "object": {
+           "type": "string",
+           "const": "list"
+          },
+          "data": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "id": {
+              "type": "string"
+             },
+             "object": {
+              "type": "string"
+             },
+             "owned_by": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "The key is missing or invalid.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/pricing": {
+   "get": {
+    "tags": [
+     "Public"
+    ],
+    "operationId": "getPricing",
+    "security": [],
+    "summary": "The price table",
+    "description": "Every model with its route prices in USD (per 1M tokens, per image by size, per second by resolution), the routes it is enabled on, the endpoints that serve it, the provider's list price for comparison and the route an Auto-route key would pick. The same data as https://ai.topxea.com/pricing.",
+    "responses": {
+     "200": {
+      "description": "The catalogue.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "success": {
+           "type": "boolean"
+          },
+          "data": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/PricingModel"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limited; retry after the Retry-After seconds.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "securitySchemes": {
+   "bearerAuth": {
+    "type": "http",
+    "scheme": "bearer",
+    "description": "A TopxAI API key (sk-...) as Authorization: Bearer <key>. Keys are created at https://ai.topxea.com/keys."
+   },
+   "anthropicKey": {
+    "type": "apiKey",
+    "in": "header",
+    "name": "x-api-key",
+    "description": "The same TopxAI key, the way the Anthropic SDK sends it."
+   }
+  },
+  "schemas": {
+   "Error": {
+    "type": "object",
+    "properties": {
+     "error": {
+      "type": "object",
+      "properties": {
+       "message": {
+        "type": "string",
+        "description": "Ends with a request id to quote to support@topxea.com."
+       },
+       "type": {
+        "type": "string"
+       },
+       "code": {
+        "type": [
+         "string",
+         "integer",
+         "null"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "TextModel": {
+    "type": "string",
+    "description": "A catalogue text model.",
+    "enum": [
+     "claude-fable-5-1",
+     "claude-fable-5",
+     "claude-sonnet-5",
+     "claude-opus-5",
+     "gpt-6-astra",
+     "gpt-5.6-sol",
+     "grok-4.6",
+     "GLM-5.3-Abliterated",
+     "kimi-k3"
+    ]
+   },
+   "ChatMessage": {
+    "type": "object",
+    "required": [
+     "role",
+     "content"
+    ],
+    "properties": {
+     "role": {
+      "type": "string",
+      "enum": [
+       "system",
+       "developer",
+       "user",
+       "assistant",
+       "tool"
+      ]
+     },
+     "content": {
+      "oneOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      ],
+      "description": "Text, or content parts (text, image_url) as the provider defines them."
+     },
+     "name": {
+      "type": "string"
+     },
+     "tool_calls": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "tool_call_id": {
+      "type": "string"
+     }
+    },
+    "additionalProperties": true
+   },
+   "ChatCompletionRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "messages"
+    ],
+    "properties": {
+     "model": {
+      "$ref": "#/components/schemas/TextModel"
+     },
+     "messages": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ChatMessage"
+      }
+     },
+     "stream": {
+      "type": "boolean",
+      "default": false
+     },
+     "max_tokens": {
+      "type": "integer"
+     },
+     "max_completion_tokens": {
+      "type": "integer"
+     },
+     "temperature": {
+      "type": "number"
+     },
+     "top_p": {
+      "type": "number"
+     },
+     "tools": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "tool_choice": {},
+     "response_format": {
+      "type": "object",
+      "additionalProperties": true
+     },
+     "reasoning_effort": {
+      "type": "string"
+     },
+     "stop": {},
+     "user": {
+      "type": "string"
+     }
+    },
+    "additionalProperties": true,
+    "description": "OpenAI's Chat Completions body; fields not listed pass through to the provider."
+   },
+   "ChatCompletionResponse": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "object": {
+      "type": "string"
+     },
+     "created": {
+      "type": "integer"
+     },
+     "model": {
+      "type": "string"
+     },
+     "choices": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "usage": {
+      "$ref": "#/components/schemas/Usage"
+     }
+    },
+    "additionalProperties": true
+   },
+   "Usage": {
+    "type": "object",
+    "properties": {
+     "prompt_tokens": {
+      "type": "integer"
+     },
+     "completion_tokens": {
+      "type": "integer"
+     },
+     "total_tokens": {
+      "type": "integer"
+     },
+     "prompt_tokens_details": {
+      "type": "object",
+      "properties": {
+       "cached_tokens": {
+        "type": "integer"
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "additionalProperties": true
+   },
+   "ResponsesRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "input"
+    ],
+    "properties": {
+     "model": {
+      "type": "string",
+      "enum": [
+       "gpt-6-astra",
+       "gpt-5.6-sol",
+       "grok-4.6"
+      ]
+     },
+     "input": {
+      "oneOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      ]
+     },
+     "instructions": {
+      "type": "string"
+     },
+     "stream": {
+      "type": "boolean"
+     },
+     "tools": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "reasoning": {
+      "type": "object",
+      "additionalProperties": true
+     },
+     "max_output_tokens": {
+      "type": "integer"
+     }
+    },
+    "additionalProperties": true
+   },
+   "MessagesRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "max_tokens",
+     "messages"
+    ],
+    "properties": {
+     "model": {
+      "type": "string",
+      "enum": [
+       "claude-fable-5-1",
+       "claude-fable-5",
+       "claude-sonnet-5",
+       "claude-opus-5"
+      ]
+     },
+     "max_tokens": {
+      "type": "integer"
+     },
+     "messages": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "required": [
+        "role",
+        "content"
+       ],
+       "properties": {
+        "role": {
+         "type": "string",
+         "enum": [
+          "user",
+          "assistant"
+         ]
+        },
+        "content": {}
+       },
+       "additionalProperties": true
+      }
+     },
+     "system": {
+      "description": "A system prompt as a string or content blocks; TopxAI adds none of its own.",
+      "oneOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "additionalProperties": true
+        }
+       }
+      ]
+     },
+     "stream": {
+      "type": "boolean"
+     },
+     "tools": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "temperature": {
+      "type": "number"
+     },
+     "thinking": {
+      "type": "object",
+      "additionalProperties": true
+     }
+    },
+    "additionalProperties": true
+   },
+   "ImageRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "prompt"
+    ],
+    "properties": {
+     "model": {
+      "type": "string",
+      "enum": [
+       "gpt-image-2.5-sunburst",
+       "gpt-image-2.5-flare"
+      ]
+     },
+     "prompt": {
+      "type": "string"
+     },
+     "size": {
+      "type": "string",
+      "description": "WIDTHxHEIGHT with a plain x; omitted or auto is pinned to 1024x1024. The pixel count picks the 1K or 2K tier.",
+      "example": "1024x1024"
+     },
+     "n": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 128,
+      "default": 1
+     },
+     "quality": {
+      "type": "string",
+      "description": "Validated, does not change the fee."
+     },
+     "stream": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": true
+   },
+   "VideoRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "prompt"
+    ],
+    "properties": {
+     "model": {
+      "type": "string",
+      "const": "grok-imagine-video-1.5"
+     },
+     "prompt": {
+      "type": "string"
+     },
+     "duration": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 15,
+      "default": 8,
+      "description": "Seconds of video; the fee is duration times the per-second price."
+     },
+     "resolution": {
+      "type": "string",
+      "enum": [
+       "480p",
+       "720p",
+       "1080p"
+      ],
+      "default": "480p"
+     },
+     "image": {
+      "description": "Image-to-video input, as xAI defines it."
+     },
+     "reference_images": {
+      "type": "array",
+      "items": {}
+     },
+     "aspect_ratio": {
+      "type": "string"
+     },
+     "generate_audio": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": true
+   },
+   "SystemOneQuestion": {
+    "type": "object",
+    "required": [
+     "type"
+    ],
+    "properties": {
+     "type": {
+      "type": "string",
+      "description": "noul (yes/no probability), choice (one of options) or score (a number in a range)."
+     },
+     "instructions": {
+      "type": "string"
+     },
+     "options": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "min": {
+      "type": "number"
+     },
+     "max": {
+      "type": "number"
+     }
+    },
+    "additionalProperties": true
+   },
+   "SystemOneRequest": {
+    "type": "object",
+    "required": [
+     "model",
+     "state",
+     "questions"
+    ],
+    "properties": {
+     "model": {
+      "type": "string",
+      "enum": [
+       "jev-1.13.0",
+       "jev-latest",
+       "jev-preview"
+      ]
+     },
+     "state": {
+      "type": "string",
+      "description": "The text the questions are about; at most 32k tokens plus the longest question."
+     },
+     "questions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+       "$ref": "#/components/schemas/SystemOneQuestion"
+      }
+     }
+    },
+    "additionalProperties": true
+   },
+   "SystemOneResponse": {
+    "type": "object",
+    "properties": {
+     "model": {
+      "type": "string"
+     },
+     "answers": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "object",
+       "additionalProperties": true
+      }
+     },
+     "usage": {
+      "type": "object",
+      "properties": {
+       "input_tokens": {
+        "type": "integer"
+       },
+       "output_tokens": {
+        "type": "integer"
+       }
+      }
+     }
+    },
+    "additionalProperties": true
+   },
+   "RoutePrice": {
+    "type": "object",
+    "properties": {
+     "unit": {
+      "type": "string",
+      "enum": [
+       "per_million_tokens",
+       "per_image",
+       "per_second",
+       "per_request"
+      ]
+     },
+     "input": {
+      "type": "number"
+     },
+     "output": {
+      "type": "number"
+     },
+     "cache_read": {
+      "type": "number"
+     },
+     "cache_write": {
+      "type": "number"
+     },
+     "cache_write_1h": {
+      "type": "number"
+     },
+     "long_context": {
+      "type": "object",
+      "properties": {
+       "min_input_tokens": {
+        "type": "integer"
+       },
+       "input": {
+        "type": "number"
+       },
+       "output": {
+        "type": "number"
+       }
+      },
+      "additionalProperties": true
+     },
+     "sizes": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "number"
+      }
+     },
+     "resolutions": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "number"
+      }
+     },
+     "unit_price": {
+      "type": "number"
+     }
+    },
+    "additionalProperties": true
+   },
+   "PricingModel": {
+    "type": "object",
+    "properties": {
+     "model_name": {
+      "type": "string"
+     },
+     "description": {
+      "type": "string"
+     },
+     "notice": {
+      "type": "string"
+     },
+     "enable_groups": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "supported_endpoint_types": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "route_prices": {
+      "type": "object",
+      "additionalProperties": {
+       "$ref": "#/components/schemas/RoutePrice"
+      }
+     },
+     "reference_price": {
+      "$ref": "#/components/schemas/RoutePrice"
+     },
+     "reference_price_source": {
+      "type": "object",
+      "properties": {
+       "kind": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       },
+       "url": {
+        "type": "string"
+       },
+       "verified_at": {
+        "type": "string"
+       },
+       "model": {
+        "type": "string"
+       }
+      }
+     },
+     "auto_route": {
+      "type": "string"
+     }
+    },
+    "additionalProperties": true
+   }
+  }
+ }
+}
