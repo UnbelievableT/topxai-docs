@@ -11,14 +11,14 @@ ChatBox reaches any OpenAI-compatible endpoint through a custom provider.
 1. **Settings → Model Provider → Add Custom Provider**.
 2. **Name**: TopxAI. **API Mode**: OpenAI API Compatible.
 3. **API Host**: `https://ai.topxea.com`. **API Path**: `/v1/chat/completions`.
-4. **API Key**: a TopxAI key on the Auto route.
-5. **Model**: add `claude-sonnet-5`, `gpt-5.6-sol`, `grok-4.6`, `kimi-k3` or `GLM-5.3-Abliterated`; or fetch the list, which reads `/v1/models`.
+4. **API Key**: a TopxAI key on the [Auto route](shared-pool-official-line-and-auto-route.md).
+5. **Model**: add `claude-sonnet-5`, `gpt-6-sol`, `grok-4.7`, `kimi-k3` or `GLM-5.3-Abliterated`; or fetch the list, which reads `/v1/models`.
 6. Save and pick the provider in a chat.
 
 ## Notes
 
-- Every text model except Jev is on `/v1/chat/completions`, including Claude, so one provider is enough. Jev answers typed questions through `/v1/systemone` and is not a chat model.
-- If ChatBox offers a separate **Anthropic** provider with a custom host, `https://ai.topxea.com` and the same key work there for `claude-sonnet-5` and `claude-opus-5`.
+- Every text model except [Jev](jev-typesafe-system-one.md) is on `/v1/chat/completions`, including Claude, so one provider is enough. Jev answers typed questions through `/v1/systemone` and is not a chat model.
+- If ChatBox offers a separate **Anthropic** provider with a custom host, `https://ai.topxea.com` and the same key work there for `claude-sonnet-5` and `claude-opus-5-5`.
 - Image generation in ChatBox with this provider uses `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare`, billed per image.
 
 ## If it fails

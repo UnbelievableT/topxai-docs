@@ -13,14 +13,14 @@ LobeChat's OpenAI provider accepts a proxy address, which is all TopxAI needs. T
 3. Click **Get model list**; the models your key can call appear. Enable the ones you want.
 4. **Check** sends one request and shows the reply.
 
-For Claude on the Anthropic provider: API key the same, proxy address `https://ai.topxea.com` (no `/v1`), models `claude-sonnet-5` and `claude-opus-5`.
+For Claude on the Anthropic provider: [API key](create-an-api-key-and-choose-a-route.md) the same, proxy address `https://ai.topxea.com` (no `/v1`), models `claude-sonnet-5` and `claude-opus-5-5`.
 
 ## Self-hosted, with variables
 
 ```bash
 OPENAI_API_KEY=sk-...
 OPENAI_PROXY_URL=https://ai.topxea.com/v1
-OPENAI_MODEL_LIST=-all,+claude-sonnet-5,+gpt-5.6-sol,+grok-4.6,+kimi-k3
+OPENAI_MODEL_LIST=-all,+claude-sonnet-5,+gpt-6-sol,+grok-4.7,+kimi-k3
 ANTHROPIC_API_KEY=sk-...
 ANTHROPIC_PROXY_URL=https://ai.topxea.com
 ```
@@ -29,7 +29,7 @@ ANTHROPIC_PROXY_URL=https://ai.topxea.com
 
 ## Images
 
-LobeChat's image generation with the OpenAI provider works with `gpt-image-2.5-sunburst` and `gpt-image-2.5-flare` through the same proxy address.
+LobeChat's [image generation](image-generation.md) with the OpenAI provider works with `gpt-image-2.5-sunburst` and `gpt-image-2.5-flare` through the same proxy address.
 
 ## If it fails
 

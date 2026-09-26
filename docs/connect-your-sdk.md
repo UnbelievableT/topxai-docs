@@ -2,8 +2,7 @@
 
 > The base URL, every endpoint with its auth header, working examples for the OpenAI and Anthropic SDKs, and what each error status means.
 
-Canonical page: https://ai.topxea.com/docs/connect-your-sdk
-
+This page is also published at https://ai.topxea.com/docs/connect-your-sdk (English and Chinese).
 
 Use the SDK you already have; the key goes where the provider's key would go. The **API endpoint** panel at the top of the **API keys** page lists every path with a copy button. **Copy base URL** copies the origin `https://ai.topxea.com` without `/v1`: right for the Anthropic SDK; OpenAI-style SDKs need `/v1` added, or copy the endpoint row.
 
@@ -18,9 +17,9 @@ For a desktop client, follow the [Cherry Studio setup](use-topxai-with-cherry-st
 
 ## Endpoints
 
-- `POST /v1/chat/completions`: OpenAI Chat Completions, `Authorization: Bearer <key>`, every text model except Jev (GLM and Kimi only here)
-- `POST /v1/responses`: OpenAI Responses, Bearer, GPT models and `grok-4.6`
-- `POST /v1/messages`: Anthropic Messages, `x-api-key: <key>`, Claude models; a raw request also needs `anthropic-version: 2023-06-01` and `max_tokens`
+- `POST /v1/chat/completions`: OpenAI Chat Completions, `Authorization: Bearer <key>`, every text model except [Jev](jev-typesafe-system-one.md) (GLM and Kimi only here)
+- `POST /v1/responses`: OpenAI Responses, Bearer, GPT models and `grok-4.7`
+- `POST /v1/messages`: Anthropic Messages, `x-api-key: <key>`, Claude models; a raw request also needs `anthropic-version: 2023-06-01`, and without `max_tokens` the model's output limit applies
 - `POST /v1/images/generations` and `POST /v1/images/edits`: OpenAI Images, Bearer, GPT Image 2.5 models
 - `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` for status, `GET /v1/videos/{request_id}/content` for the video: Bearer, Grok Imagine Video
 - `POST /v1/systemone` (or `/v1/system_one`): TypeSafe System One, Bearer, Jev
@@ -60,8 +59,8 @@ print(reply.content[0].text)
 
 ## Coding tools
 
-- Claude Code: Claude models work with Claude Code and any Anthropic-compatible client. **CC Switch** in a key's row menu opens a `ccswitch://` import with the endpoint (`https://ai.topxea.com` for Claude, `https://ai.topxea.com/v1` for Codex), the key and the **Primary Model** you pick, plus optional **Haiku Model**, **Sonnet Model** and **Opus Model** for Claude.
-- Codex CLI: GPT and Grok models, at `https://ai.topxea.com/v1`.
+- [Claude Code](use-topxai-with-claude-code.md): Claude models work with Claude Code and any Anthropic-compatible client. **CC Switch** in a key's row menu opens a `ccswitch://` import with the endpoint (`https://ai.topxea.com` for Claude, `https://ai.topxea.com/v1` for Codex), the key and the **Primary Model** you pick, plus optional **Haiku Model**, **Sonnet Model** and **Opus Model** for Claude.
+- [Codex CLI](use-topxai-with-codex-cli.md): GPT and Grok models, at `https://ai.topxea.com/v1`.
 - Trae and similar editors take the same two values. Trae's add-model test sends a small image, and `GLM-5.3-Abliterated` is text only; the relay swaps it for `[Attachment omitted: this model accepts text only.]`, so the test passes but the model gets no attachments.
 - Jev: the TypeSafe SDKs read `TYPESAFE_BASE_URL=https://ai.topxea.com` and `TYPESAFE_API_KEY`. The one-command setup under a Jev key installs the TypeSafe agent skill, writes `~/.config/topxai/typesafe.env`, a marked block in `~/.zshrc` or `~/.bashrc` and the env in `~/.claude/settings.json`, then sends one ping; without `--key` it prompts for the key without echo.
 

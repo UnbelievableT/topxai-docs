@@ -20,9 +20,9 @@ models:
     apiBase: https://ai.topxea.com
     apiKey: sk-...
     roles: [chat, edit, apply]
-  - name: GPT-5.6 Sol (TopxAI)
+  - name: GPT-6 Sol (TopxAI)
     provider: openai
-    model: gpt-5.6-sol
+    model: gpt-6-sol
     apiBase: https://ai.topxea.com/v1
     apiKey: sk-...
     roles: [chat, edit, apply]

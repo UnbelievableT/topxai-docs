@@ -8,7 +8,7 @@ This page is also published at https://ai.topxea.com/docs/video-generation (Engl
 
 ## Route and endpoints
 
-Sold only on the Grok official line, shown on the **API keys** page as **Grok**, line **official line** (route id `grok-official`). An **Auto route** key sends it there too. All calls use `Authorization: Bearer <key>`.
+Sold only on the Grok [official line](shared-pool-official-line-and-auto-route.md), shown on the **API keys** page as **Grok**, line **official line** (route id `grok-official`). An **Auto route** key sends it there too. All calls use `Authorization: Bearer <key>`.
 
 - `POST /v1/videos/generations` submits a job.
 - `GET /v1/videos/{request_id}` returns the job's status.

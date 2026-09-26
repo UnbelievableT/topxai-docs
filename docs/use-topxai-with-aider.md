@@ -4,7 +4,7 @@
 
 This page is also published at https://ai.topxea.com/docs/use-topxai-with-aider (English and Chinese).
 
-Aider uses LiteLLM underneath, so any OpenAI-compatible endpoint works through the `openai/` prefix, and the Anthropic endpoint through `anthropic/`.
+Aider uses [LiteLLM](use-topxai-with-litellm.md) underneath, so any OpenAI-compatible endpoint works through the `openai/` prefix, and the Anthropic endpoint through `anthropic/`.
 
 ## OpenAI-compatible (every text model)
 
@@ -14,7 +14,7 @@ export OPENAI_API_KEY=sk-...          # a TopxAI key on the Auto route
 aider --model openai/claude-sonnet-5
 ```
 
-Any catalogue id except Jev goes after `openai/`: `openai/gpt-5.6-sol`, `openai/grok-4.6`, `openai/kimi-k3`, `openai/GLM-5.3-Abliterated`.
+Any catalogue id except [Jev](jev-typesafe-system-one.md) goes after `openai/`: `openai/gpt-6-sol`, `openai/grok-4.7`, `openai/kimi-k3`, `openai/GLM-5.3-Abliterated`.
 
 ## Anthropic (Claude, with prompt caching)
 
@@ -33,8 +33,8 @@ Aider warns when it has no context-window or price data for a model name. Add a 
 ```json
 {
   "openai/claude-sonnet-5": {
-    "max_input_tokens": 200000,
-    "max_output_tokens": 64000,
+    "max_input_tokens": 1000000,
+    "max_output_tokens": 128000,
     "input_cost_per_token": 0.000001,
     "output_cost_per_token": 0.000005,
     "litellm_provider": "openai",
@@ -43,7 +43,7 @@ Aider warns when it has no context-window or price data for a model name. Add a 
 }
 ```
 
-The costs above are the shared-pool prices from the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5); Aider uses them only for its running total, the actual charge is in the TopxAI usage log.
+The costs above are the shared-pool prices from the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5); Aider uses them only for its running total, the actual charge is in the TopxAI [usage log](reading-your-usage-log.md).
 
 ## Persisting it
 

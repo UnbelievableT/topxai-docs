@@ -60,7 +60,7 @@
     ],
     "operationId": "createChatCompletion",
     "summary": "Chat Completions",
-    "description": "OpenAI Chat Completions for every text model except Jev. GLM-5.3-Abliterated and kimi-k3 are served here only. Streaming with stream: true returns server-sent events.",
+    "description": "OpenAI Chat Completions for every text model except Jev. GLM-5.3-Abliterated, kimi-k3, deepseek-flash and deepseek-v4-pro are served here only. Streaming with stream: true returns server-sent events.",
     "requestBody": {
      "required": true,
      "content": {
@@ -166,7 +166,7 @@
     ],
     "operationId": "createResponse",
     "summary": "Responses",
-    "description": "OpenAI Responses API for gpt-6-astra, gpt-5.6-sol and grok-4.6. Codex CLI uses this endpoint.",
+    "description": "OpenAI Responses API for gpt-6-astra, gpt-6-sol and grok-4.7. Codex CLI uses this endpoint.",
     "requestBody": {
      "required": true,
      "content": {
@@ -175,7 +175,7 @@
         "$ref": "#/components/schemas/ResponsesRequest"
        },
        "example": {
-        "model": "gpt-5.6-sol",
+        "model": "gpt-6-sol",
         "input": "Say hello in one sentence."
        }
       }
@@ -1092,14 +1092,15 @@
     "description": "A catalogue text model.",
     "enum": [
      "claude-fable-5-1",
-     "claude-fable-5",
      "claude-sonnet-5",
-     "claude-opus-5",
+     "claude-opus-5-5",
      "gpt-6-astra",
-     "gpt-5.6-sol",
-     "grok-4.6",
+     "gpt-6-sol",
+     "grok-4.7",
      "GLM-5.3-Abliterated",
-     "kimi-k3"
+     "kimi-k3",
+     "deepseek-flash",
+     "deepseek-v4-pro"
     ]
    },
    "ChatMessage": {
@@ -1268,8 +1269,8 @@
       "type": "string",
       "enum": [
        "gpt-6-astra",
-       "gpt-5.6-sol",
-       "grok-4.6"
+       "gpt-6-sol",
+       "grok-4.7"
       ]
      },
      "input": {
@@ -1321,9 +1322,8 @@
       "type": "string",
       "enum": [
        "claude-fable-5-1",
-       "claude-fable-5",
        "claude-sonnet-5",
-       "claude-opus-5"
+       "claude-opus-5-5"
       ]
      },
      "max_tokens": {
@@ -1669,6 +1669,14 @@
      },
      "auto_route": {
       "type": "string"
+     },
+     "context_window": {
+      "type": "integer",
+      "description": "Input context window in tokens; omitted when unknown or not applicable."
+     },
+     "max_output": {
+      "type": "integer",
+      "description": "Maximum output tokens; omitted when unknown or not applicable."
      }
     },
     "additionalProperties": true

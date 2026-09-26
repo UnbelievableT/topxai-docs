@@ -1,6 +1,6 @@
 # Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key
 
-> Point Claude Code at https://ai.topxea.com with two environment variables and pick claude-sonnet-5, claude-opus-5 or the Fable models as its model.
+> Point Claude Code at https://ai.topxea.com with two environment variables and pick claude-sonnet-5, claude-opus-5-5 or claude-fable-5-1 as its model.
 
 This page is also published at https://ai.topxea.com/docs/use-topxai-with-claude-code (English and Chinese).
 
@@ -29,7 +29,7 @@ To make it permanent, put the same values under `env` in `~/.claude/settings.jso
 }
 ```
 
-Claude Code also reads `ANTHROPIC_DEFAULT_OPUS_MODEL`, `ANTHROPIC_DEFAULT_SONNET_MODEL` and `ANTHROPIC_DEFAULT_HAIKU_MODEL` for the models it switches between; set them to catalogue ids (`claude-opus-5`, `claude-sonnet-5`) so a switch never asks for a model TopxAI does not sell.
+Claude Code also reads `ANTHROPIC_DEFAULT_OPUS_MODEL`, `ANTHROPIC_DEFAULT_SONNET_MODEL` and `ANTHROPIC_DEFAULT_HAIKU_MODEL` for the models it switches between; set them to catalogue ids (`claude-opus-5-5`, `claude-sonnet-5`) so a switch never asks for a model TopxAI does not sell.
 
 ## Which key
 
@@ -41,7 +41,7 @@ If you keep several endpoints, the **CC Switch** entry in a key's row menu on th
 
 ## What Claude Code sends
 
-Claude Code sends its own system prompt and tool definitions with every request; those tokens are billed as input like any other. Prompt caching applies at the cache-read and cache-write prices on the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5), and the usage log shows the cached and uncached counts separately.
+Claude Code sends its own system prompt and tool definitions with every request; those tokens are billed as input like any other. Prompt caching applies at the cache-read and cache-write prices on the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5), and the [usage log](reading-your-usage-log.md) shows the cached and uncached counts separately.
 
 ## If it fails
 

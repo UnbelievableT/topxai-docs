@@ -9,12 +9,12 @@ Cursor lets you bring your own OpenAI-compatible endpoint for chat. The override
 ## Setup
 
 1. Open **Cursor Settings → Models**.
-2. Under **OpenAI API Key**, paste a TopxAI key (Auto route covers every model).
+2. Under **OpenAI API Key**, paste a TopxAI key ([Auto route](shared-pool-official-line-and-auto-route.md) covers every model).
 3. Turn on **Override OpenAI Base URL** and enter `https://ai.topxea.com/v1`.
-4. Click **Verify**. Cursor sends one small request; the usage log at TopxAI shows it.
-5. Under the model list, **Add model** and type the catalogue id exactly: `claude-sonnet-5`, `gpt-5.6-sol`, `grok-4.6`, `kimi-k3`, `GLM-5.3-Abliterated`. Enable the ones you want in the picker.
+4. Click **Verify**. Cursor sends one small request; the [usage log](reading-your-usage-log.md) at TopxAI shows it.
+5. Under the model list, **Add model** and type the catalogue id exactly: `claude-sonnet-5`, `gpt-6-sol`, `grok-4.7`, `kimi-k3`, `GLM-5.3-Abliterated`. Enable the ones you want in the picker.
 
-Cursor sends every added model to `/v1/chat/completions`, which serves every text model except Jev, so Claude models work here through the OpenAI format without a separate Anthropic key.
+Cursor sends every added model to `/v1/chat/completions`, which serves every text model except [Jev](jev-typesafe-system-one.md), so Claude models work here through the OpenAI format without a separate Anthropic key.
 
 ## What to expect
 

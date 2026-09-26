@@ -19,7 +19,7 @@ Click **Save changes**. The key starts with `sk-`.
 
 ## The routes
 
-**Auto route** is listed first and covers the whole catalogue with one key. Each request goes to the lowest-priced line that can serve its model right now, normally the shared pool; when the pool cannot, it goes to the official line at its higher price, so the billed route can differ per request. The usage log shows that route under **Group**.
+**Auto route** is listed first and covers the whole catalogue with one key. Each request goes to the lowest-priced line that can serve its model right now, normally the [shared pool](shared-pool-official-line-and-auto-route.md); when the pool cannot, it goes to the official line at its higher price, so the billed route can differ per request. The [usage log](reading-your-usage-log.md) shows that route under **Group**.
 
 - Claude, OpenAI and Grok: a **Shared pool** (`claude-shared`, `openai-shared`, `grok-shared`) at 50% of list and an **Official line** (`claude-official`, `openai-official`, `grok-official`) at 90%. A text model is sold only on its own vendor's two routes. Grok's official line is also the only route for `grok-imagine-video-1.5`, per second.
 - OpenAI **Image generation** (`image`): the only route for `gpt-image-2.5-sunburst` and `gpt-image-2.5-flare`, per image by size.

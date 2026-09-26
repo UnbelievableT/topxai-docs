@@ -27,7 +27,7 @@ claude = ChatAnthropic(
 )
 ```
 
-Swap `model` for `gpt-5.6-sol`, `grok-4.6`, `kimi-k3` or `GLM-5.3-Abliterated` on `ChatOpenAI`. Tool calling, streaming and structured output work as with the provider's own endpoint; TopxAI forwards the request unchanged.
+Swap `model` for `gpt-6-sol`, `grok-4.7`, `kimi-k3` or `GLM-5.3-Abliterated` on `ChatOpenAI`. Tool calling, streaming and structured output work as with the provider's own endpoint; TopxAI forwards the request unchanged.
 
 ## JavaScript
 
@@ -36,7 +36,7 @@ import { ChatOpenAI } from '@langchain/openai'
 import { ChatAnthropic } from '@langchain/anthropic'
 
 const llm = new ChatOpenAI({
-  model: 'gpt-5.6-sol',
+  model: 'gpt-6-sol',
   apiKey: process.env.TOPXAI_API_KEY,
   configuration: { baseURL: 'https://ai.topxea.com/v1' },
 })

@@ -22,7 +22,7 @@ To run your account TopxAI processes your Clerk user id and verified primary ema
 
 Card numbers and wallet private keys never pass through TopxAI; Waffo handles card checkout on topxea.com, NOWPayments handles USDT and USDC. A crypto top-up's transaction hash and addresses are public on chain and cannot be deleted.
 
-API keys are kept in recoverable form (you can view and copy them in the console), so revoke any key that leaks; personal access tokens are kept as digests. The only cookies are an HttpOnly session cookie, a `topxai_session` hint and Clerk's own; none serve advertising.
+[API key](create-an-api-key-and-choose-a-route.md)s are kept in recoverable form (you can view and copy them in the console), so revoke any key that leaks; personal access tokens are kept as digests. The only cookies are an HttpOnly session cookie, a `topxai_session` hint and Clerk's own; none serve advertising.
 
 ## Retention
 

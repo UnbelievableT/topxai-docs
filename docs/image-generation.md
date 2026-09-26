@@ -63,6 +63,6 @@ Every `url` in the response is replaced by a link on this relay:
 }
 ```
 
-The token is an encrypted, signed claim that hides the supplier's storage address and credentials. You can put the link straight into an `<img>` tag: fetching it needs no API key. It expires one hour after the response was issued; after that the link answers 404 with the code `image_unavailable` and the message "Generated image is unavailable or the link has expired". Download the file within the hour if you need to keep it. Base64 payloads (`b64_json`) are passed through unchanged.
+The token is an encrypted, signed claim that hides the supplier's storage address and credentials. You can put the link straight into an `<img>` tag: fetching it needs no [API key](create-an-api-key-and-choose-a-route.md). It expires one hour after the response was issued; after that the link answers 404 with the code `image_unavailable` and the message "Generated image is unavailable or the link has expired". Download the file within the hour if you need to keep it. Base64 payloads (`b64_json`) are passed through unchanged.
 
 Three limits on fetching the link. The relay fetches at most 4 generated images at a time across the whole site; a fifth simultaneous fetch gets the same 404 `image_unavailable` and should be retried, which a page with many `<img>` tags can trigger. Only `image/png`, `image/jpeg`, `image/webp` and `image/gif` are served (sniffed from the bytes; anything else is a 404), with `Cache-Control: private, max-age=300`. A single fetched image is limited to 32 MiB.

@@ -2,8 +2,7 @@
 
 > Connect a route-scoped TopxAI key to Cherry Studio, choose the right endpoint, and diagnose the first request without guessing URL suffixes.
 
-Canonical page: https://ai.topxea.com/docs/use-topxai-with-cherry-studio
-
+This page is also published at https://ai.topxea.com/docs/use-topxai-with-cherry-studio (English and Chinese).
 
 Start with one model and a key whose route includes it. For example, create a Claude-route key for `claude-sonnet-5`. A single OpenAI-compatible connection does not make every model available to every key.
 
@@ -11,13 +10,13 @@ Start with one model and a key whose route includes it. For example, create a Cl
 
 Cherry Studio has changed its provider settings between versions. Older releases show a single **API Address** field and add a version suffix. The current v2 source stores a separate base URL for each endpoint. Follow the field in your installed version and inspect the resulting request path if setup fails.
 
-| Endpoint | Base URL for a v2 endpoint configuration | Example model |
-| --- | --- | --- |
-| OpenAI Chat Completions | `https://ai.topxea.com/v1` | `claude-sonnet-5` on a Claude key; `gpt-5.6-sol` on a GPT key |
-| OpenAI Responses | `https://ai.topxea.com/v1` | `gpt-5.6-sol`, `grok-4.6` on their matching routes |
-| Anthropic Messages | `https://ai.topxea.com` | `claude-sonnet-5`, `claude-opus-5` |
+| Endpoint                | Base URL for a v2 endpoint configuration | Example model                                                 |
+| ----------------------- | ---------------------------------------- | ------------------------------------------------------------- |
+| OpenAI Chat Completions | `https://ai.topxea.com/v1`               | `claude-sonnet-5` on a Claude key; `gpt-6-sol` on a GPT key |
+| OpenAI Responses        | `https://ai.topxea.com/v1`               | `gpt-6-sol`, `grok-4.7` on their matching routes            |
+| Anthropic Messages      | `https://ai.topxea.com`                  | `claude-sonnet-5`, `claude-opus-5-5`                            |
 
-The resulting POST paths must be `/v1/chat/completions`, `/v1/responses`, or `/v1/messages`, respectively. Select **Chat Completions** for Kimi and GLM; they do not use TopxAI's Responses endpoint. Jev uses a separate protocol and is outside this setup.
+The resulting POST paths must be `/v1/chat/completions`, `/v1/responses`, or `/v1/messages`, respectively. Select **Chat Completions** for Kimi and GLM; they do not use TopxAI's Responses endpoint. [Jev](jev-typesafe-system-one.md) uses a separate protocol and is outside this setup.
 
 In older versions that explicitly append `/v1`, start with `https://ai.topxea.com` in the single API Address field. Do not apply that rule blindly to v2 endpoint fields. An address containing `/v1` is not inherently wrong: the final request path is what matters. Avoid the advanced `#` endpoint override for this first setup.
 
@@ -33,15 +32,15 @@ New TopxAI accounts currently receive $0.50 welcome credit. Check Wallet before 
 
 ## Diagnose the boundary that failed
 
-| Symptom | Check next |
-| --- | --- |
-| 401 | Correct key, no surrounding whitespace, correct authentication type |
-| 402 with positive balance | Key quota and requested output limit; the initial reservation can exceed the available balance |
-| 403 | The key's route and model limits; choosing a model in Cherry does not expand them |
-| 404 or duplicated `/v1/v1` | Final request path and the version-specific address field |
-| Models load but chat fails | Selected endpoint, model permissions and response format |
-| Curl works but the client fails | Extra tools, attachments, reasoning options and automatic retries; start with plain text |
-| Timeout after submission | Check Usage and the request ID before repeating; do not assume the first request never ran |
+| Symptom                         | Check next                                                                                     |
+| ------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 401                             | Correct key, no surrounding whitespace, correct authentication type                            |
+| 402 with positive balance       | Key quota and requested output limit; the initial reservation can exceed the available balance |
+| 403                             | The key's route and model limits; choosing a model in Cherry does not expand them              |
+| 404 or duplicated `/v1/v1`      | Final request path and the version-specific address field                                      |
+| Models load but chat fails      | Selected endpoint, model permissions and response format                                       |
+| Curl works but the client fails | Extra tools, attachments, reasoning options and automatic retries; start with plain text       |
+| Timeout after submission        | Check Usage and the request ID before repeating; do not assume the first request never ran     |
 
 Image generation is a separate configuration and route. A working text-model key does not establish that image requests are enabled.
 

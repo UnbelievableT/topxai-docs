@@ -12,19 +12,19 @@ In the extension's settings:
 
 - **API Provider**: OpenAI Compatible
 - **Base URL**: `https://ai.topxea.com/v1`
-- **API Key**: a TopxAI key (Auto route covers every model)
-- **Model ID**: `claude-sonnet-5`, `gpt-5.6-sol`, `grok-4.6`, `kimi-k3` or `GLM-5.3-Abliterated`
+- **API Key**: a TopxAI key ([Auto route](shared-pool-official-line-and-auto-route.md) covers every model)
+- **Model ID**: `claude-sonnet-5`, `gpt-6-sol`, `grok-4.7`, `kimi-k3` or `GLM-5.3-Abliterated`
 
 Leave the "Azure" and "legacy format" switches off. The model id must match the catalogue exactly; the picker cannot list TopxAI's models by itself, so type it.
 
 ## Anthropic with a custom base URL
 
-For Claude models the Anthropic provider keeps prompt caching and the Messages-specific features:
+For Claude models the Anthropic provider keeps [prompt caching](how-requests-are-billed.md) and the Messages-specific features:
 
 - **API Provider**: Anthropic
 - **Use custom base URL**: on, `https://ai.topxea.com`
 - **API Key**: the TopxAI key
-- **Model**: `claude-sonnet-5` or `claude-opus-5`
+- **Model**: `claude-sonnet-5` or `claude-opus-5-5`
 
 The base URL here is the origin without `/v1`; the extension appends `/v1/messages`.
 

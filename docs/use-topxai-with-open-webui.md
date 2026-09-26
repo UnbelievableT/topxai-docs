@@ -9,7 +9,7 @@ Open WebUI treats any OpenAI-compatible endpoint as an "OpenAI API connection" a
 ## In the admin panel
 
 1. **Admin Panel → Settings → Connections**.
-2. Under **OpenAI API**, add a connection: URL `https://ai.topxea.com/v1`, key `sk-...` (a TopxAI key on the Auto route).
+2. Under **OpenAI API**, add a connection: URL `https://ai.topxea.com/v1`, key `sk-...` (a TopxAI key on the [Auto route](shared-pool-official-line-and-auto-route.md)).
 3. Save. The model picker now lists the models your key can call.
 
 ## With environment variables
@@ -26,7 +26,7 @@ docker run -d -p 3000:8080 \
 
 ## What is listed
 
-`/v1/models` returns the models the key's route can serve: on the Auto route, every text model and the image models. Jev is listed only for keys on the TypeSafe route and is not usable from a chat window, since it answers typed questions through `/v1/systemone`, not chat.
+`/v1/models` returns the models the key's route can serve: on the Auto route, every text model and the image models. [Jev](jev-typesafe-system-one.md) is listed only for keys on the TypeSafe route and is not usable from a chat window, since it answers typed questions through `/v1/systemone`, not chat.
 
 ## Images
 

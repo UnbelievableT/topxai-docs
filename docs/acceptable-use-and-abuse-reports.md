@@ -6,7 +6,7 @@ This page is also published at https://ai.topxea.com/docs/acceptable-use-and-abu
 
 ## Scope
 
-The policy covers every request relayed through TopxAI on any line, route or API key, including end-user traffic of a product you build on it, which is your responsibility; a stricter upstream policy takes precedence. TopxAI does not provide any services to users located in mainland China.
+The policy covers every request relayed through TopxAI on any line, route or [API key](create-an-api-key-and-choose-a-route.md), including end-user traffic of a product you build on it, which is your responsibility; a stricter upstream policy takes precedence. TopxAI does not provide any services to users located in mainland China.
 
 ## Prohibited content
 
@@ -23,7 +23,7 @@ Malware, fraud, spam, illegal activity and bypassing safety systems (jailbreaks,
 
 ## GLM's private deployment
 
-GLM-5.3-Abliterated is a fine-tuned GLM 5.3 with its refusal behaviour removed, served from a private deployment, not the vendor API. The same policy applies; its notice adds that it may produce biased, offensive or locally unlawful content and that you bear full responsibility for compliance and legal consequences.
+[GLM-5.3-Abliterated](https://ai.topxea.com/pricing/glm-5.3-abliterated) is a fine-tuned GLM 5.3 with its refusal behaviour removed, served from a private deployment, not the vendor API. The same policy applies; its notice adds that it may produce biased, offensive or locally unlawful content and that you bear full responsibility for compliance and legal consequences.
 
 ## Enforcement
 

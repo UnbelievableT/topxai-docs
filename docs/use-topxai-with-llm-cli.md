@@ -17,8 +17,8 @@ cat > "$(dirname "$(llm keys path)")/extra-openai-models.yaml" <<'EOF'
   api_key_name: topxai
   supports_tools: true
   vision: true
-- model_id: gpt-5.6-sol
-  model_name: gpt-5.6-sol
+- model_id: gpt-6-sol
+  model_name: gpt-6-sol
   api_base: https://ai.topxea.com/v1
   api_key_name: topxai
   supports_tools: true
@@ -38,11 +38,11 @@ llm models | grep -i topxea
 
 ```bash
 llm -m claude-sonnet-5 "Say hello in one sentence."
-llm -m gpt-5.6-sol -s "Answer in JSON" "List three ports of Portugal"
+llm -m gpt-6-sol -s "Answer in JSON" "List three ports of Portugal"
 cat main.go | llm -m kimi-k3 "Explain this file"
 ```
 
-`llm logs -n 1` shows the last request and response; the charge is in the TopxAI usage log.
+`llm logs -n 1` shows the last request and response; the charge is in the TopxAI [usage log](reading-your-usage-log.md).
 
 ## Responses API
 

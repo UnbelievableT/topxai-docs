@@ -9,7 +9,7 @@ This page is also published at https://ai.topxea.com/docs/reading-your-usage-log
 ## What a row shows
 
 - **Time** and **Type**.
-- **Token**: the key name, then the billed route (for example `claude-shared`). An Auto route key shows its concrete route, with no auto flag.
+- **Token**: the key name, then the billed route (for example `claude-shared`). An [Auto route](shared-pool-official-line-and-auto-route.md) key shows its concrete route, with no auto flag.
 - **Model**: what you requested.
 - **Stream**: Stream or Sync, plus output speed in tokens per second.
 - **Tokens**: input / output, plus Cache Read, Cache Write (5m), Cache Write (1h) or Cache Creation lines when cached.

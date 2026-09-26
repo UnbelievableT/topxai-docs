@@ -22,19 +22,19 @@ The key's route decides which models it can call; an Auto-route key can call eve
 
 ## Endpoints
 
-| Endpoint                              | Format                    | Models                                      | Notes                                                                    |
-| ------------------------------------- | ------------------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
-| `POST /v1/chat/completions`           | OpenAI Chat Completions   | every text model except Jev                 | GLM-5.3-Abliterated and kimi-k3 only here; `stream: true` for SSE        |
-| `POST /v1/responses`                  | OpenAI Responses          | gpt-6-astra, gpt-5.6-sol, grok-4.6          | what Codex CLI uses                                                      |
-| `POST /v1/messages`                   | Anthropic Messages        | the Claude models                           | needs `anthropic-version` and `max_tokens`; `cache_control` forwarded    |
-| `POST /v1/images/generations`         | OpenAI Images             | gpt-image-2.5-sunburst, gpt-image-2.5-flare | priced per image by the `size` tier; `n` 1 to 128                        |
-| `POST /v1/images/edits`               | OpenAI Images (multipart) | the same two                                | priced like generation                                                   |
-| `POST /v1/videos/generations`         | video job                 | grok-imagine-video-1.5                      | `duration` 1 to 15 s, `resolution` 480p/720p/1080p; billed on acceptance |
-| `GET /v1/videos/{request_id}`         | job status                |                                             | keep polling on pending, queued, processing, running, in_progress        |
-| `GET /v1/videos/{request_id}/content` | the file                  |                                             | after `done`                                                             |
-| `POST /v1/systemone`                  | TypeSafe System One       | jev-1.13.0, jev-latest, jev-preview         | `model`, `state`, `questions`; also `/v1/system_one`                     |
-| `GET /v1/models`                      | OpenAI model list         |                                             | filtered to the key's route                                              |
-| `GET /api/pricing`                    | JSON price table          |                                             | no key needed; the data behind [/pricing](https://ai.topxea.com/pricing)                      |
+| Endpoint                              | Format                    | Models                                                       | Notes                                                                                             |
+| ------------------------------------- | ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| `POST /v1/chat/completions`           | OpenAI Chat Completions   | every text model except [Jev](jev-typesafe-system-one.md) | [GLM-5.3-Abliterated](https://ai.topxea.com/pricing/glm-5.3-abliterated) and kimi-k3 only here; `stream: true` for SSE |
+| `POST /v1/responses`                  | OpenAI Responses          | gpt-6-astra, gpt-6-sol, grok-4.7                           | what [Codex CLI](use-topxai-with-codex-cli.md) uses                                            |
+| `POST /v1/messages`                   | Anthropic Messages        | the Claude models                                            | needs `anthropic-version`; no `max_tokens` means the model's output limit; `cache_control` forwarded |
+| `POST /v1/images/generations`         | OpenAI Images             | gpt-image-2.5-sunburst, gpt-image-2.5-flare                  | priced per image by the `size` tier; `n` 1 to 128                                                 |
+| `POST /v1/images/edits`               | OpenAI Images (multipart) | the same two                                                 | priced like generation                                                                            |
+| `POST /v1/videos/generations`         | video job                 | grok-imagine-video-1.5                                       | `duration` 1 to 15 s, `resolution` 480p/720p/1080p; billed on acceptance                          |
+| `GET /v1/videos/{request_id}`         | job status                |                                                              | keep polling on pending, queued, processing, running, in_progress                                 |
+| `GET /v1/videos/{request_id}/content` | the file                  |                                                              | after `done`                                                                                      |
+| `POST /v1/systemone`                  | TypeSafe System One       | jev-1.13.0, jev-latest, jev-preview                          | `model`, `state`, `questions`; also `/v1/system_one`                                              |
+| `GET /v1/models`                      | OpenAI model list         |                                                              | filtered to the key's route                                                                       |
+| `GET /api/pricing`                    | JSON price table          |                                                              | no key needed; the data behind [/pricing](https://ai.topxea.com/pricing)                                               |
 
 ## Status codes
 

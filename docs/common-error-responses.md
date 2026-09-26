@@ -4,7 +4,7 @@
 
 This page is also published at https://ai.topxea.com/docs/common-error-responses (English and Chinese).
 
-Errors share one shape. OpenAI-style endpoints return `{"error":{"message":"...","type":"...","code":"...","param":null}}`; `/v1/messages` returns `{"type":"error","error":{"type":"...","message":"..."}}`. The message ends with `(request id: ...)`; the `x-request-id` response header carries the same id. Mid-stream, the status is already 200: the error is one `data: {"error":...}` event (`event: error` first on `/v1/messages`) and the stream ends without `[DONE]`. Support needs that id; prompts and responses are not stored.
+Errors share one shape. OpenAI-style endpoints return `{"error":{"message":"...","type":"...","code":"...","param":null}}`; `/v1/messages` returns `{"type":"error","error":{"type":"...","message":"..."}}`. The message ends with `(request id: ...)`; the `x-request-id` response header carries the same id. Mid-stream, the status is already 200: the error is one `data: {"error":...}` event (`event: error` first on `/v1/messages`) and the stream ends without `[DONE]`. A `/v1/responses` stream that has started ends with `response.failed` instead when it breaks off or fails (see the last two sections). Support needs that id; prompts and responses are not stored.
 
 ## 401 authentication_error
 
@@ -29,8 +29,20 @@ The gateway's per-account limit (all your keys together) answers `Request limit 
 
 ## 400 invalid_request
 
-A provider rejection is returned as `The request was rejected. Check the parameters and try again.`, never the provider's text. Gateway checks keep their message, such as `duration must be between 1 and 15 seconds`. A safety refusal is `content_filtered`. On `/v1/chat/completions`, GLM-5.3-Abliterated does not reject images: each attachment becomes `[Attachment omitted: this model accepts text only.]` and the text is forwarded.
+A provider rejection is returned as `The request was rejected. Check the parameters and try again.`, never the provider's text. Gateway checks keep their message, such as `duration must be between 1 and 15 seconds`. A safety refusal is `content_filtered`. On `/v1/chat/completions`, [GLM-5.3-Abliterated](https://ai.topxea.com/pricing/glm-5.3-abliterated) does not reject images: each attachment becomes `[Attachment omitted: this model accepts text only.]` and the text is forwarded.
 
 ## 404 and 5xx
 
-An upstream 404 is `model_not_found`; `internal_error` is 500. `upstream_unavailable` is 502, or 503 for provider overload or no channel able to serve the model; `upstream_timeout` is 504. The gateway retried another channel where it could. A failed request is refunded to your balance; **Billing refunds** lists only later corrections, not this. Video differs: the fee is taken when the provider accepts the job; polling a failed, expired or shorter clip refunds it in full or pro rata, and that refund is listed there.
+An upstream 404 is `model_not_found`; `internal_error` is 500. `upstream_unavailable` is 502, or 503 for provider overload or no channel able to serve the model; `upstream_timeout` is 504. The gateway retried another channel where it could. A failed request is refunded to your balance (a stream that broke off or failed after producing output is charged for that output, see below); **Billing refunds** lists only later corrections, not this. Video differs: the fee is taken when the provider accepts the job; polling a failed, expired or shorter clip refunds it in full or pro rata, and that refund is listed there.
+
+## stream_interrupted
+
+The provider's stream broke off or went silent before the answer was complete. You get the text that arrived, then one error instead of the normal end (`[DONE]`, `message_stop` or `response.completed`): code `stream_interrupted` with type `upstream_error` on OpenAI-style endpoints, type `api_error` on `/v1/messages`. A `/v1/responses` stream ends with `response.failed`, whose `error.code` is `server_error` with the same message. The OpenAI and Anthropic SDKs raise an exception on this event. The text you already have is incomplete: retry the request. If the break came before anything reached you, the gateway first tries another attempt and, failing that, answers HTTP 502 with this code. A connection lost after the provider had finished its answer is a normal end.
+
+Output produced before the break is charged once, on the provider's reported usage or, without one, on the counted text. A stream that produced no output is refunded and listed as a failed request, and so is a request you cancel before the first token. Cancel mid-answer and the output generated so far is charged.
+
+## An error partway through an answer
+
+When the provider reports an error after part of the answer has streamed, you get the text that arrived, then the error as one event in the shape above, with its usual code (for example `upstream_unavailable`) and no normal end. A `/v1/responses` stream ends with `response.failed`, `error.code` `server_error`, carrying that message, also when the error comes before any text. Retry the request: the answer is incomplete.
+
+Billing is the same as for a stream that broke off: the output produced before the error is charged once, and an error before any output is refunded and listed as a failed request. A retry never adds a second charge. One exception: a request Grok rejects on its child-safety check is refunded and charged the separate violation fee, even when the rejection arrives partway through the answer.

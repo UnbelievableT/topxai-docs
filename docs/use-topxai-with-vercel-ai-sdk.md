@@ -23,7 +23,7 @@ const { text } = await generateText({
 })
 ```
 
-`topxai.chat(id)` uses Chat Completions and serves every text model except Jev. `topxai.responses("gpt-5.6-sol")` uses the Responses API, which TopxAI serves for the GPT models and `grok-4.6`. `topxai.image("gpt-image-2.5-sunburst")` generates images, billed per picture.
+`topxai.chat(id)` uses Chat Completions and serves every text model except [Jev](jev-typesafe-system-one.md). `topxai.responses("gpt-6-sol")` uses the Responses API, which TopxAI serves for the GPT models and `grok-4.7`. `topxai.image("gpt-image-2.5-sunburst")` generates images, billed per picture.
 
 ## @ai-sdk/anthropic
 
@@ -36,7 +36,7 @@ const claude = createAnthropic({
 })
 
 const { text } = await generateText({
-  model: claude('claude-opus-5'),
+  model: claude('claude-opus-5-5'),
   prompt: 'Say hello in one sentence.',
 })
 ```
@@ -61,7 +61,7 @@ const model = topxai('kimi-k3')
 ## Notes
 
 - `streamText`, tool calling and `Output.object` structured output work as with the provider's own endpoint.
-- `usage` on the result carries the token counts TopxAI returns; the charge itself is in the usage log.
+- `usage` on the result carries the token counts TopxAI returns; the charge itself is in the [usage log](reading-your-usage-log.md).
 
 ## If it fails
 

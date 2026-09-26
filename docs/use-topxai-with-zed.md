@@ -16,14 +16,14 @@ Zed's agent takes custom providers under `language_models` in `settings.json`. T
         "api_url": "https://ai.topxea.com/v1",
         "available_models": [
           {
-            "name": "gpt-5.6-sol",
-            "display_name": "GPT-5.6 Sol",
-            "max_tokens": 400000
+            "name": "gpt-6-sol",
+            "display_name": "GPT-6 Sol",
+            "max_tokens": 1000000
           },
           {
-            "name": "grok-4.6",
-            "display_name": "Grok 4.6",
-            "max_tokens": 256000
+            "name": "grok-4.7",
+            "display_name": "Grok 4.7",
+            "max_tokens": 500000
           },
           {
             "name": "kimi-k3",
@@ -40,8 +40,8 @@ Zed's agent takes custom providers under `language_models` in `settings.json`. T
           {
             "name": "claude-sonnet-5",
             "display_name": "Claude Sonnet 5",
-            "max_tokens": 200000,
-            "max_output_tokens": 64000,
+            "max_tokens": 1000000,
+            "max_output_tokens": 128000,
             "capabilities": {
               "tools": true,
               "images": true,
@@ -49,10 +49,10 @@ Zed's agent takes custom providers under `language_models` in `settings.json`. T
             }
           },
           {
-            "name": "claude-opus-5",
-            "display_name": "Claude Opus 5",
-            "max_tokens": 200000,
-            "max_output_tokens": 64000,
+            "name": "claude-opus-5-5",
+            "display_name": "Claude Opus 5.5",
+            "max_tokens": 1000000,
+            "max_output_tokens": 128000,
             "capabilities": {
               "tools": true,
               "images": true,

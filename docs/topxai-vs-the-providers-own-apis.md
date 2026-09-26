@@ -21,7 +21,7 @@ Calling a provider directly is the baseline every relay is measured against. Thi
 
 ## What stays with the provider
 
-TopxAI serves Chat Completions, Responses, Messages, image generation and edits, video generation, `/v1/systemone` and `/v1/models`. Anything else stays on the provider's own key:
+TopxAI serves Chat Completions, Responses, Messages, [image generation](image-generation.md) and edits, [video generation](video-generation.md), `/v1/systemone` and `/v1/models`. Anything else stays on the provider's own key:
 
 - Batch APIs and their discounts
 - Fine-tuning, files, assistants, vector stores
@@ -31,7 +31,7 @@ TopxAI serves Chat Completions, Responses, Messages, image generation and edits,
 
 ## The same either way
 
-The request body is forwarded unchanged and the response is returned unchanged: tool calling, structured output, streaming, vision inputs, prompt caching and reasoning settings behave as they do at the provider. TopxAI adds no system prompt and no headers of its own; the relay's test suite asserts that a Claude Messages request leaves byte for byte as it arrived.
+The request body is forwarded unchanged and the response is returned unchanged: tool calling, structured output, streaming, vision inputs, [prompt caching](how-requests-are-billed.md) and reasoning settings behave as they do at the provider. TopxAI adds no system prompt and no headers of its own; the relay's test suite asserts that a Claude Messages request leaves byte for byte as it arrived.
 
 ## Deciding
 

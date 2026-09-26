@@ -20,7 +20,7 @@ reply = litellm.completion(
 print(reply.choices[0].message.content)
 ```
 
-For Claude with prompt caching through the Messages API:
+For Claude with [prompt caching](how-requests-are-billed.md) through the Messages API:
 
 ```python
 reply = litellm.completion(
@@ -40,9 +40,9 @@ model_list:
       model: openai/claude-sonnet-5
       api_base: https://ai.topxea.com/v1
       api_key: os.environ/TOPXAI_API_KEY
-  - model_name: gpt-5.6-sol
+  - model_name: gpt-6-sol
     litellm_params:
-      model: openai/gpt-5.6-sol
+      model: openai/gpt-6-sol
       api_base: https://ai.topxea.com/v1
       api_key: os.environ/TOPXAI_API_KEY
   - model_name: kimi-k3
@@ -56,7 +56,7 @@ Start it with `litellm --config config.yaml`; clients then call the proxy with t
 
 ## Cost tracking
 
-LiteLLM prices by model name and knows nothing about TopxAI's routes. To make its cost column match the usage log, set `input_cost_per_token` and `output_cost_per_token` in `litellm_params` from the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5) (for example `0.000001` and `0.000005` for `claude-sonnet-5` on the shared pool).
+LiteLLM prices by model name and knows nothing about TopxAI's routes. To make its cost column match the [usage log](reading-your-usage-log.md), set `input_cost_per_token` and `output_cost_per_token` in `litellm_params` from the [model's page](https://ai.topxea.com/pricing/claude-sonnet-5) (for example `0.000001` and `0.000005` for `claude-sonnet-5` on the [shared pool](shared-pool-official-line-and-auto-route.md)).
 
 ## If it fails
 

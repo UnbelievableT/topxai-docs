@@ -22,19 +22,19 @@ opencode takes custom providers in `opencode.json` (in the project or in `~/.con
       "models": {
         "claude-sonnet-5": {
           "name": "Claude Sonnet 5",
-          "limit": { "context": 200000, "output": 64000 }
+          "limit": { "context": 1000000, "output": 128000 }
         },
-        "gpt-5.6-sol": {
-          "name": "GPT-5.6 Sol",
-          "limit": { "context": 400000, "output": 128000 }
+        "gpt-6-sol": {
+          "name": "GPT-6 Sol",
+          "limit": { "context": 1000000, "output": 128000 }
         },
-        "grok-4.6": {
-          "name": "Grok 4.6",
-          "limit": { "context": 256000, "output": 32000 }
+        "grok-4.7": {
+          "name": "Grok 4.7",
+          "limit": { "context": 500000, "output": 128000 }
         },
         "kimi-k3": {
           "name": "Kimi K3",
-          "limit": { "context": 1000000, "output": 32000 }
+          "limit": { "context": 1000000, "output": 128000 }
         }
       }
     },
@@ -47,7 +47,7 @@ opencode takes custom providers in `opencode.json` (in the project or in `~/.con
       },
       "models": {
         "claude-sonnet-5": { "name": "Claude Sonnet 5" },
-        "claude-opus-5": { "name": "Claude Opus 5" }
+        "claude-opus-5-5": { "name": "Claude Opus 5.5" }
       }
     }
   }
