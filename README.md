@@ -1,11 +1,11 @@
-# TopxAI — one API endpoint for Claude, GPT, Grok, GLM, Kimi and Jev
+# TopxAI — one API endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev
 
-[TopxAI](https://ai.topxea.com) is the model API service run by [TopXEA](https://topxea.com). Thirteen models from six lines are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
+[TopxAI](https://ai.topxea.com) is the model API service run by [TopXEA](https://topxea.com). Claude, GPT, Grok, GLM, Kimi, DeepSeek and TypeSafe's Jev are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
 
-This repository holds the public documentation in Markdown. The same pages are published, in English and Chinese, at **https://ai.topxea.com/docs**.
+This repository indexes the public documentation: each page under [docs/](docs/) summarizes a page of **https://ai.topxea.com/docs**, where the full text is published in English and Chinese.
 
 - Sign in and create a key: https://ai.topxea.com/keys
-- Models and prices: https://ai.topxea.com/#models
+- Models and prices: https://ai.topxea.com/pricing
 - Documentation: https://ai.topxea.com/docs
 - Every model's price on its own page: https://ai.topxea.com/pricing · price calculator: https://ai.topxea.com/tools/price-calculator
 - API reference and OpenAPI 3.1: https://ai.topxea.com/docs/api-reference · [openapi.json](openapi.json)
@@ -54,29 +54,21 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | `POST /v1/systemone` | TypeSafe System One | `jev-1.13.0` |
 | `GET /v1/models` | OpenAI | the models your key can use |
 
-## Models and prices
+## Models
 
-Prices are in USD, fixed per model and route; the live table at https://ai.topxea.com/#models and `GET https://ai.topxea.com/api/pricing` are the source of truth. Text models bill per million tokens (input / output; cache read where the provider supports it). The **shared pool** is 50% of the provider's list price, the **official line** 90%; a key on **Auto route** sends each request to the lowest-priced line that serves its model.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-09-28: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
-| Model | Shared pool (in / out) | Official line (in / out) |
-| --- | --- | --- |
-| `claude-fable-5-1` | $5 / $25 | $9 / $45 |
-| `claude-fable-5` | $5 / $25 | $9 / $45 |
-| `claude-opus-5` | $2.50 / $12.50 | $4.50 / $22.50 |
-| `claude-sonnet-5` | $1 / $5 | $1.80 / $9 |
-| `gpt-6-astra` | $5 / $25 | $9 / $45 |
-| `gpt-5.6-sol` | $2 / $10 | $3.60 / $18 |
-| `grok-4.6` | $1 / $3 | $1.80 / $5.40 |
-| `kimi-k3` | — | $2.40 / $12 (80% of list) |
-| `jev-1.13.0` (TypeSafe System One) | — | $0.04494 / output free |
-| `GLM-5.3-Abliterated` (private deployment) | — | $4 / $7 |
+| Provider | Models |
+| --- | --- |
+| Anthropic | [`claude-fable-5-1`](https://ai.topxea.com/pricing/claude-fable-5-1) · [`claude-opus-5-5`](https://ai.topxea.com/pricing/claude-opus-5-5) · [`claude-sonnet-5`](https://ai.topxea.com/pricing/claude-sonnet-5) |
+| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6-sol`](https://ai.topxea.com/pricing/gpt-6-sol) · [`gpt-image-2.5-flare`](https://ai.topxea.com/pricing/gpt-image-2.5-flare) · [`gpt-image-2.5-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.5-sunburst) |
+| xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
+| Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
+| Moonshot AI | [`kimi-k3`](https://ai.topxea.com/pricing/kimi-k3) |
+| TypeSafe | [`jev-1.13.0`](https://ai.topxea.com/pricing/jev-1.13.0) |
+| DeepSeek | [`deepseek-flash`](https://ai.topxea.com/pricing/deepseek-flash) · [`deepseek-v4-pro`](https://ai.topxea.com/pricing/deepseek-v4-pro) |
 
-| Model | Unit | Price |
-| --- | --- | --- |
-| `gpt-image-2.5-sunburst`, `gpt-image-2.5-flare` | per image | $0.03 up to 1024×1024, $0.05 up to 2048×2048 |
-| `grok-imagine-video-1.5` | per second of video | $0.05 at 480p, $0.10 at 720p, $0.20 at 1080p |
-
-`GLM-5.3-Abliterated` is a fine-tuned GLM 5.3 with its refusal alignment removed, served from a private deployment rather than the vendor's API; it is text only, priced above list, and covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line. Prices as of 2026-09-18.
+Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). `GLM-5.3-Abliterated` is a fine-tuned GLM 5.3 served from a private deployment rather than Z.ai's API; it is covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
 
 ## Documentation
 
@@ -142,6 +134,7 @@ Prices are in USD, fixed per model and route; the live table at https://ai.topxe
 
 - [What TopxAI stores and what it never stores](docs/what-topxai-stores-and-what-it-never-stores.md) — Request and response content passes through memory only; here is what the usage log, account and payment records keep, and for how long.
 - [Acceptable use and abuse reports](docs/acceptable-use-and-abuse-reports.md) — The six prohibited content categories, how enforcement works, why GLM's private deployment is no exception, and how to report abuse.
+
 ## Retention and policies
 
 Prompts, completions and uploaded files are relayed in memory and never written to disk; the usage log keeps token counts, model names, routes and request ids. Details: [Privacy Policy](https://ai.topxea.com/privacy-policy), [User Agreement](https://ai.topxea.com/user-agreement), [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy).
@@ -152,7 +145,7 @@ TopXEA (https://topxea.com) sells MetaTrader expert advisors, parameter sets and
 
 ## Contributing
 
-Corrections to these pages are welcome as pull requests; the pages mirror https://ai.topxea.com/docs and are updated from there.
+The summaries here are generated from the site's sources, so a correction belongs on the page it summarizes: open an issue or write to support@topxea.com.
 
 ## License
 
