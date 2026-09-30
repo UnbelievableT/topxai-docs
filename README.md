@@ -56,12 +56,12 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-09-28: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-09-30: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
 | Anthropic | [`claude-fable-5-1`](https://ai.topxea.com/pricing/claude-fable-5-1) · [`claude-opus-5-5`](https://ai.topxea.com/pricing/claude-opus-5-5) · [`claude-sonnet-5`](https://ai.topxea.com/pricing/claude-sonnet-5) |
-| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6-sol`](https://ai.topxea.com/pricing/gpt-6-sol) · [`gpt-image-2.5-flare`](https://ai.topxea.com/pricing/gpt-image-2.5-flare) · [`gpt-image-2.5-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.5-sunburst) |
+| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-image-2.5-flare`](https://ai.topxea.com/pricing/gpt-image-2.5-flare) · [`gpt-image-2.5-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.5-sunburst) |
 | xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
 | Moonshot AI | [`kimi-k3`](https://ai.topxea.com/pricing/kimi-k3) |
@@ -82,7 +82,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 ### Integrations
 
 - [Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key](docs/use-topxai-with-claude-code.md) — Point Claude Code at https://ai.topxea.com with two environment variables and pick claude-sonnet-5, claude-opus-5-5 or claude-fable-5-1 as its model.
-- [Codex CLI with TopxAI: download, install and connect](docs/use-topxai-with-codex-cli.md) — Install the Codex CLI through an npm mirror when GitHub and npm are out of reach, connect it to TopxAI with one command, and run gpt-6-sol or grok-4.7.
+- [Codex CLI with TopxAI: download, install and connect](docs/use-topxai-with-codex-cli.md) — Install the Codex CLI through an npm mirror when GitHub and npm are out of reach, connect it to TopxAI with one command, and run gpt-6.1-sol or grok-4.7.
 - [Cursor with TopxAI: override the OpenAI base URL](docs/use-topxai-with-cursor.md) — In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://ai.topxea.com/v1 and add the model ids you want to chat with.
 - [Cline and Roo Code with TopxAI: the OpenAI-compatible provider](docs/use-topxai-with-cline-and-roo-code.md) — Set the provider to OpenAI Compatible with base URL https://ai.topxea.com/v1, a TopxAI key and a model id; or the Anthropic provider with a custom base URL.
 - [Continue with TopxAI: models in config.yaml](docs/use-topxai-with-continue.md) — Add TopxAI models to ~/.continue/config.yaml with provider openai or anthropic and apiBase, then use them for chat, edit and agent mode in VS Code or JetBrains.

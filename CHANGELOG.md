@@ -2,6 +2,25 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-09-30 · GPT-6.1 Sol replaces GPT-6 Sol
+
+The OpenAI shared and official routes move to `gpt-6.1-sol`. Update the model ID in your client: `gpt-6-sol` is retired, including its reasoning suffixes, with no forwarding alias. For keys restricted to specific models, update the allowed-model list too. Unrestricted keys and route keys without a model restriction keep working with the same key.
+
+Default USD prices per million tokens, based on [OpenAI's model page](https://developers.openai.com/api/docs/models/gpt-6.1-sol), checked September 30, 2026:
+
+| Category    | Shared (50%) | Official (90%) | OpenAI Standard |
+| ----------- | ------------ | -------------- | --------------- |
+| Input       | $1           | $1.80          | $2              |
+| Output      | $5           | $9             | $10             |
+| Cache read  | $0.05        | $0.09          | $0.10           |
+| Cache write | $1.25        | $2.25          | $2.50           |
+
+Cache reads cost half as much as on GPT-6 Sol; the other standard rates are unchanged. Above 272,000 input tokens, including cache tokens, the whole request uses the long-context tier: input and cache rates double, output rates multiply by 1.5. Existing administrator route-price overrides are preserved; accepted requests and historical charges retain their captured prices.
+
+The context window remains 1,050,000 tokens, with up to 128,000 output tokens. Reasoning levels are `low`, `medium` (default), `high`, `xhigh` and `max`. Reasoning cannot be disabled; legacy `none` and `minimal` are normalized to `low`. Chat Completions and Anthropic-compatible requests use Responses upstream, preserving the client's response format and tools.
+
+The [Codex installer](https://ai.topxea.com/downloads) uses the new model by default. See the [upgrade guide](https://ai.topxea.com/blog/gpt-6-1-sol) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-sol).
+
 ## 2026-09-27 · GLM-5.3-Abliterated publishes its reasoning modes and 1M-token context
 
 [GLM-5.3-Abliterated](glm-5-3-abliterated.md) runs on a deployment with a 1,000,000-token context and three reasoning modes. `/api/pricing` now publishes both: `context_window` 1000000, `max_output` 131072, and the reasoning efforts `low`, `high` and `max`, with `max` as the default. TopxAI Desktop reads the feed, so it now offers the effort picker for this model and plans for the full window. Until now its requests always ran at max and it treated the model as a 128K-token window.

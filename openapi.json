@@ -166,7 +166,7 @@
     ],
     "operationId": "createResponse",
     "summary": "Responses",
-    "description": "OpenAI Responses API for gpt-6-astra, gpt-6-sol and grok-4.7. Codex CLI uses this endpoint.",
+    "description": "OpenAI Responses API for gpt-6-astra, gpt-6.1-sol and grok-4.7. Codex CLI uses this endpoint.",
     "requestBody": {
      "required": true,
      "content": {
@@ -175,7 +175,7 @@
         "$ref": "#/components/schemas/ResponsesRequest"
        },
        "example": {
-        "model": "gpt-6-sol",
+        "model": "gpt-6.1-sol",
         "input": "Say hello in one sentence."
        }
       }
@@ -1095,7 +1095,7 @@
      "claude-sonnet-5",
      "claude-opus-5-5",
      "gpt-6-astra",
-     "gpt-6-sol",
+     "gpt-6.1-sol",
      "grok-4.7",
      "GLM-5.3-Abliterated",
      "kimi-k3",
@@ -1269,7 +1269,7 @@
       "type": "string",
       "enum": [
        "gpt-6-astra",
-       "gpt-6-sol",
+       "gpt-6.1-sol",
        "grok-4.7"
       ]
      },
