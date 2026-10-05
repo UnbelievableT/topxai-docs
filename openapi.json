@@ -69,7 +69,7 @@
         "$ref": "#/components/schemas/ChatCompletionRequest"
        },
        "example": {
-        "model": "claude-sonnet-5",
+        "model": "claude-sonnet-5-5",
         "messages": [
          {
           "role": "user",
@@ -296,7 +296,7 @@
         "$ref": "#/components/schemas/MessagesRequest"
        },
        "example": {
-        "model": "claude-sonnet-5",
+        "model": "claude-sonnet-5-5",
         "max_tokens": 256,
         "messages": [
          {
@@ -1092,7 +1092,7 @@
     "description": "A catalogue text model.",
     "enum": [
      "claude-fable-5-1",
-     "claude-sonnet-5",
+     "claude-sonnet-5-5",
      "claude-opus-5-5",
      "gpt-6-astra",
      "gpt-6.1-sol",
@@ -1322,7 +1322,7 @@
       "type": "string",
       "enum": [
        "claude-fable-5-1",
-       "claude-sonnet-5",
+       "claude-sonnet-5-5",
        "claude-opus-5-5"
       ]
      },

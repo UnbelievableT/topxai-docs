@@ -2,6 +2,28 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-02 · Claude Sonnet 5.5 replaces Sonnet 5 at the same prices
+
+Select `claude-sonnet-5-5` on the Claude shared or official route, or with an Auto-route key. The old `claude-sonnet-5` ID is retired and has no forwarding alias. Unrestricted keys can keep using the same key; if a key has an allowed-model list, edit that list to include the new ID.
+
+Default prices in USD per million tokens, checked against [Anthropic's Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) on October 2, 2026:
+
+| Category | Shared (50%) | Official (90%) | Anthropic list |
+| --- | --- | --- | --- |
+| Input | $1 | $1.80 | $2 |
+| Output | $5 | $9 | $10 |
+| Cache read | $0.10 | $0.18 | $0.20 |
+| Cache write, 5 minutes | $1.25 | $2.25 | $2.50 |
+| Cache write, 1 hour | $2 | $3.60 | $4 |
+
+All five rates remain unchanged from Sonnet 5. The model supports a 1M-token context and up to 128K output tokens, with no long-context price premium. Accepted requests and historical charges keep their captured prices.
+
+Adaptive thinking defaults to high effort. TopxAI maps legacy disabled-thinking and OpenAI `none` requests to `between_tools` at low effort, and converts manual thinking budgets to effort. Unsupported sampling parameters are removed. Forced tool selection returns a 400 error without a charge; use automatic tool selection. Native thinking signatures and tool-result conversations are preserved.
+
+See the [migration post](https://ai.topxea.com/blog/claude-sonnet-5-5) for supported settings, and the [Claude Code guide](use-topxai-with-claude-code.md) for the model variables to update. Provider-native computer-use clients need Anthropic's new toolset format, described in its [migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide).
+
+During the October 2 supplier checks, some `between_tools` requests returned 502, including `medium` on both routes and OpenAI `none` on the official route. Adaptive mode with explicit `low` effort passed on both routes: use `thinking: {"type":"adaptive"}` with `output_config: {"effort":"low"}` for Messages, or `reasoning_effort: "low"` for Chat Completions, when it fits your task. Adaptive mode can still think before answering, and those tokens are billed as output. TopxAI preserves the requested mode rather than silently substituting another one.
+
 ## 2026-09-30 · GPT-6.1 Sol replaces GPT-6 Sol
 
 The OpenAI shared and official routes move to `gpt-6.1-sol`. Update the model ID in your client: `gpt-6-sol` is retired, including its reasoning suffixes, with no forwarding alias. For keys restricted to specific models, update the allowed-model list too. Unrestricted keys and route keys without a model restriction keep working with the same key.
@@ -19,7 +41,7 @@ Cache reads cost half as much as on GPT-6 Sol; the other standard rates are unch
 
 The context window remains 1,050,000 tokens, with up to 128,000 output tokens. Reasoning levels are `low`, `medium` (default), `high`, `xhigh` and `max`. Reasoning cannot be disabled; legacy `none` and `minimal` are normalized to `low`. Chat Completions and Anthropic-compatible requests use Responses upstream, preserving the client's response format and tools.
 
-The [Codex installer](https://ai.topxea.com/downloads) uses the new model by default. See the [upgrade guide](https://ai.topxea.com/blog/gpt-6-1-sol) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-sol).
+The [Codex installer](use-topxai-with-codex-cli.md) uses the new model by default. See the [upgrade guide](https://ai.topxea.com/blog/gpt-6-1-sol) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-sol).
 
 ## 2026-09-27 · GLM-5.3-Abliterated publishes its reasoning modes and 1M-token context
 
@@ -128,6 +150,8 @@ Grok 4.7, prompt of 200K tokens or more, USD per million tokens:
 Rates follow the [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) and [Grok 4.7](https://docs.x.ai/developers/models/grok-4.7) model pages, checked September 23, 2026. The price table on each model page lists both tiers, and the usage log shows which tier a request settled at.
 
 ## 2026-09-22 · Codex CLI downloads and a one-command installer
+
+> **Update — September 30, 2026:** The [downloads page](https://ai.topxea.com/downloads) now provides the TopxAI desktop app. For current Codex CLI downloads, installation scripts and manual configuration, see the [Codex CLI guide](use-topxai-with-codex-cli.md). The announcement below is retained as a historical record.
 
 Codex CLI users who cannot reach GitHub or npm from their network no longer have to.
 
@@ -239,7 +263,7 @@ curl -fsSL https://ai.topxea.com/install/typesafe.sh | sh -s -- --key sk-xxxx
 
 TopxAI is live at https://ai.topxea.com. It relays Claude, OpenAI and Grok models through one OpenAI- and Anthropic-compatible endpoint. Set the base URL to `https://ai.topxea.com/v1` and use your TopxAI key.
 
-- Models: `claude-fable-5-1`, `claude-fable-5`, `claude-sonnet-5`, `claude-opus-5`, `gpt-6-astra`, `gpt-5.6-sol`, `gpt-image-2` and `grok-4.6`.
+- Models: `claude-fable-5-1`, `claude-fable-5`, `claude-sonnet-5-5`, `claude-opus-5`, `gpt-6-astra`, `gpt-5.6-sol`, `gpt-image-2` and `grok-4.6`.
 - Two routes per vendor: the shared pool at 50% of list price and the official line at 90%. Both reach the vendor's own models and differ only in routing and price. You pick the route when you create a key; `gpt-image-2` has its own image route.
 - Fixed USD prices per million tokens, charged from a prepaid balance. Every request writes a usage-log row with model, route and charge.
 - Zero retention: prompts, completions and files pass through in memory and are never written to disk. Logs hold token counts, model names, routes and identifiers.
