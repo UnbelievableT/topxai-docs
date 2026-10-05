@@ -22,7 +22,7 @@ from openai import OpenAI
 
 client = OpenAI(base_url="https://ai.topxea.com/v1", api_key="sk-...")
 reply = client.chat.completions.create(
-    model="claude-sonnet-5",
+    model="claude-sonnet-5-5",
     messages=[{"role": "user", "content": "Say hello in one sentence."}],
 )
 print(reply.choices[0].message.content)
@@ -33,7 +33,7 @@ from anthropic import Anthropic
 
 client = Anthropic(base_url="https://ai.topxea.com", api_key="sk-...")
 reply = client.messages.create(
-    model="claude-sonnet-5",
+    model="claude-sonnet-5-5",
     max_tokens=256,
     messages=[{"role": "user", "content": "Say hello in one sentence."}],
 )
