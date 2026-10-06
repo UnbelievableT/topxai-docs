@@ -1,6 +1,6 @@
-# Codex CLI with TopxAI: download, install and connect
+# Codex CLI custom model provider: model_providers in config.toml for TopxAI
 
-> Install the Codex CLI through an npm mirror when GitHub and npm are out of reach, connect it to TopxAI with one command, and run gpt-6.1-sol or grok-4.7.
+> Point Codex CLI at TopxAI with a [model_providers.topxai] table in ~/.codex/config.toml and run gpt-6.1-sol, gpt-6-astra or grok-4.7. An npm mirror is included.
 
 The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-codex-cli (in Chinese: https://ai.topxea.com/docs/use-topxai-with-codex-cli?lang=zh).
 

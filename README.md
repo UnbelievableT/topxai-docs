@@ -82,7 +82,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 ### Integrations
 
 - [Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key](docs/use-topxai-with-claude-code.md) — Point Claude Code at https://ai.topxea.com with two environment variables and pick claude-sonnet-5-5, claude-opus-5-5 or claude-fable-5-1 as its model.
-- [Codex CLI with TopxAI: download, install and connect](docs/use-topxai-with-codex-cli.md) — Install the Codex CLI through an npm mirror when GitHub and npm are out of reach, connect it to TopxAI with one command, and run gpt-6.1-sol or grok-4.7.
+- [Codex CLI custom model provider: model_providers in config.toml for TopxAI](docs/use-topxai-with-codex-cli.md) — Point Codex CLI at TopxAI with a [model_providers.topxai] table in ~/.codex/config.toml and run gpt-6.1-sol, gpt-6-astra or grok-4.7. An npm mirror is included.
 - [Cursor with TopxAI: override the OpenAI base URL](docs/use-topxai-with-cursor.md) — In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://ai.topxea.com/v1 and add the model ids you want to chat with.
 - [Cline and Roo Code with TopxAI: the OpenAI-compatible provider](docs/use-topxai-with-cline-and-roo-code.md) — Set the provider to OpenAI Compatible with base URL https://ai.topxea.com/v1, a TopxAI key and a model id; or the Anthropic provider with a custom base URL.
 - [Continue with TopxAI: models in config.yaml](docs/use-topxai-with-continue.md) — Add TopxAI models to ~/.continue/config.yaml with provider openai or anthropic and apiBase, then use them for chat, edit and agent mode in VS Code or JetBrains.
@@ -129,6 +129,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 - [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare current model and route prices: TopxAI shared routes cost 37.5% to 50% less than OpenRouter standard routes, and Kimi hosts can cost less.
 - [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT, Grok or Kimi go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
+- [TopxAI vs Vercel AI Gateway: list price with no markup, or half of it](docs/topxai-vs-vercel-ai-gateway.md) — Vercel AI Gateway charges the provider list price with no markup; TopxAI shared routes charge 50% of it for Claude, GPT and Grok. What else differs.
 
 ### Privacy and policies
 
