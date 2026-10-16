@@ -2,8 +2,8 @@
  "openapi": "3.1.0",
  "info": {
   "title": "TopxAI API",
-  "version": "2026-09-19",
-  "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi and Jev.",
+  "version": "2026-10-16",
+  "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
   "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged; parameters not listed here pass through to the provider. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
   "termsOfService": "https://ai.topxea.com/user-agreement",
   "contact": {
@@ -830,7 +830,7 @@
     ],
     "operationId": "systemOne",
     "summary": "System One (Jev)",
-    "description": "TypeSafe's System One: typed questions about a state, answered with probabilities instead of text. Models jev-1.13.0, jev-latest, jev-preview. $0.04494 per 1M input tokens, output free. /v1/system_one is accepted as a second spelling. The body must be at most 1 MiB with model, state and a non-empty questions object.",
+    "description": "TypeSafe's System One: typed questions about a state, answered with probabilities (or, for Box, the edges of a box in an image) instead of text. Model jev-1.14.0; jev-latest and jev-preview are accepted and answered by jev-1.14.0. $0.04494 per 1M input tokens, image tokens included, output free. /v1/system_one is accepted as a second spelling. The body must carry model, state and a non-empty questions object; state and questions together are at most 1 MiB, the whole body at most 32 MiB, and assets at most 1,024 images with reference strings of at most 1,024 bytes each and 64 KiB together. Images (PNG or JPEG) are listed once in assets under a reference string and placed by writing that reference in the state, an instruction or a criterion; send them base64-encoded in the JSON body or as file parts of a multipart/form-data body whose first part, named request, holds the JSON. Images and Box questions are an experimental TypeSafe feature: the relay adds the TypeSafe-Danger-Zone-Images header the provider requires, so it is optional here.",
     "requestBody": {
      "required": true,
      "content": {
@@ -839,7 +839,7 @@
         "$ref": "#/components/schemas/SystemOneRequest"
        },
        "example": {
-        "model": "jev-latest",
+        "model": "jev-1.14.0",
         "state": "I have asked three times now. Can I please just talk to a real person?",
         "questions": {
          "is_human_escalation": {
@@ -848,19 +848,43 @@
          }
         }
        }
+      },
+      "multipart/form-data": {
+       "schema": {
+        "type": "object",
+        "required": [
+         "request"
+        ],
+        "properties": {
+         "request": {
+          "$ref": "#/components/schemas/SystemOneRequest",
+          "description": "The JSON body; must be the first part. Each asset names its file part in part."
+         }
+        },
+        "additionalProperties": {
+         "type": "string",
+         "format": "binary",
+         "description": "One image file part (image/png, image/jpeg or application/octet-stream) per asset, under the name its asset gives in part."
+        }
+       },
+       "encoding": {
+        "request": {
+         "contentType": "application/json"
+        }
+       }
       }
      }
     },
     "responses": {
      "200": {
-      "description": "TypeSafe's answers, unchanged, with usage.",
+      "description": "TypeSafe's answers, unchanged, with usage. usage.input_tokens includes the tokens of every image (about ceil(width/28) x ceil(height/28) x 2 per use).",
       "content": {
        "application/json": {
         "schema": {
          "$ref": "#/components/schemas/SystemOneResponse"
         },
         "example": {
-         "model": "jev-latest",
+         "model": "jev-1.14.0",
          "answers": {
           "is_human_escalation": {
            "type": "noul",
@@ -869,28 +893,52 @@
          },
          "usage": {
           "input_tokens": 43,
-          "output_tokens": 0
+          "output_tokens": 20
          }
         }
        }
       }
      },
      "422": {
-      "description": "TypeSafe's validation detail, as written.",
+      "description": "TypeSafe's validation detail, as written. Nothing is charged.",
       "content": {
        "application/json": {
         "schema": {
-         "$ref": "#/components/schemas/Error"
+         "$ref": "#/components/schemas/SystemOneProviderError"
         }
        }
       }
      },
      "400": {
-      "description": "The body failed validation; the message says which field.",
+      "description": "The body failed the relay's checks (Error), or TypeSafe rejected it: an image it cannot read or outside its size limits, an asset nobody references, a request over the context length (SystemOneProviderError). Nothing is charged.",
       "content": {
        "application/json": {
         "schema": {
-         "$ref": "#/components/schemas/Error"
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/Error"
+          },
+          {
+           "$ref": "#/components/schemas/SystemOneProviderError"
+          }
+         ]
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "The body is over 32 MiB (Error), or TypeSafe found an image or all images together over its size limits (SystemOneProviderError). Nothing is charged.",
+      "content": {
+       "application/json": {
+        "schema": {
+         "oneOf": [
+          {
+           "$ref": "#/components/schemas/Error"
+          },
+          {
+           "$ref": "#/components/schemas/SystemOneProviderError"
+          }
+         ]
         }
        }
       }
@@ -945,7 +993,21 @@
        }
       }
      }
-    }
+    },
+    "parameters": [
+     {
+      "name": "TypeSafe-Danger-Zone-Images",
+      "in": "header",
+      "required": false,
+      "description": "TypeSafe's opt-in for images and Box questions. Optional on TopxAI: the relay sends it whenever the request carries assets or a Box question.",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "true"
+       ]
+      }
+     }
+    ]
    }
   },
   "/v1/models": {
@@ -1472,27 +1534,44 @@
    "SystemOneQuestion": {
     "type": "object",
     "required": [
-     "type"
+     "type",
+     "instructions"
     ],
     "properties": {
      "type": {
       "type": "string",
-      "description": "noul (yes/no probability), choice (one of options) or score (a number in a range)."
+      "enum": [
+       "noul",
+       "choice",
+       "score",
+       "box"
+      ],
+      "description": "noul (probability of yes), choice (one option of criteria, with a probability per option), score (a value across ordered criteria levels) or box (where the target is in an image: top, bottom, left and right as fractions of the image)."
      },
      "instructions": {
-      "type": "string"
+      "description": "The question, or for box what to find and in which image. A string, or an object or array that holds the question and data it refers to; may contain image references.",
+      "oneOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "object"
+       },
+       {
+        "type": "array"
+       }
+      ]
      },
-     "options": {
-      "type": "array",
-      "items": {
-       "type": "string"
-      }
-     },
-     "min": {
-      "type": "number"
-     },
-     "max": {
-      "type": "number"
+     "criteria": {
+      "description": "noul: optional {true, false} definitions. choice: object of option name to description (or null), at most 255 options. score: ordered array of 2 to 10 level descriptions. box: none. Descriptions may contain image references.",
+      "oneOf": [
+       {
+        "type": "object"
+       },
+       {
+        "type": "array"
+       }
+      ]
      }
     },
     "additionalProperties": true
@@ -1508,14 +1587,24 @@
      "model": {
       "type": "string",
       "enum": [
-       "jev-1.13.0",
+       "jev-1.14.0",
        "jev-latest",
        "jev-preview"
       ]
      },
      "state": {
-      "type": "string",
-      "description": "The text the questions are about; at most 32k tokens plus the longest question."
+      "description": "What the questions are about: a string, or structured JSON such as a record or a chat log; image references may appear in it. Default limits: 64k tokens per request and 32k per question, the state included.",
+      "oneOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "object"
+       },
+       {
+        "type": "array"
+       }
+      ]
      },
      "questions": {
       "type": "object",
@@ -1523,9 +1612,45 @@
       "additionalProperties": {
        "$ref": "#/components/schemas/SystemOneQuestion"
       }
+     },
+     "assets": {
+      "type": "object",
+      "description": "Images keyed by reference string. Every reference must appear in the state, an instruction or a criterion; each appearance adds the image again.",
+      "additionalProperties": {
+       "$ref": "#/components/schemas/SystemOneAsset"
+      }
      }
     },
     "additionalProperties": true
+   },
+   "SystemOneAsset": {
+    "type": "object",
+    "properties": {
+     "type": {
+      "type": "string",
+      "enum": [
+       "image"
+      ]
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "png",
+       "jpg",
+       "jpeg"
+      ],
+      "description": "Required with data_base64."
+     },
+     "data_base64": {
+      "type": "string",
+      "description": "The image file, standard base64 with padding, no data: prefix. PNG or JPEG, 280 to 1568 pixels on each side as measured on 2026-10-16 (TypeSafe documents 256)."
+     },
+     "part": {
+      "type": "string",
+      "description": "In a multipart body, the name of the file part holding the image."
+     }
+    },
+    "additionalProperties": false
    },
    "SystemOneResponse": {
     "type": "object",
@@ -1550,6 +1675,24 @@
         "type": "integer"
        }
       }
+     }
+    },
+    "additionalProperties": true
+   },
+   "SystemOneProviderError": {
+    "type": "object",
+    "description": "TypeSafe's own error body, passed through as written (the channel key and upstream hosts removed).",
+    "properties": {
+     "detail": {
+      "description": "An object with error_type and message, or a list of field errors.",
+      "oneOf": [
+       {
+        "type": "object"
+       },
+       {
+        "type": "array"
+       }
+      ]
      }
     },
     "additionalProperties": true

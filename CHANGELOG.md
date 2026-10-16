@@ -2,6 +2,16 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-16 · Jev 1.14 replaces Jev 1.13, with images and Box questions
+
+`jev-1.14.0` is now the Jev model on `POST /v1/systemone`. The price is unchanged: $0.04494 per 1M input tokens, 107% of TypeSafe's list price of $0.042 checked on [its models page](https://docs.typesafe.ai/models) on October 16, 2026, and output stays free. The old `jev-1.13.0` ID is retired without a forwarding alias; a request for it gets a 403. `jev-latest` and `jev-preview` keep working and are answered by `jev-1.14.0`, so every response now reports `"model": "jev-1.14.0"`. If you tuned thresholds on 1.13, check them again. Unrestricted keys keep working; if a key has an allowed-model list that names `jev-1.13.0`, add `jev-1.14.0` to it, which also covers `jev-latest` and `jev-preview`.
+
+Questions can now look at images. List each PNG or JPEG once in a top-level `assets` map, base64-encoded or as a file part of a `multipart/form-data` request, and write its reference string in the `state`, an instruction or a criterion. The new `box` question type returns where a target is in an image as four edges (`top`, `bottom`, `left`, `right`, fractions of the image) with a confidence. The latest TypeSafe SDKs (Python 0.7.5, JavaScript 0.7.0) upload images as multipart and compress request bodies with zstd; both work against TopxAI's base URL.
+
+TypeSafe labels images and Box experimental, and its API requires the `TypeSafe-Danger-Zone-Images: true` header for them. TopxAI adds the header whenever a request carries an image or a Box question. Image tokens are billed as input tokens at the same price and are included in `usage.input_tokens`: in our October 16 measurements an image cost ceil(width / 28) × ceil(height / 28) × 2 tokens per use, so 1,276 tokens for an 800 × 600 photo.
+
+A System One request may now be up to 32 MiB, with `state` and `questions` together still at most 1 MiB. When TypeSafe rejects a request with a 400 or 413 (for example an image with a side under 280 pixels, which TypeSafe rejects although its docs say 256), its message reaches you as written and nothing is charged, the same as its 422 detail before. The [Jev documentation](jev-typesafe-system-one.md) covers limits, multipart uploads and Box, and the [launch post](https://ai.topxea.com/blog/jev-1-14-images-and-box) has our measurements of Box accuracy and image token counts.
+
 ## 2026-10-02 · Claude Sonnet 5.5 replaces Sonnet 5 at the same prices
 
 Select `claude-sonnet-5-5` on the Claude shared or official route, or with an Auto-route key. The old `claude-sonnet-5` ID is retired and has no forwarding alias. Unrestricted keys can keep using the same key; if a key has an allowed-model list, edit that list to include the new ID.

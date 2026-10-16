@@ -51,12 +51,12 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | `POST /v1/messages` | Anthropic Messages | Claude models |
 | `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.5-sunburst`, `gpt-image-2.5-flare` |
 | `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` | OpenAI Videos | `grok-imagine-video-1.5` |
-| `POST /v1/systemone` | TypeSafe System One | `jev-1.13.0` |
+| `POST /v1/systemone` | TypeSafe System One | `jev-1.14.0` |
 | `GET /v1/models` | OpenAI | the models your key can use |
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-05: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-16: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
@@ -65,7 +65,7 @@ As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-05: 14 models 
 | xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
 | Moonshot AI | [`kimi-k3`](https://ai.topxea.com/pricing/kimi-k3) |
-| TypeSafe | [`jev-1.13.0`](https://ai.topxea.com/pricing/jev-1.13.0) |
+| TypeSafe | [`jev-1.14.0`](https://ai.topxea.com/pricing/jev-1.14.0) |
 | DeepSeek | [`deepseek-flash`](https://ai.topxea.com/pricing/deepseek-flash) · [`deepseek-v4-pro`](https://ai.topxea.com/pricing/deepseek-v4-pro) |
 
 Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). `GLM-5.3-Abliterated` is a fine-tuned GLM 5.3 served from a private deployment rather than Z.ai's API; it is covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
@@ -108,7 +108,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Models
 
-- [Jev (TypeSafe System One)](docs/jev-typesafe-system-one.md) — What Jev returns, how to call POST /v1/systemone, the one-line setup under a TypeSafe official-line key, and what it costs.
+- [Jev (TypeSafe System One)](docs/jev-typesafe-system-one.md) — What Jev 1.14 returns, how to call POST /v1/systemone with text or images, Box questions, the one-line setup for a TypeSafe key, and the price.
 - [GLM-5.3-Abliterated](docs/glm-5-3-abliterated.md) — A fine-tuned GLM 5.3 on a private deployment: text only, 1M-token context, three reasoning modes, priced above list, and covered by a compliance notice.
 - [Image generation](docs/image-generation.md) — gpt-image-2.5-sunburst and -flare: the two endpoints, the 1K and 2K per-image prices, how the size tier is chosen, and where the image link comes from.
 - [Video generation](docs/video-generation.md) — grok-imagine-video-1.5: submit a job, poll it, per-second prices by resolution, refunds on failure, and how forgotten jobs are refunded after 24 hours.
