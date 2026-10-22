@@ -11,7 +11,7 @@ It covers:
 - 3. The model id
 - 4. The key's route and limits
 - 5. The key's IP whitelist
-- 6. Chat-only models and Jev
+- 6. GLM, Kimi and Jev
 - 7. Timeouts, streaming and video
 
 All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs

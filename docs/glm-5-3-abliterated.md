@@ -10,6 +10,7 @@ It covers:
 - Text only
 - Context and output
 - Reasoning
+- Structured output
 - Price
 - Compliance notice
 

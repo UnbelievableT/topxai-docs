@@ -56,7 +56,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-16: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-23: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
@@ -93,7 +93,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 - [LobeChat with TopxAI: the OpenAI proxy address](docs/use-topxai-with-lobechat.md) — Set OpenAI’s API proxy address to https://ai.topxea.com/v1 in LobeChat, or OPENAI_PROXY_URL for a deployment, and fetch the model list.
 - [Cherry Studio with TopxAI: first chat and endpoint setup](docs/use-topxai-with-cherry-studio.md) — Connect a route-scoped TopxAI key to Cherry Studio, choose the right endpoint, and diagnose the first request without guessing URL suffixes.
 - [ChatBox with TopxAI: a custom provider](docs/use-topxai-with-chatbox.md) — In ChatBox, add a custom provider in OpenAI API compatible mode with host https://ai.topxea.com and path /v1/chat/completions, then add the model ids.
-- [LangChain with TopxAI: ChatOpenAI and ChatAnthropic with a base URL](docs/use-topxai-with-langchain.md) — Use TopxAI from LangChain (Python and JavaScript) by passing base_url to ChatOpenAI for every text model, or to ChatAnthropic for Claude with prompt caching.
+- [LangChain with TopxAI: ChatTopxAI from the langchain-topxai package](docs/use-topxai-with-langchain.md) — Call TopxAI chat models from LangChain in Python with ChatTopxAI from langchain-topxai. ChatOpenAI with a base URL still works, also for the Responses API.
 - [Vercel AI SDK with TopxAI: createOpenAI, createAnthropic and openai-compatible](docs/use-topxai-with-vercel-ai-sdk.md) — Create an AI SDK provider with baseURL https://ai.topxea.com/v1 and a TopxAI key, then use generateText or streamText with any catalogue model.
 - [LiteLLM with TopxAI: proxy config and the Python SDK](docs/use-topxai-with-litellm.md) — Route LiteLLM to TopxAI with model openai/<id> and api_base https://ai.topxea.com/v1, in the proxy’s model_list or a completion() call.
 - [Dify with TopxAI: the OpenAI-API-compatible provider](docs/use-topxai-with-dify.md) — Add each TopxAI model to Dify through the OpenAI-API-compatible provider with endpoint https://ai.topxea.com/v1, your key and the model id.

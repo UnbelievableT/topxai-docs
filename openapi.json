@@ -4,7 +4,7 @@
   "title": "TopxAI API",
   "version": "2026-10-16",
   "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
-  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged; parameters not listed here pass through to the provider. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
+  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
   "termsOfService": "https://ai.topxea.com/user-agreement",
   "contact": {
    "name": "TopxAI support",
@@ -41,7 +41,7 @@
   },
   {
    "name": "Anthropic-compatible",
-   "description": "The Messages API for the Claude models, with x-api-key or Authorization: Bearer."
+   "description": "The Messages API for every text model except Jev, with x-api-key or Authorization: Bearer."
   },
   {
    "name": "TypeSafe",
@@ -60,7 +60,7 @@
     ],
     "operationId": "createChatCompletion",
     "summary": "Chat Completions",
-    "description": "OpenAI Chat Completions for every text model except Jev. GLM-5.3-Abliterated, kimi-k3, deepseek-flash and deepseek-v4-pro are served here only. Streaming with stream: true returns server-sent events.",
+    "description": "OpenAI Chat Completions for every text model except Jev. Streaming with stream: true returns server-sent events.",
     "requestBody": {
      "required": true,
      "content": {
@@ -82,7 +82,7 @@
     },
     "responses": {
      "200": {
-      "description": "The provider's chat completion, unchanged; usage carries the token counts the charge was settled from.",
+      "description": "The provider's chat completion, unchanged apart from provider_specific_fields, which some upstream capacity adds and the relay removes; usage carries the token counts the charge was settled from.",
       "content": {
        "application/json": {
         "schema": {
@@ -183,7 +183,7 @@
     },
     "responses": {
      "200": {
-      "description": "The provider's response object, unchanged.",
+      "description": "The provider's response object. instructions, metadata, safety_identifier and prompt_cache_key show the values the request sent, and members no Responses API defines that the upstream adds are removed, in the body and in every stream event.",
       "content": {
        "application/json": {
         "schema": {
@@ -268,7 +268,7 @@
     ],
     "operationId": "createMessage",
     "summary": "Messages",
-    "description": "Anthropic Messages API for the Claude models. Send the key as x-api-key (the Anthropic SDK does) or as a Bearer token; a raw request also needs anthropic-version and max_tokens. Prompt caching (cache_control) is forwarded and billed at the cache-read and cache-write prices.",
+    "description": "Anthropic Messages API for every text model except Jev. Claude models get the request in Anthropic's own format, cache_control included, and prompt caching bills at the cache-read and cache-write prices; the relay sets a missing max_tokens to the model's output limit and drops service_tier, inference_geo and speed. The other models get a conversion and answer in the Messages format: gpt-6.1-sol through the Responses API, the rest through Chat Completions. Send the key as x-api-key (the Anthropic SDK does) or as a Bearer token. Without max_tokens, DeepSeek also gets the model's output limit (cut to what the context window leaves after the prompt) and the other converted models are sent no cap. The Chat Completions conversion keeps cache_control on text, image and document blocks only, and the Responses conversion drops it. On the Chat Completions models a tool_result keeps its text on the tool message and its images move to the following user message, and a tool_result holding a document is a 400; thinking blocks in the history are dropped on gpt-6.1-sol, and redacted_thinking blocks on every converted model; stop_sequences on grok-4.7 is a 400; GLM-5.3-Abliterated takes text only and fails with a 400 on an image or document block.",
     "security": [
      {
       "anthropicKey": []
@@ -281,7 +281,8 @@
      {
       "name": "anthropic-version",
       "in": "header",
-      "required": true,
+      "required": false,
+      "description": "Optional. Claude gets this value, or 2023-06-01 when it is absent; the converted requests do not carry it.",
       "schema": {
        "type": "string",
        "example": "2023-06-01"
@@ -310,7 +311,7 @@
     },
     "responses": {
      "200": {
-      "description": "The provider's message, unchanged.",
+      "description": "The answer as a Messages object: Claude's unchanged, the other models' converted from Chat Completions or Responses.",
       "content": {
        "application/json": {
         "schema": {
@@ -1350,7 +1351,8 @@
       ]
      },
      "instructions": {
-      "type": "string"
+      "type": "string",
+      "description": "The system prompt. When it is missing or blank, input has no system or developer item and no stored prompt is named, gpt-6-astra and gpt-6.1-sol are sent \"You are a helpful assistant.\" so the provider does not add its own longer prompt; the answer still echoes the value the request sent."
      },
      "stream": {
       "type": "boolean"
@@ -1376,20 +1378,15 @@
     "type": "object",
     "required": [
      "model",
-     "max_tokens",
      "messages"
     ],
     "properties": {
      "model": {
-      "type": "string",
-      "enum": [
-       "claude-fable-5-1",
-       "claude-sonnet-5-5",
-       "claude-opus-5-5"
-      ]
+      "$ref": "#/components/schemas/TextModel"
      },
      "max_tokens": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Without it, Claude and DeepSeek get the model's output limit and the other models are sent no cap."
      },
      "messages": {
       "type": "array",
@@ -1413,7 +1410,7 @@
       }
      },
      "system": {
-      "description": "A system prompt as a string or content blocks; TopxAI adds none of its own.",
+      "description": "A system prompt as a string or content blocks. TopxAI adds none of its own, except that a gpt-6.1-sol request without one is sent the instructions \"You are a helpful assistant.\" so the provider does not add its own longer prompt.",
       "oneOf": [
        {
         "type": "string"
