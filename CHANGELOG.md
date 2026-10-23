@@ -2,6 +2,19 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-23 · Claude Sonnet 5.5 cache reads at 50% and 90% of list
+
+Anthropic prices Claude Sonnet 5.5 cache reads at 0.05x the input price, $0.10 per million tokens, which is half of Sonnet 5's rate. When Sonnet 5.5 replaced Sonnet 5 on October 2, TopxAI's price table kept Sonnet 5's $0.20 as the list price, so cache reads cost $0.10 on the shared route and $0.18 on the official route instead of 50% and 90% of list. The table now matches Anthropic. Input, output and cache-write prices do not change, and requests accepted before the change settle at the price they were quoted.
+
+Claude Sonnet 5.5 cache read, USD per million tokens:
+
+| Route | Until October 23 | Now | Share of the $0.10 list price |
+| --- | --- | --- | --- |
+| Shared | $0.10 | $0.05 | 50% |
+| Official | $0.18 | $0.09 | 90% |
+
+Rates follow Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) and [Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview), checked October 23, 2026. Opus 5.5 and Fable 5.1 cache reads were already at 50% and 90% of their list prices. The [model page](https://ai.topxea.com/pricing/claude-sonnet-5-5) lists every lane, and the [usage log](reading-your-usage-log.md) shows cache-read tokens separately from other input.
+
 ## 2026-10-23 · Images in tool results, fairer image and cache billing, and a round of relay fixes
 
 Two relay releases on October 23 change how some requests are converted and billed. No model or price changed, and nothing needs to change on your side. The [blog post](https://ai.topxea.com/blog/relay-fixes-october-2026) explains the larger items.
@@ -60,7 +73,7 @@ Default prices in USD per million tokens, checked against [Anthropic's Sonnet 5.
 | Cache write, 5 minutes | $1.25 | $2.25 | $2.50 |
 | Cache write, 1 hour | $2 | $3.60 | $4 |
 
-All five rates remain unchanged from Sonnet 5. The model supports a 1M-token context and up to 128K output tokens, with no long-context price premium. Accepted requests and historical charges keep their captured prices.
+All five rates remain unchanged from Sonnet 5. (Correction, October 23, 2026: Anthropic lists Sonnet 5.5 cache reads at $0.10, not $0.20, so the cache-read prices above were twice the 50% and 90% shown; they are now $0.05 and $0.09, see [the correction](https://ai.topxea.com/changelog#claude-sonnet-5-5-cache-read-price).) The model supports a 1M-token context and up to 128K output tokens, with no long-context price premium. Accepted requests and historical charges keep their captured prices.
 
 Adaptive thinking defaults to high effort. TopxAI maps legacy disabled-thinking and OpenAI `none` requests to `between_tools` at low effort, and converts manual thinking budgets to effort. Unsupported sampling parameters are removed. Forced tool selection returns a 400 error without a charge; use automatic tool selection. Native thinking signatures and tool-result conversations are preserved.
 
