@@ -2,6 +2,40 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-23 · Images in tool results, fairer image and cache billing, and a round of relay fixes
+
+Two relay releases on October 23 change how some requests are converted and billed. No model or price changed, and nothing needs to change on your side. The [blog post](https://ai.topxea.com/blog/relay-fixes-october-2026) explains the larger items.
+
+Requests that used to fail:
+
+- On `/v1/messages`, an image inside a `tool_result` (a screenshot, an image file Claude Code read) no longer fails with a 400 on Kimi, DeepSeek, GLM and Grok. Its text stays in the tool message and the image moves to the user message that follows. A document inside a `tool_result` is still a 400 on those models.
+- GLM-5.3-Abliterated now gets a note in place of each image or document on `/v1/messages` too, as it already did on `/v1/chat/completions`.
+- Two consecutive assistant messages with tool calls no longer lose the first message's calls when sent to Claude, which Claude answered with a 400.
+- Responses input that ends with the model's own answer (a client retrying a stream) is no longer sent to Claude as a prefill, which Claude 5.x rejects.
+- A Responses tool output made of content parts (text and images) reaches Claude as text and image blocks.
+- Kimi K3 messages that declare tools mid-conversation keep their `tools`.
+- Per-message `output_config` and `safeguards` reach Claude on `/v1/messages`, and every `anthropic-beta` header line is forwarded, not just the first.
+
+Billing:
+
+- A Claude stream whose prompt came entirely from the cache no longer gets an estimate of the prompt added when it ends early.
+- Images are counted by what came back: an entry with only `revised_prompt` is not billed, and one image sent as two entries is billed once. An answer with no image at all is an error and nothing is charged.
+- The cache TTL in `prompt_cache_options` is not forwarded to OpenAI or Kimi, so every cache write is the default kind at the listed cache-write price.
+- A Responses stream that fails after you received output is settled on the usage the failure event reports, when it reports output.
+
+Streams and limits:
+
+- Reasoning items in converted Responses streams always carry `summary`, and answer text that arrives in the same chunk as reasoning is no longer dropped on `/v1/messages`.
+- A slow connection no longer loses a large image event halfway: each stream gets time in proportion to what it has been sent.
+- `gpt-6.1-sol` keeps the order of your JSON Schema properties on Chat Completions.
+- Long Claude Code sessions on Kimi, DeepSeek, GLM and Grok convert much faster: a 400-turn conversation went from about one second to 21 ms.
+- A request body over the size limit answers 413 instead of 400.
+
+Security:
+
+- `/api/usage/token/` and `/api/log/token` now apply the key's IP allow list, as `/v1` does.
+- The relay runs on Go 1.26.10, with the standard library's TLS, certificate and HTTP fixes since 1.26.6, a redirect from https to plain http no longer carries credentials, and a redirect to another host no longer carries the provider key header.
+
 ## 2026-10-16 · Jev 1.14 replaces Jev 1.13, with images and Box questions
 
 `jev-1.14.0` is now the Jev model on `POST /v1/systemone`. The price is unchanged: $0.04494 per 1M input tokens, 107% of TypeSafe's list price of $0.042 checked on [its models page](https://docs.typesafe.ai/models) on October 16, 2026, and output stays free. The old `jev-1.13.0` ID is retired without a forwarding alias; a request for it gets a 403. `jev-latest` and `jev-preview` keep working and are answered by `jev-1.14.0`, so every response now reports `"model": "jev-1.14.0"`. If you tuned thresholds on 1.13, check them again. Unrestricted keys keep working; if a key has an allowed-model list that names `jev-1.13.0`, add `jev-1.14.0` to it, which also covers `jev-latest` and `jev-preview`.
