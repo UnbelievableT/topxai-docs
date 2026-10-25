@@ -2,6 +2,34 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-25 · DeepSeek V4 Pro retired; Abliterated models grouped together
+
+`deepseek-v4-pro` has left the catalogue. New requests for it return HTTP 403 with the public error code `permission_denied`. It no longer appears in the model list or price table, while its [standalone model reference](https://ai.topxea.com/pricing/deepseek-v4-pro) remains available, clearly marked as currently unavailable. The page keeps its historical overview and links to other models; it does not offer a current price or API access. No alias forwards requests to another model.
+
+Past usage records and captured charges remain intact. If a key permits only this model, edit its allowed models before choosing another available model; its permissions are not expanded automatically.
+
+`GLM-5.3-Abliterated` and `deepseek-flash-Abliterated` now appear together under **Abliterated**. Both are private deployments. Their model IDs, routes, prices and capabilities are unchanged: GLM remains on `z-official`, and Flash remains on `deepseek-official`.
+
+## 2026-10-24 · deepseek-flash-Abliterated replaces the old Flash model
+
+Update, 2026-10-25: [deepseek-v4-pro](https://ai.topxea.com/pricing/deepseek-v4-pro) is retired. New requests for that ID return HTTP 403 `permission_denied`; the launch details below are historical.
+
+`deepseek-flash-Abliterated` replaces `deepseek-flash` on the existing `deepseek-official` route. It uses a private deployment, accepts text and images, has a 1,048,576-token context window and supports up to 262,144 output tokens. Chat Completions, stateless Responses and the Messages bridge are supported.
+
+Default prices per million tokens are $1.20 input, $0.15 cache read and $2.40 output, with no peak/off-peak tier or long-context premium. `deepseek-v4-pro` retains its official deployment and 80%-of-list peak/off-peak prices. Accepted requests and historical charges retain their captured prices.
+
+Reasoning effort accepts `none`, `low`, `high` and `max`, with `high` as the default. The old `deepseek-flash` ID returns HTTP 403 and has no alias. Update saved model IDs, output limits and the allowed-model lists of restricted keys. Unrestricted keys and the base URL can stay the same.
+
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. The [Acceptable Use Policy](acceptable-use-and-abuse-reports.md) applies. See the [migration post](https://ai.topxea.com/blog/deepseek-flash-abliterated) for the client changes.
+
+## 2026-10-24 · Kimi K3.1 Pro replaces Kimi K3
+
+The `kimi-official` route now serves `kimi-k3.1-pro`. Replace `kimi-k3` in client settings; the retired ID returns HTTP 403 without a forwarding alias. Keys restricted to specific models need the new ID added explicitly. Unrestricted route keys and the base URL are unchanged.
+
+Default prices per million tokens remain $2.40 input, $0.24 cache read, $2.40 default 5-minute cache write and $12 output. The new [official reference](https://platform.kimi.ai/docs/pricing/chat), checked October 24, 2026, is $2 / $0.20 / $2 / $10 in the same order. TopxAI is therefore 120% of that reference, or 20% higher. No long-context tier is added. Administrator overrides, deliberate deletions and historical charges are preserved.
+
+The context window is 1,048,576 tokens. TopxAI keeps its published output limit at 131,072 tokens to leave room for the prompt. Thinking stays enabled; use `reasoning_effort: "low"`, `"high"` or `"max"` (default). See the [migration guide](https://ai.topxea.com/blog/kimi-k3-1-pro) and [request example](kimi-k3-1-pro.md).
+
 ## 2026-10-23 · Claude Sonnet 5.5 cache reads at 50% and 90% of list
 
 Anthropic prices Claude Sonnet 5.5 cache reads at 0.05x the input price, $0.10 per million tokens, which is half of Sonnet 5's rate. When Sonnet 5.5 replaced Sonnet 5 on October 2, TopxAI's price table kept Sonnet 5's $0.20 as the list price, so cache reads cost $0.10 on the shared route and $0.18 on the official route instead of 50% and 90% of list. The table now matches Anthropic. Input, output and cache-write prices do not change, and requests accepted before the change settle at the price they were quoted.
@@ -16,6 +44,8 @@ Claude Sonnet 5.5 cache read, USD per million tokens:
 Rates follow Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) and [Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview), checked October 23, 2026. Opus 5.5 and Fable 5.1 cache reads were already at 50% and 90% of their list prices. The [model page](https://ai.topxea.com/pricing/claude-sonnet-5-5) lists every lane, and the [usage log](reading-your-usage-log.md) shows cache-read tokens separately from other input.
 
 ## 2026-10-23 · Images in tool results, fairer image and cache billing, and a round of relay fixes
+
+> October 24, 2026 update: `kimi-k3` has been replaced by [Kimi K3.1 Pro](https://ai.topxea.com/blog/kimi-k3-1-pro). Its default TopxAI token prices are unchanged and now equal 120% of the new model’s official reference. Update the model ID and any restricted key allowlist; the old ID returns HTTP 403. The original release record below is preserved.
 
 Two relay releases on October 23 change how some requests are converted and billed. No model or price changed, and nothing needs to change on your side. The [blog post](https://ai.topxea.com/blog/relay-fixes-october-2026) explains the larger items.
 
@@ -238,6 +268,10 @@ The [Codex CLI page](use-topxai-with-codex-cli.md) in the docs now covers the wh
 
 ## 2026-09-22 · DeepSeek V4.1 Flash and V4 Pro join the catalogue, with off-peak and peak hours
 
+Update, 2026-10-25: [deepseek-v4-pro](https://ai.topxea.com/pricing/deepseek-v4-pro) is retired. New requests for that ID return HTTP 403 `permission_denied`; the launch details below are historical.
+
+October 24, 2026 update: `deepseek-flash` has been replaced by the private deployment [deepseek-flash-Abliterated](https://ai.topxea.com/blog/deepseek-flash-abliterated), with a new ID, fixed prices and a 262,144-token output limit. The original launch details below describe the retired model; DeepSeek V4 Pro retains its official peak/off-peak pricing.
+
 A seventh line joins the catalogue.
 
 ## Two DeepSeek models
@@ -276,6 +310,8 @@ The wallet also sells gift cards. Under **Gift cards**, **Buy a gift card** issu
 Usage log rows for images and video now itemize the per-image or per-second charge.
 
 ## 2026-09-18 · GLM-5.3-Abliterated, Kimi K3 and Jev join the catalogue
+
+> October 24, 2026 update: `kimi-k3` has been replaced by [Kimi K3.1 Pro](https://ai.topxea.com/blog/kimi-k3-1-pro). Its default TopxAI token prices are unchanged and now equal 120% of the new model’s official reference. Update the model ID and any restricted key allowlist; the old ID returns HTTP 403. The original release record below is preserved.
 
 Three lines join Claude, OpenAI and Grok.
 

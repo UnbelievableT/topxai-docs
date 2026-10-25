@@ -1,6 +1,6 @@
 # TopxAI vs OpenRouter: what is the same and what differs
 
-> Compare current model and route prices: TopxAI shared routes cost 37.5% to 50% less than OpenRouter standard routes, and Kimi hosts can cost less.
+> Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the current Kimi K3.1 Pro pricing scope.
 
 The full page is on the TopxAI site: https://ai.topxea.com/docs/topxai-vs-openrouter (in Chinese: https://ai.topxea.com/docs/topxai-vs-openrouter?lang=zh).
 

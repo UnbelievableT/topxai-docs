@@ -56,7 +56,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-23: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-25: 13 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
@@ -64,9 +64,9 @@ As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-23: 14 models 
 | OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-image-2.5-flare`](https://ai.topxea.com/pricing/gpt-image-2.5-flare) · [`gpt-image-2.5-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.5-sunburst) |
 | xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
-| Moonshot AI | [`kimi-k3`](https://ai.topxea.com/pricing/kimi-k3) |
+| Moonshot AI | [`kimi-k3.1-pro`](https://ai.topxea.com/pricing/kimi-k3.1-pro) |
 | TypeSafe | [`jev-1.14.0`](https://ai.topxea.com/pricing/jev-1.14.0) |
-| DeepSeek | [`deepseek-flash`](https://ai.topxea.com/pricing/deepseek-flash) · [`deepseek-v4-pro`](https://ai.topxea.com/pricing/deepseek-v4-pro) |
+| DeepSeek | [`deepseek-flash-Abliterated`](https://ai.topxea.com/pricing/deepseek-flash-abliterated) (private deployment) |
 
 Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). `GLM-5.3-Abliterated` is a fine-tuned GLM 5.3 served from a private deployment rather than Z.ai's API; it is covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
 
@@ -74,7 +74,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Getting started
 
-- [What TopxAI is](docs/what-topxai-is.md) — One base URL, fourteen models on seven lines, prepaid USD credit, and nothing you send is stored.
+- [What TopxAI is](docs/what-topxai-is.md) — One base URL, models on seven lines and prepaid USD credit. TopxAI does not store prompts or completions.
 - [Create an API key and choose a route](docs/create-an-api-key-and-choose-a-route.md) — The key drawer step by step, what each route means, and the three 403 refusals a key can hit.
 - [Connect your SDK](docs/connect-your-sdk.md) — The base URL, every endpoint with its auth header, working examples for the OpenAI and Anthropic SDKs, and what each error status means.
 - [API reference: every endpoint, with an OpenAPI specification](docs/api-reference.md) — Every endpoint TopxAI serves, what each accepts and returns, the two ways to send the key, and the OpenAPI 3.1 file at /openapi.json for API tools.
@@ -112,6 +112,8 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 - [GLM-5.3-Abliterated](docs/glm-5-3-abliterated.md) — A fine-tuned GLM 5.3 on a private deployment: text only, 1M-token context, three reasoning modes, priced above list, and covered by a compliance notice.
 - [Image generation](docs/image-generation.md) — gpt-image-2.5-sunburst and -flare: the two endpoints, the 1K and 2K per-image prices, how the size tier is chosen, and where the image link comes from.
 - [Video generation](docs/video-generation.md) — grok-imagine-video-1.5: submit a job, poll it, per-second prices by resolution, refunds on failure, and how forgotten jobs are refunded after 24 hours.
+- [deepseek-flash-Abliterated](docs/deepseek-flash-abliterated.md) — Private deployment with text and image inputs, 1,048,576-token context, 262,144-token output, four reasoning settings and fixed token prices.
+- [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md) — Call kimi-k3.1-pro on TopxAI: model migration, fixed token prices, always-on reasoning, output caps and image-input limits.
 
 ### Payments and credit
 
@@ -127,14 +129,14 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Comparisons
 
-- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare current model and route prices: TopxAI shared routes cost 37.5% to 50% less than OpenRouter standard routes, and Kimi hosts can cost less.
+- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the current Kimi K3.1 Pro pricing scope.
 - [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT, Grok or Kimi go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
 - [TopxAI vs Vercel AI Gateway: list price with no markup, or half of it](docs/topxai-vs-vercel-ai-gateway.md) — Vercel AI Gateway charges the provider list price with no markup; TopxAI shared routes charge 50% of it for Claude, GPT and Grok. What else differs.
 
 ### Privacy and policies
 
 - [What TopxAI stores and what it never stores](docs/what-topxai-stores-and-what-it-never-stores.md) — Request and response content passes through memory only; here is what the usage log, account and payment records keep, and for how long.
-- [Acceptable use and abuse reports](docs/acceptable-use-and-abuse-reports.md) — The six prohibited content categories, how enforcement works, why GLM's private deployment is no exception, and how to report abuse.
+- [Acceptable use and abuse reports](docs/acceptable-use-and-abuse-reports.md) — The six prohibited content categories, how enforcement works, why private deployments are no exception, and how to report abuse.
 
 ## Retention and policies
 

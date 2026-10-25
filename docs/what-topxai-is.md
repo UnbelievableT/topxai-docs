@@ -1,13 +1,13 @@
 # What TopxAI is
 
-> One base URL, fourteen models on seven lines, prepaid USD credit, and nothing you send is stored.
+> One base URL, models on seven lines and prepaid USD credit. TopxAI does not store prompts or completions.
 
 The full page is on the TopxAI site: https://ai.topxea.com/docs/what-topxai-is (in Chinese: https://ai.topxea.com/docs/what-topxai-is?lang=zh).
 
 It covers:
 
 - One endpoint
-- Fourteen models on seven lines
+- Models on seven lines
 - Routes and prices
 - Prepaid USD
 - Zero retention

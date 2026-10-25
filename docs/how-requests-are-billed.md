@@ -8,7 +8,7 @@ It covers:
 
 - Units
 - Long-context tiers
-- Peak hours
+- Historical peak-hour charges
 - Reservation and settlement
 
 All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
