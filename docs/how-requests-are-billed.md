@@ -7,6 +7,7 @@ The full page is on the TopxAI site: https://ai.topxea.com/docs/how-requests-are
 It covers:
 
 - Units
+- Worked example: repeated Claude input
 - Long-context tiers
 - Historical peak-hour charges
 - Reservation and settlement

@@ -9,6 +9,7 @@ It covers:
 - Base URLs
 - Authentication
 - Endpoints
+- Model compatibility and verification
 - Messages requests to other models
 - Status codes
 - Using the specification
