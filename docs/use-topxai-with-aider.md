@@ -6,7 +6,7 @@ The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-
 
 It covers:
 
-- OpenAI-compatible (every text model)
+- OpenAI-compatible chat models
 - Anthropic (Claude, with prompt caching)
 - Model metadata
 - Persisting it
