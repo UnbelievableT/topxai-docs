@@ -2,6 +2,65 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-10-30 · GPT-6.1 Terra joins the OpenAI routes
+
+The OpenAI shared and official routes, and Auto route, now serve `gpt-6.1-terra` next to `gpt-6.1-sol` and `gpt-6-astra`. No model is retired. Route keys without a model restriction can call it with the same key; a key with an allowed-model list needs `gpt-6.1-terra` added to that list.
+
+Default USD prices per million tokens, based on [OpenAI's model page](https://developers.openai.com/api/docs/models/gpt-6.1-terra), checked October 30, 2026:
+
+| Category    | Shared (50%) | Official (90%) | OpenAI Standard |
+| ----------- | ------------ | -------------- | --------------- |
+| Input       | $0.50        | $0.90          | $1              |
+| Output      | $2.50        | $4.50          | $5              |
+| Cache read  | $0.025       | $0.045         | $0.05           |
+| Cache write | $0.625       | $1.125         | $1.25           |
+
+Above 272,000 input tokens, including cache tokens, the whole request uses the long-context tier: input and cache rates double, output rates multiply by 1.5. Cache writes are sold at OpenAI's default 30-minute retention.
+
+The context window is 1,050,000 tokens, of which up to 922,000 can be input, with up to 128,000 output tokens. Input is text or images; output is text. Reasoning levels are `none`, `low`, `medium` (default), `high`, `xhigh` and `max`. Unlike Sol, Terra can turn reasoning off: `none`, and Anthropic-style disabled thinking, reach OpenAI as `none`, and only then are `temperature` and `top_p` forwarded. Terra returns no logprobs at any level: the upstream rejects `top_logprobs` and the logprobs `include`, so TopxAI removes them. Legacy `minimal` becomes `low`. Chat Completions and Anthropic-compatible requests use Responses upstream, because OpenAI serves this model's tool calls only there; the client's response format and tools are kept.
+
+Fixed for every OpenAI model: a 12-hour `ttl` set on a single `prompt_cache_breakpoint` inside `input` was forwarded, so a write the provider prices at twice the default could be billed at the default cache-write price. It is now dropped, like the request-level `ttl` in `prompt_cache_options`, and the breakpoint keeps the default lifetime.
+
+See the [launch post](https://ai.topxea.com/blog/gpt-6-1-terra) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-terra).
+
+## 2026-10-30 · MCP ask_model: room to reason, a reasoning_effort argument, and errors for empty replies
+
+Two relay releases on October 30 change the `ask_model` tool of the TopxAI Models MCP server (`/mcp/models`). Prices and billing rules are unchanged. MCP clients read tool definitions when they connect, so reconnect the server or start a new session to see the new argument.
+
+Reasoning:
+
+- Every text model in the catalogue reasons before it answers, and the reasoning counts toward `max_output_tokens` without being returned. The default is now 8,192 tokens instead of 2,048, and the tool description asks for at least 4,096. With the old default a model could spend the whole budget thinking and write nothing.
+- `ask_model` takes an optional `reasoning_effort`. Each model takes its own set, and `list_models` shows the efforts and the default of each one: `claude-opus-5-5`, for example, takes `low` through `max`, `GLM-5.3-Abliterated` takes `low`, `high` and `max`, and `deepseek-flash-Abliterated` can also turn reasoning off with `none`. The default applies when you leave the argument out. An effort the model does not take is refused before anything is reserved or charged.
+- `max_cost_usd` is checked against the whole `max_output_tokens`, so with the new default the estimate covers 8,192 output tokens. For a tight budget, pass a smaller `max_output_tokens`. The charge still counts only the tokens the model writes.
+
+Empty replies:
+
+- When a model returns no text, `ask_model` now answers with `isError: true` and names the cause: the limit ran out while the model was still reasoning (raise `max_output_tokens` or lower `reasoning_effort`); the model declined, in which case the refusal is quoted and the same prompt sent again is likely to be declined and charged again; or the model stopped without writing anything.
+- The provider still ran the request, so it is charged like the same API call plus the call fee, and `structuredContent` keeps the usage and the exact charge. Before this release such a reply came back as a success, with a text block that lacked its `text` member.
+
+## 2026-10-29 · Claude Opus 5.5 special offer: a low-price line that is often unavailable
+
+**Read this first: the special-offer line is often unavailable, sometimes for long stretches, and its availability is not guaranteed.** On its first day the upstream stopped serving six minutes after the line opened and was still failing every request more than half an hour later. Expect that to happen again. While it is down, requests get HTTP 503 `overloaded_error` and are not charged.
+
+`claude-opus-5-5` now has a separate, temporary route, **Special offer** (`claude-special`), at a much lower fixed price. USD per 1M tokens:
+
+| Lane | Special offer | Shared pool | Anthropic list price |
+| --- | --- | --- | --- |
+| Input | $0.45 | $2.00 | $4.00 |
+| Output | $0.90 | $10.00 | $20.00 |
+| Cache read | $0.10 | $0.10 | $0.20 |
+| Cache write (5 min) | $0.20 | $2.50 | $5.00 |
+| Cache write (1 h) | $0.30 | $4.00 | $8.00 |
+
+- Only a key created on this line uses it. Choose **Special offer** under **Claude** when you create a key, or use **Create a key on this line** on the home-page card. Existing keys and **Auto route** keys never switch to it.
+- It sells Opus 5.5 only; any other model on such a key gets HTTP 403 before anything is charged.
+- There is no fallback. A failed request is not retried on another route, and keys on the line may stop working. Keep a key on the shared pool or the official line for work that has to go through.
+- The line adds its own system prompt to every request. Those tokens are billed like your own, so check your usage log.
+- We guarantee that requests are answered by the official Claude Opus 5.5 model. Speed, quality, feature support and an experience like the official API are not guaranteed.
+- The offer is temporary and can end at short notice.
+
+All terms, the extra-token measurements and Claude Code settings are on the [special-offer page](claude-opus-5-5-special-offer.md).
+
 ## 2026-10-25 · DeepSeek V4 Pro retired; Abliterated models grouped together
 
 `deepseek-v4-pro` has left the catalogue. New requests for it return HTTP 403 with the public error code `permission_denied`. It no longer appears in the model list or price table, while its [standalone model reference](https://ai.topxea.com/pricing/deepseek-v4-pro) remains available, clearly marked as currently unavailable. The page keeps its historical overview and links to other models; it does not offer a current price or API access. No alias forwards requests to another model.

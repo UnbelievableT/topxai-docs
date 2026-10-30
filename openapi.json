@@ -2,9 +2,9 @@
  "openapi": "3.1.0",
  "info": {
   "title": "TopxAI API",
-  "version": "2026-10-25",
+  "version": "2026-10-30",
   "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
-  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
+  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol and gpt-6.1-terra on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
   "termsOfService": "https://ai.topxea.com/user-agreement",
   "contact": {
    "name": "TopxAI support",
@@ -166,7 +166,7 @@
     ],
     "operationId": "createResponse",
     "summary": "Responses",
-    "description": "OpenAI Responses API for gpt-6-astra, gpt-6.1-sol, grok-4.7, kimi-k3.1-pro and deepseek-flash-Abliterated. Codex CLI uses this endpoint; persistent conversation workflows on kimi-k3.1-pro and deepseek-flash-Abliterated have not been verified.",
+    "description": "OpenAI Responses API for gpt-6-astra, gpt-6.1-sol, gpt-6.1-terra, grok-4.7, kimi-k3.1-pro and deepseek-flash-Abliterated. Codex CLI uses this endpoint; persistent conversation workflows on kimi-k3.1-pro and deepseek-flash-Abliterated have not been verified.",
     "requestBody": {
      "required": true,
      "content": {
@@ -268,7 +268,7 @@
     ],
     "operationId": "createMessage",
     "summary": "Messages",
-    "description": "Anthropic Messages API for every text model except Jev. Claude models get the request in Anthropic's own format, cache_control included, and prompt caching bills at the cache-read and cache-write prices; the relay sets a missing max_tokens to the model's output limit and drops service_tier, inference_geo and speed. The other models get a conversion and answer in the Messages format: gpt-6.1-sol through the Responses API, the rest through Chat Completions. Send the key as x-api-key (the Anthropic SDK does) or as a Bearer token. Without max_tokens, deepseek-flash-Abliterated gets 262144 (cut to what the context window leaves after the prompt) and the other converted models are sent no cap. The Chat Completions conversion keeps cache_control on text, image and document blocks only, and the Responses conversion drops it. On the Chat Completions models a tool_result keeps its text on the tool message and its images move to the following user message, and a tool_result holding a document is a 400; thinking blocks in the history are dropped on gpt-6.1-sol, and redacted_thinking blocks on every converted model; stop_sequences on grok-4.7 is a 400; GLM-5.3-Abliterated takes text only: each image or document block reaches it as the note \"[Attachment omitted: this model accepts text only.]\", as on Chat Completions.",
+    "description": "Anthropic Messages API for every text model except Jev. Claude models get the request in Anthropic's own format, cache_control included, and prompt caching bills at the cache-read and cache-write prices; the relay sets a missing max_tokens to the model's output limit and drops service_tier, inference_geo and speed. The other models get a conversion and answer in the Messages format: gpt-6.1-sol and gpt-6.1-terra through the Responses API, the rest through Chat Completions. Send the key as x-api-key (the Anthropic SDK does) or as a Bearer token. Without max_tokens, deepseek-flash-Abliterated gets 262144 (cut to what the context window leaves after the prompt) and the other converted models are sent no cap. The Chat Completions conversion keeps cache_control on text, image and document blocks only, and the Responses conversion drops it. On the Chat Completions models a tool_result keeps its text on the tool message and its images move to the following user message, and a tool_result holding a document is a 400; thinking blocks in the history are dropped on gpt-6.1-sol and gpt-6.1-terra, and redacted_thinking blocks on every converted model; stop_sequences on grok-4.7 is a 400; GLM-5.3-Abliterated takes text only: each image or document block reaches it as the note \"[Attachment omitted: this model accepts text only.]\", as on Chat Completions.",
     "security": [
      {
       "anthropicKey": []
@@ -1159,6 +1159,7 @@
      "claude-opus-5-5",
      "gpt-6-astra",
      "gpt-6.1-sol",
+     "gpt-6.1-terra",
      "grok-4.7",
      "GLM-5.3-Abliterated",
      "kimi-k3.1-pro",
@@ -1332,6 +1333,7 @@
       "enum": [
        "gpt-6-astra",
        "gpt-6.1-sol",
+       "gpt-6.1-terra",
        "grok-4.7",
        "kimi-k3.1-pro",
        "deepseek-flash-Abliterated"
@@ -1353,7 +1355,7 @@
      },
      "instructions": {
       "type": "string",
-      "description": "The system prompt. When it is missing or blank, input has no system or developer item and no stored prompt is named, gpt-6-astra and gpt-6.1-sol are sent \"You are a helpful assistant.\" so the provider does not add its own longer prompt; the answer still echoes the value the request sent."
+      "description": "The system prompt. When it is missing or blank, input has no system or developer item and no stored prompt is named, gpt-6-astra, gpt-6.1-sol and gpt-6.1-terra are sent \"You are a helpful assistant.\" so the provider does not add its own longer prompt; the answer still echoes the value the request sent."
      },
      "stream": {
       "type": "boolean"
@@ -1411,7 +1413,7 @@
       }
      },
      "system": {
-      "description": "A system prompt as a string or content blocks. TopxAI adds none of its own, except that a gpt-6.1-sol request without one is sent the instructions \"You are a helpful assistant.\" so the provider does not add its own longer prompt.",
+      "description": "A system prompt as a string or content blocks. TopxAI adds none of its own, except that a gpt-6.1-sol or gpt-6.1-terra request without one is sent the instructions \"You are a helpful assistant.\" so the provider does not add its own longer prompt.",
       "oneOf": [
        {
         "type": "string"
