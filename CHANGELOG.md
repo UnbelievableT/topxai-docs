@@ -2,6 +2,73 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-11-06 · API key errors now say what is wrong
+
+Until now a request with no API key and one with a wrong key got the same message, `Invalid token`.
+
+Now `/v1` says which it is: `You did not send an API key`, or `This API key is wrong or no longer valid`, each with the address to create or check a key. Both are still a `401`, so clients and SDKs handle them as before. Disabled, expired and used-up keys get the second message. The language follows `Accept-Language`.
+
+With a wrong key, the hosted MCP servers now behave as they do with no key: they connect and list their tools, and a tool call answers HTTP 200 with `isError: true` and the same message. No model runs and nothing is charged.
+
+If your code matches the text `Invalid token`, match the `401` status or the `authentication_error` code instead.
+
+## 2026-11-06 · GPT Image 2.6 replaces GPT Image 2.5
+
+The image route now serves `gpt-image-2.6-sunburst` and `gpt-image-2.6-flare`. They replace `gpt-image-2.5-sunburst` and `gpt-image-2.5-flare`, which return HTTP 403 and are not kept as aliases. Update the `model` value in your requests. A key with an allowed-model list needs the new IDs added to that list.
+
+The 1K and 2K prices do not change: $0.03 and $0.05 per image, for both models. A new 4K tier costs $0.20 per image.
+
+Tiers now follow the longest edge instead of the pixel count: up to 1024 is 1K, up to 2048 is 2K, above that is 4K, up to 3840 per edge. Some sizes move up: 1280x720 was 1K and is now 2K, and 2560x1440 was 2K and is now 4K.
+
+The final charge now follows the image delivered. This line can return another size than the one requested, and most images are currently about 1.5 megapixels, which is the 2K tier. A 4K request is not guaranteed a 4K image and pays the tier it receives; the difference from the amount held is returned.
+
+GIF and SVG output are not available on this route yet. A request for either is refused and nothing is charged. PNG, JPEG and WebP work as before.
+
+See the [image generation guide](image-generation.md) and current prices for [Sunburst](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) and [Flare](https://ai.topxea.com/pricing/gpt-image-2.6-flare).
+
+## 2026-11-06 · MCP servers now answer without a key and say where to get one
+
+Until now a request to a hosted MCP server with no API key got a `401`. A client couldn't see the tools before it had a key, and the error didn't say where to get one.
+
+Now a request with no key can connect. `initialize`, `ping` and `tools/list` answer normally. In `tools/list` the model input is free text, because there is no key to list models for.
+
+Calling a tool still needs a key. Without one, `tools/call` answers HTTP 200 with `isError: true` and a message that says where to sign up and create a key. No model runs and nothing is charged.
+
+A wrong key still gets a `401`. `/v1` still needs a key, and prices and call fees haven't changed.
+
+## 2026-11-01 · Exact numbers in converted tool calls, and a few relay and console fixes
+
+> Corrected on November 1, 2026: the stream item now says what each endpoint does with an unusual `[DONE]` line, and the list of cases that still round is complete.
+
+A relay release on November 1 fixes how some requests are converted, plus two issues in the console. No model or price changed, and nothing needs to change on your side.
+
+Conversion:
+
+- On `/v1/messages`, the arguments of a tool call in a non-streamed answer from a GPT, Grok, Kimi, GLM or DeepSeek model keep their numbers exactly as the model wrote them. Integers above 2^53 and long decimals used to be rounded, so `9007199254740993` arrived as `9007199254740992`. This includes GPT-6.1 Sol and Terra, which answer through the Responses API. Streamed answers already passed the arguments through unchanged.
+- On `/v1/chat/completions`, a `stop` list for a Claude model that holds a non-string item, such as `["END", 1]`, no longer fails with a 500. The string items are sent as stop sequences and the rest is ignored.
+- A bare `[DONE]` line from an upstream, without `data:`, now ends the stream cleanly; `/v1/chat/completions` used to send a broken `data: ]` event first. A line that only starts with `[DONE]` no longer ends the stream: `/v1/messages` now delivers the rest of the answer, and `/v1/chat/completions` passes the line on unchanged.
+- Still rounded: tool input in a non-streamed Claude answer on `/v1/chat/completions`; tool calls in the history of a `/v1/messages` request, whichever model it goes to; and tool calls in the history of a `/v1/chat/completions` request to a Claude model. If such a number must stay exact, send it as a string.
+
+Console and website:
+
+- Chart tooltips show key names and usernames as plain text. The chart library used to insert a tooltip title as HTML, so a name containing HTML tags was rendered as markup.
+- axios and DOMPurify, which the website and console use, are updated to versions with no published security advisories.
+- Signing out no longer shows "Session expired" next to "Signed out".
+
+## 2026-10-30 · Answers no longer carry billing_usage, and Astra drops log probabilities on Responses
+
+A relay release on October 30 fixes two things you could see in answers. No model or price changed.
+
+When the endpoint you call and the protocol of the model's channel differ, the relay converts the answer: Chat Completions or Messages from GPT-6.1 Sol and Terra, which OpenAI serves through Responses; Messages from a Chat Completions channel such as Grok; Chat Completions or Responses from Claude. Those answers used to include `usage.billing_usage`, an internal object holding the channel's original token counts that TopxAI bills on. It no longer appears, in a whole answer or in a stream event. Billing still reads the same counts, so charges do not change. If your code read that object, use the usage fields your endpoint defines; they report the same usage in that endpoint's format.
+
+`gpt-6-astra` on `/v1/responses` with `top_logprobs` was rejected by the upstream with a 400. TopxAI now removes `top_logprobs` and the `message.output_text.logprobs` item of `include` before forwarding, as it already does for `gpt-6.1-terra`, and the answer comes back without log probabilities. Other `include` items, the reasoning effort, `temperature`, `top_p` and the output cap are sent as before.
+
+The four model IDs replaced earlier in October (`claude-sonnet-5`, `jev-1.13.0`, `kimi-k3` and `deepseek-flash`) keep returning HTTP 403. Nothing changes for callers: the relay now treats them like other retired IDs and removes them from channels and price tables at startup.
+
+## 2026-10-30 · Charges follow the usage your answer shows
+
+Some upstream gateways add their own `usage.billing_usage` object to answers they convert. From a second relay release on October 30, TopxAI ignores that object: a request is billed on the usage fields your endpoint returns, and an answer TopxAI converts itself is still billed on the channel's original token counts. The object is also removed before the answer reaches you, on endpoints TopxAI passes through unchanged as well. Prices did not change.
+
 ## 2026-10-30 · GPT-6.1 Terra joins the OpenAI routes
 
 The OpenAI shared and official routes, and Auto route, now serve `gpt-6.1-terra` next to `gpt-6.1-sol` and `gpt-6-astra`. No model is retired. Route keys without a model restriction can call it with the same key; a key with an allowed-model list needs `gpt-6.1-terra` added to that list.
@@ -37,6 +104,10 @@ Empty replies:
 
 - When a model returns no text, `ask_model` now answers with `isError: true` and names the cause: the limit ran out while the model was still reasoning (raise `max_output_tokens` or lower `reasoning_effort`); the model declined, in which case the refusal is quoted and the same prompt sent again is likely to be declined and charged again; or the model stopped without writing anything.
 - The provider still ran the request, so it is charged like the same API call plus the call fee, and `structuredContent` keeps the usage and the exact charge. Before this release such a reply came back as a success, with a text block that lacked its `text` member.
+
+## 2026-10-30 · Usage tags from upstreams no longer change billing
+
+Some upstream gateways tag the usage they return with `usage_semantic` and `usage_source`. A tag of `"anthropic"` says the input count leaves cached tokens out, so the cached part of an OpenAI-format answer would bill once as input and again as a cache read. TopxAI now ignores these tags in upstream answers and reads usage by the endpoint's own format: on Chat Completions and Responses, cached tokens are part of the input count and are billed once, at the cache-read price where the model has one. Production logs from the past 30 days show no request billed the other way, so this fix is preventive. Prices did not change.
 
 ## 2026-10-29 · Claude Opus 5.5 special offer: a low-price line that is often unavailable
 

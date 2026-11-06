@@ -49,19 +49,19 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | `POST /v1/chat/completions` | OpenAI Chat Completions | every text model except Jev |
 | `POST /v1/responses` | OpenAI Responses | `gpt-6-astra`, `gpt-6.1-sol`, `gpt-6.1-terra`, `grok-4.7`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated` |
 | `POST /v1/messages` | Anthropic Messages | every text model except Jev |
-| `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.5-sunburst`, `gpt-image-2.5-flare` |
+| `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.6-sunburst`, `gpt-image-2.6-flare` |
 | `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` | OpenAI Videos | `grok-imagine-video-1.5` |
 | `POST /v1/systemone` | TypeSafe System One | `jev-1.14.0` |
 | `GET /v1/models` | OpenAI | the models your key can use |
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-10-30: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-11-06: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
 | Anthropic | [`claude-fable-5-1`](https://ai.topxea.com/pricing/claude-fable-5-1) · [`claude-opus-5-5`](https://ai.topxea.com/pricing/claude-opus-5-5) · [`claude-sonnet-5-5`](https://ai.topxea.com/pricing/claude-sonnet-5-5) |
-| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://ai.topxea.com/pricing/gpt-6.1-terra) · [`gpt-image-2.5-flare`](https://ai.topxea.com/pricing/gpt-image-2.5-flare) · [`gpt-image-2.5-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.5-sunburst) |
+| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://ai.topxea.com/pricing/gpt-6.1-terra) · [`gpt-image-2.6-flare`](https://ai.topxea.com/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) |
 | xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
 | Moonshot AI | [`kimi-k3.1-pro`](https://ai.topxea.com/pricing/kimi-k3.1-pro) |
@@ -110,7 +110,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 - [Jev (TypeSafe System One)](docs/jev-typesafe-system-one.md) — What Jev 1.14 returns, how to call POST /v1/systemone with text or images, Box questions, the one-line setup for a TypeSafe key, and the price.
 - [GLM-5.3-Abliterated](docs/glm-5-3-abliterated.md) — A fine-tuned GLM 5.3 on a private deployment: text only, 1M-token context, three reasoning modes, priced above list, and covered by a compliance notice.
-- [Image generation](docs/image-generation.md) — gpt-image-2.5-sunburst and -flare: the two endpoints, the 1K and 2K per-image prices, how the size tier is chosen, and where the image link comes from.
+- [Image generation](docs/image-generation.md) — gpt-image-2.6-sunburst and -flare: the two endpoints, the 1K, 2K and 4K per-image prices, how the size tier is chosen, and where the image link comes from.
 - [Video generation](docs/video-generation.md) — grok-imagine-video-1.5: submit a job, poll it, per-second prices by resolution, refunds on failure, and how forgotten jobs are refunded after 24 hours.
 - [deepseek-flash-Abliterated](docs/deepseek-flash-abliterated.md) — Private deployment with text and image inputs, 1,048,576-token context, 262,144-token output, four reasoning settings and fixed token prices.
 - [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md) — Call kimi-k3.1-pro on TopxAI: model migration, fixed token prices, always-on reasoning, output caps and image-input limits.
