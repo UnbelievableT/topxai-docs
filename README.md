@@ -1,6 +1,6 @@
 # TopxAI — one API endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev
 
-[TopxAI](https://ai.topxea.com) is the model API service run by [TopXEA](https://topxea.com). Claude, GPT, Grok, GLM, Kimi, DeepSeek and TypeSafe's Jev are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
+[TopxAI](https://ai.topxea.com?utm_source=github&utm_medium=readme&utm_campaign=topxai-docs) is the model API service run by [TopXEA](https://topxea.com). Claude, GPT, Grok, GLM, Kimi, DeepSeek and TypeSafe's Jev are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
 
 This repository indexes the public documentation: each page under [docs/](docs/) summarizes a page of **https://ai.topxea.com/docs**, where the full text is published in English and Chinese.
 
