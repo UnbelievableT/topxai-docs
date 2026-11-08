@@ -1,6 +1,6 @@
 # TopxAI vs the providers' own APIs: price, retention and what stays direct
 
-> What changes when Claude, GPT, Grok or Kimi go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
+> What changes when Claude, GPT or Grok go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
 
 The full page is on the TopxAI site: https://ai.topxea.com/docs/topxai-vs-the-providers-own-apis (in Chinese: https://ai.topxea.com/docs/topxai-vs-the-providers-own-apis?lang=zh).
 

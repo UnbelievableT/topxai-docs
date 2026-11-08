@@ -2,6 +2,47 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-11-08 · Two new models, and new prices on the GLM, DeepSeek and Kimi lines
+
+The catalogue now has 16 built-in models on seven lines. Two models join, and three existing models change price and default reasoning. Model IDs, route IDs and the base URL stay the same. Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment, not the provider's own API, at fixed prices that are the same at every hour, with no long-context tier and no cache-write lane on the main deployment.
+
+## New models
+
+- `GLM-5.3-Flash-Abliterated` on the GLM line (`z-official`): Z.ai's GLM-5.3-Flash with the refusal alignment removed, cheaper and faster than GLM-5.3-Abliterated. Text and images, a 1,048,576-token context and up to 131,072 output tokens, on Chat Completions and Responses (Messages through the conversion). $0.24 input, $0.08 cache read and $1.00 output per million tokens.
+- `deepseek-flash-fast` on the DeepSeek line (`deepseek-official`): DeepSeek V4.1 Flash 1017, the current version, on standard weights. It is not abliterated and keeps the base model's refusal behaviour. Text and images, a 1,048,576-token context and up to 262,144 output tokens, on Chat Completions and Responses. $0.02 input, $0.004 cache read and $0.16 output per million tokens.
+
+## New prices
+
+USD per million tokens, input / cache read / output:
+
+| Model                        | Now                   | Before                                         |
+| ---------------------------- | --------------------- | ---------------------------------------------- |
+| `GLM-5.3-Abliterated`        | $2.00 / $0.30 / $4.00 | $4.00 / $0.40 / $7.00                          |
+| `deepseek-flash-Abliterated` | $0.28 / $0.07 / $1.00 | $1.20 / $0.15 / $2.40                          |
+| `kimi-k3.1-pro`              | $0.50 / $0.30 / $5.00 | $2.40 / $0.24 / $12.00, plus $2.40 cache write |
+
+Kimi's cache read rises from $0.24 to $0.30, and its main deployment has no cache-write lane: cache writes are no longer billed separately there. Kimi K3.1 Pro now runs on a private deployment instead of Moonshot's own API, and that deployment adds a system prompt of about 100 input tokens to each request, billed as input. Accepted requests and historical charges keep the prices captured when they were accepted.
+
+`deepseek-flash-Abliterated` now writes at most 131,072 output tokens. A saved configuration that asks for more needs a lower cap.
+
+## Backup deployment
+
+`GLM-5.3-Abliterated`, `deepseek-flash-Abliterated` and `kimi-k3.1-pro` each run on two deployments, the second a costlier standby. If the main deployment fails before answering, a request may move to the standby automatically; this is rare, and that request is billed at the backup price, which equals the price before this change: $4.00 / $0.40 / $7.00 for GLM-5.3-Abliterated, $1.20 / $0.15 / $2.40 for deepseek-flash-Abliterated, and $2.40 / $0.24 / $12.00 plus $2.40 for five-minute cache writes for kimi-k3.1-pro (input / cache read / output per million tokens). Its usage-log entry is marked **Backup deployment** and shows those rates, and the price tables list them in a **Backup deployment** row. `GLM-5.3-Flash-Abliterated` and `deepseek-flash-fast` have no standby: if their deployment fails, the request fails and is not charged.
+
+## Reasoning defaults
+
+The default reasoning effort becomes `low` on `GLM-5.3-Abliterated` (was `max`), `deepseek-flash-Abliterated` (was `high`) and `kimi-k3.1-pro` (was `max`), as on the two new models. To keep the old depth, send `reasoning_effort`, or `reasoning.effort` on Responses. Any OpenAI value is accepted: `minimal` runs as `low`, `medium` as `high` and `xhigh` as `max`. Only the two DeepSeek models turn reasoning off with `none`; the GLM models and Kimi run it as `low`.
+
+## Known limits
+
+On all five models `n` is not supported (one choice is returned and billed once) and `logprobs` are not returned. `GLM-5.3-Flash-Abliterated`, `deepseek-flash-fast` and `kimi-k3.1-pro` read images only as base64 data URLs: an http(s) image URL is not fetched, the model answers that it cannot see the image, and the request is still billed. `deepseek-flash-fast` and `kimi-k3.1-pro` ignore `stop`, a `json_schema` response format (`json_object` works), `tool_choice` set to `"none"` or `"required"`, and `parallel_tool_calls: false`; a `tool_choice` that names one function works. The model guides list the details.
+
+## Restricted keys
+
+Keys limited to specific model IDs do not gain the new models automatically. Add `GLM-5.3-Flash-Abliterated` or `deepseek-flash-fast` to the key's **Model limits** to use them. Keys without model limits need no change.
+
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated` and `deepseek-flash-Abliterated`; the [Acceptable Use Policy](acceptable-use-and-abuse-reports.md) applies to every model. See the guides for the [GLM models](glm-5-3-abliterated.md), the [DeepSeek models](deepseek-flash-abliterated.md) and [Kimi K3.1 Pro](kimi-k3-1-pro.md).
+
 ## 2026-11-06 · API key errors now say what is wrong
 
 Until now a request with no API key and one with a wrong key got the same message, `Invalid token`.

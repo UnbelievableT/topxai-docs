@@ -47,7 +47,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | Path | Dialect | Models |
 | --- | --- | --- |
 | `POST /v1/chat/completions` | OpenAI Chat Completions | every text model except Jev |
-| `POST /v1/responses` | OpenAI Responses | `gpt-6-astra`, `gpt-6.1-sol`, `gpt-6.1-terra`, `grok-4.7`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated` |
+| `POST /v1/responses` | OpenAI Responses | `gpt-6-astra`, `gpt-6.1-sol`, `gpt-6.1-terra`, `grok-4.7`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated`, `deepseek-flash-fast` |
 | `POST /v1/messages` | Anthropic Messages | every text model except Jev |
 | `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.6-sunburst`, `gpt-image-2.6-flare` |
 | `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` | OpenAI Videos | `grok-imagine-video-1.5` |
@@ -56,25 +56,25 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-11-06: 14 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://ai.topxea.com/api/pricing` listed them on 2026-11-08: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
 | Anthropic | [`claude-fable-5-1`](https://ai.topxea.com/pricing/claude-fable-5-1) · [`claude-opus-5-5`](https://ai.topxea.com/pricing/claude-opus-5-5) · [`claude-sonnet-5-5`](https://ai.topxea.com/pricing/claude-sonnet-5-5) |
 | OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://ai.topxea.com/pricing/gpt-6.1-terra) · [`gpt-image-2.6-flare`](https://ai.topxea.com/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) |
 | xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
-| Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) |
-| Moonshot AI | [`kimi-k3.1-pro`](https://ai.topxea.com/pricing/kimi-k3.1-pro) |
+| Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) · [`GLM-5.3-Flash-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-flash-abliterated) (private deployment) |
+| Moonshot AI | [`kimi-k3.1-pro`](https://ai.topxea.com/pricing/kimi-k3.1-pro) (private deployment) |
 | TypeSafe | [`jev-1.14.0`](https://ai.topxea.com/pricing/jev-1.14.0) |
-| DeepSeek | [`deepseek-flash-Abliterated`](https://ai.topxea.com/pricing/deepseek-flash-abliterated) (private deployment) |
+| DeepSeek | [`deepseek-flash-Abliterated`](https://ai.topxea.com/pricing/deepseek-flash-abliterated) (private deployment) · [`deepseek-flash-fast`](https://ai.topxea.com/pricing/deepseek-flash-fast) (private deployment) |
 
-Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). `GLM-5.3-Abliterated` is a fine-tuned GLM 5.3 served from a private deployment rather than Z.ai's API; it is covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
+Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment rather than the provider's own API, at fixed prices that are the same at every hour; the two GLM models and `deepseek-flash-Abliterated` have the refusal alignment removed, and `deepseek-flash-fast` runs the standard weights. They are covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
 
 ## Documentation
 
 ### Getting started
 
-- [What TopxAI is](docs/what-topxai-is.md) — One base URL, models on seven lines and prepaid USD credit. TopxAI does not store prompts or completions.
+- [What TopxAI is](docs/what-topxai-is.md) — One base URL, 16 models on seven lines and prepaid USD credit. TopxAI does not store prompts or completions.
 - [Create an API key and choose a route](docs/create-an-api-key-and-choose-a-route.md) — The key drawer step by step, what each route means, and the three 403 refusals a key can hit.
 - [Connect your SDK](docs/connect-your-sdk.md) — The base URL, every endpoint with its auth header, working examples for the OpenAI and Anthropic SDKs, and what each error status means.
 - [API reference: every endpoint, with an OpenAPI specification](docs/api-reference.md) — Every endpoint TopxAI serves, what each accepts and returns, the two ways to send the key, and the OpenAPI 3.1 file at /openapi.json for API tools.
@@ -109,11 +109,11 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 ### Models
 
 - [Jev (TypeSafe System One)](docs/jev-typesafe-system-one.md) — What Jev 1.14 returns, how to call POST /v1/systemone with text or images, Box questions, the one-line setup for a TypeSafe key, and the price.
-- [GLM-5.3-Abliterated](docs/glm-5-3-abliterated.md) — A fine-tuned GLM 5.3 on a private deployment: text only, 1M-token context, three reasoning modes, priced above list, and covered by a compliance notice.
-- [Image generation](docs/image-generation.md) — gpt-image-2.6-sunburst and -flare: the two endpoints, the 1K, 2K and 4K per-image prices, how the size tier is chosen, and where the image link comes from.
+- [GLM-5.3-Abliterated and GLM-5.3-Flash-Abliterated](docs/glm-5-3-abliterated.md) — The two GLM models on a private deployment: text-only GLM-5.3-Abliterated and the faster GLM-5.3-Flash-Abliterated with images. Reasoning, limits, prices.
+- [Image generation](docs/image-generation.md) — gpt-image-2.6-sunburst and -flare: the two endpoints, the 1K and 2K per-image prices, how the size tier is chosen, and where the image link comes from.
 - [Video generation](docs/video-generation.md) — grok-imagine-video-1.5: submit a job, poll it, per-second prices by resolution, refunds on failure, and how forgotten jobs are refunded after 24 hours.
-- [deepseek-flash-Abliterated](docs/deepseek-flash-abliterated.md) — Private deployment with text and image inputs, 1,048,576-token context, 262,144-token output, four reasoning settings and fixed token prices.
-- [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md) — Call kimi-k3.1-pro on TopxAI: model migration, fixed token prices, always-on reasoning, output caps and image-input limits.
+- [deepseek-flash-Abliterated and deepseek-flash-fast](docs/deepseek-flash-abliterated.md) — The two DeepSeek V4.1 Flash 1017 models on a private deployment, abliterated or on standard weights: limits, four reasoning settings and fixed prices.
+- [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md) — Call kimi-k3.1-pro on TopxAI: a private deployment with fixed token prices, always-on reasoning (default low), output caps, and image and parameter limits.
 - [Claude Opus 5.5 special offer](docs/claude-opus-5-5-special-offer.md) — A temporary, low-priced Claude Opus 5.5 line that is often unavailable: prices, how to create a key for it, the extra tokens it adds and its terms.
 
 ### Payments and credit
@@ -130,8 +130,8 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Comparisons
 
-- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the current Kimi K3.1 Pro pricing scope.
-- [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT, Grok or Kimi go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
+- [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the scope of the private-deployment prices.
+- [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT or Grok go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
 - [TopxAI vs Vercel AI Gateway: list price with no markup, or half of it](docs/topxai-vs-vercel-ai-gateway.md) — Vercel AI Gateway charges the provider list price with no markup; TopxAI shared routes charge 50% of it for Claude, GPT and Grok. What else differs.
 
 ### Privacy and policies
