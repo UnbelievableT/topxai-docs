@@ -2,6 +2,18 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-11-09 · Automatic backup switching with a visible countdown
+
+Text routes with a configured backup now start a fixed 15-minute observation period after three consecutive upstream failures. Eligible failed requests can retry the backup immediately; after the deadline, new requests prefer the backup until the primary recovers.
+
+The console and model pages show the line state and countdown. Failures are tracked by model and protocol, so one model's failure does not disable its channel's other models. Invalid parameters, content refusals and client cancellations do not count.
+
+Recovery uses real requests at controlled intervals, with a longer wait after another failure. Two primary successes at least 30 seconds apart restore primary preference. No new scheduled model probes are added, and idle routes generate no recovery requests. An existing scheduled check may also confirm recovery for the model and protocol it actually checked.
+
+Requests already streaming keep their original connection. The existing retry and billing rules still apply; switching adds no separate fee. This policy covers Chat Completions, Messages and Responses, where a backup is configured; image and video tasks are unchanged.
+
+See [the route guide](docs/create-an-api-key-and-choose-a-route.md) for the full behavior and limitations.
+
 ## 2026-11-08 · Two new models, and new prices on the GLM, DeepSeek and Kimi lines
 
 The catalogue now has 16 built-in models on seven lines. Two models join, and three existing models change price and default reasoning. Model IDs, route IDs and the base URL stay the same. Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment, not the provider's own API, at fixed prices that are the same at every hour, with no long-context tier and no cache-write lane on the main deployment.
@@ -41,7 +53,7 @@ On all five models `n` is not supported (one choice is returned and billed once)
 
 Keys limited to specific model IDs do not gain the new models automatically. Add `GLM-5.3-Flash-Abliterated` or `deepseek-flash-fast` to the key's **Model limits** to use them. Keys without model limits need no change.
 
-Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated` and `deepseek-flash-Abliterated`; the [Acceptable Use Policy](acceptable-use-and-abuse-reports.md) applies to every model. See the guides for the [GLM models](glm-5-3-abliterated.md), the [DeepSeek models](deepseek-flash-abliterated.md) and [Kimi K3.1 Pro](kimi-k3-1-pro.md).
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated` and `deepseek-flash-Abliterated`; the [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies to every model. See the guides for the [GLM models](docs/glm-5-3-abliterated.md), the [DeepSeek models](docs/deepseek-flash-abliterated.md) and [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md).
 
 ## 2026-11-06 · API key errors now say what is wrong
 
@@ -65,7 +77,7 @@ The final charge now follows the image delivered. This line can return another s
 
 GIF and SVG output are not available on this route yet. A request for either is refused and nothing is charged. PNG, JPEG and WebP work as before.
 
-See the [image generation guide](image-generation.md) and current prices for [Sunburst](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) and [Flare](https://ai.topxea.com/pricing/gpt-image-2.6-flare).
+See the [image generation guide](docs/image-generation.md) and current prices for [Sunburst](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) and [Flare](https://ai.topxea.com/pricing/gpt-image-2.6-flare).
 
 ## 2026-11-06 · MCP servers now answer without a key and say where to get one
 
@@ -156,13 +168,13 @@ Some upstream gateways tag the usage they return with `usage_semantic` and `usag
 
 `claude-opus-5-5` now has a separate, temporary route, **Special offer** (`claude-special`), at a much lower fixed price. USD per 1M tokens:
 
-| Lane | Special offer | Shared pool | Anthropic list price |
-| --- | --- | --- | --- |
-| Input | $0.45 | $2.00 | $4.00 |
-| Output | $0.90 | $10.00 | $20.00 |
-| Cache read | $0.10 | $0.10 | $0.20 |
-| Cache write (5 min) | $0.20 | $2.50 | $5.00 |
-| Cache write (1 h) | $0.30 | $4.00 | $8.00 |
+| Lane                | Special offer | Shared pool | Anthropic list price |
+| ------------------- | ------------- | ----------- | -------------------- |
+| Input               | $0.45         | $2.00       | $4.00                |
+| Output              | $0.90         | $10.00      | $20.00               |
+| Cache read          | $0.10         | $0.10       | $0.20                |
+| Cache write (5 min) | $0.20         | $2.50       | $5.00                |
+| Cache write (1 h)   | $0.30         | $4.00       | $8.00                |
 
 - Only a key created on this line uses it. Choose **Special offer** under **Claude** when you create a key, or use **Create a key on this line** on the home-page card. Existing keys and **Auto route** keys never switch to it.
 - It sells Opus 5.5 only; any other model on such a key gets HTTP 403 before anything is charged.
@@ -171,7 +183,7 @@ Some upstream gateways tag the usage they return with `usage_semantic` and `usag
 - We guarantee that requests are answered by the official Claude Opus 5.5 model. Speed, quality, feature support and an experience like the official API are not guaranteed.
 - The offer is temporary and can end at short notice.
 
-All terms, the extra-token measurements and Claude Code settings are on the [special-offer page](claude-opus-5-5-special-offer.md).
+All terms, the extra-token measurements and Claude Code settings are on the [special-offer page](docs/claude-opus-5-5-special-offer.md).
 
 ## 2026-10-25 · DeepSeek V4 Pro retired; Abliterated models grouped together
 
@@ -191,7 +203,7 @@ Default prices per million tokens are $1.20 input, $0.15 cache read and $2.40 ou
 
 Reasoning effort accepts `none`, `low`, `high` and `max`, with `high` as the default. The old `deepseek-flash` ID returns HTTP 403 and has no alias. Update saved model IDs, output limits and the allowed-model lists of restricted keys. Unrestricted keys and the base URL can stay the same.
 
-Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. The [Acceptable Use Policy](acceptable-use-and-abuse-reports.md) applies. See the [migration post](https://ai.topxea.com/blog/deepseek-flash-abliterated) for the client changes.
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. The [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies. See the [migration post](https://ai.topxea.com/blog/deepseek-flash-abliterated) for the client changes.
 
 ## 2026-10-24 · Kimi K3.1 Pro replaces Kimi K3
 
@@ -199,7 +211,7 @@ The `kimi-official` route now serves `kimi-k3.1-pro`. Replace `kimi-k3` in clien
 
 Default prices per million tokens remain $2.40 input, $0.24 cache read, $2.40 default 5-minute cache write and $12 output. The new [official reference](https://platform.kimi.ai/docs/pricing/chat), checked October 24, 2026, is $2 / $0.20 / $2 / $10 in the same order. TopxAI is therefore 120% of that reference, or 20% higher. No long-context tier is added. Administrator overrides, deliberate deletions and historical charges are preserved.
 
-The context window is 1,048,576 tokens. TopxAI keeps its published output limit at 131,072 tokens to leave room for the prompt. Thinking stays enabled; use `reasoning_effort: "low"`, `"high"` or `"max"` (default). See the [migration guide](https://ai.topxea.com/blog/kimi-k3-1-pro) and [request example](kimi-k3-1-pro.md).
+The context window is 1,048,576 tokens. TopxAI keeps its published output limit at 131,072 tokens to leave room for the prompt. Thinking stays enabled; use `reasoning_effort: "low"`, `"high"` or `"max"` (default). See the [migration guide](https://ai.topxea.com/blog/kimi-k3-1-pro) and [request example](docs/kimi-k3-1-pro.md).
 
 ## 2026-10-23 · Claude Sonnet 5.5 cache reads at 50% and 90% of list
 
@@ -207,12 +219,12 @@ Anthropic prices Claude Sonnet 5.5 cache reads at 0.05x the input price, $0.10 p
 
 Claude Sonnet 5.5 cache read, USD per million tokens:
 
-| Route | Until October 23 | Now | Share of the $0.10 list price |
-| --- | --- | --- | --- |
-| Shared | $0.10 | $0.05 | 50% |
-| Official | $0.18 | $0.09 | 90% |
+| Route    | Until October 23 | Now   | Share of the $0.10 list price |
+| -------- | ---------------- | ----- | ----------------------------- |
+| Shared   | $0.10            | $0.05 | 50%                           |
+| Official | $0.18            | $0.09 | 90%                           |
 
-Rates follow Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) and [Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview), checked October 23, 2026. Opus 5.5 and Fable 5.1 cache reads were already at 50% and 90% of their list prices. The [model page](https://ai.topxea.com/pricing/claude-sonnet-5-5) lists every lane, and the [usage log](reading-your-usage-log.md) shows cache-read tokens separately from other input.
+Rates follow Anthropic's [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) and [Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview), checked October 23, 2026. Opus 5.5 and Fable 5.1 cache reads were already at 50% and 90% of their list prices. The [model page](https://ai.topxea.com/pricing/claude-sonnet-5-5) lists every lane, and the [usage log](docs/reading-your-usage-log.md) shows cache-read tokens separately from other input.
 
 ## 2026-10-23 · Images in tool results, fairer image and cache billing, and a round of relay fixes
 
@@ -258,7 +270,7 @@ Questions can now look at images. List each PNG or JPEG once in a top-level `ass
 
 TypeSafe labels images and Box experimental, and its API requires the `TypeSafe-Danger-Zone-Images: true` header for them. TopxAI adds the header whenever a request carries an image or a Box question. Image tokens are billed as input tokens at the same price and are included in `usage.input_tokens`: in our October 16 measurements an image cost ceil(width / 28) × ceil(height / 28) × 2 tokens per use, so 1,276 tokens for an 800 × 600 photo.
 
-A System One request may now be up to 32 MiB, with `state` and `questions` together still at most 1 MiB. When TypeSafe rejects a request with a 400 or 413 (for example an image with a side under 280 pixels, which TypeSafe rejects although its docs say 256), its message reaches you as written and nothing is charged, the same as its 422 detail before. The [Jev documentation](jev-typesafe-system-one.md) covers limits, multipart uploads and Box, and the [launch post](https://ai.topxea.com/blog/jev-1-14-images-and-box) has our measurements of Box accuracy and image token counts.
+A System One request may now be up to 32 MiB, with `state` and `questions` together still at most 1 MiB. When TypeSafe rejects a request with a 400 or 413 (for example an image with a side under 280 pixels, which TypeSafe rejects although its docs say 256), its message reaches you as written and nothing is charged, the same as its 422 detail before. The [Jev documentation](docs/jev-typesafe-system-one.md) covers limits, multipart uploads and Box, and the [launch post](https://ai.topxea.com/blog/jev-1-14-images-and-box) has our measurements of Box accuracy and image token counts.
 
 ## 2026-10-02 · Claude Sonnet 5.5 replaces Sonnet 5 at the same prices
 
@@ -266,19 +278,19 @@ Select `claude-sonnet-5-5` on the Claude shared or official route, or with an Au
 
 Default prices in USD per million tokens, checked against [Anthropic's Sonnet 5.5 model page](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) on October 2, 2026:
 
-| Category | Shared (50%) | Official (90%) | Anthropic list |
-| --- | --- | --- | --- |
-| Input | $1 | $1.80 | $2 |
-| Output | $5 | $9 | $10 |
-| Cache read | $0.10 | $0.18 | $0.20 |
-| Cache write, 5 minutes | $1.25 | $2.25 | $2.50 |
-| Cache write, 1 hour | $2 | $3.60 | $4 |
+| Category               | Shared (50%) | Official (90%) | Anthropic list |
+| ---------------------- | ------------ | -------------- | -------------- |
+| Input                  | $1           | $1.80          | $2             |
+| Output                 | $5           | $9             | $10            |
+| Cache read             | $0.10        | $0.18          | $0.20          |
+| Cache write, 5 minutes | $1.25        | $2.25          | $2.50          |
+| Cache write, 1 hour    | $2           | $3.60          | $4             |
 
 All five rates remain unchanged from Sonnet 5. (Correction, October 23, 2026: Anthropic lists Sonnet 5.5 cache reads at $0.10, not $0.20, so the cache-read prices above were twice the 50% and 90% shown; they are now $0.05 and $0.09, see [the correction](https://ai.topxea.com/changelog#claude-sonnet-5-5-cache-read-price).) The model supports a 1M-token context and up to 128K output tokens, with no long-context price premium. Accepted requests and historical charges keep their captured prices.
 
 Adaptive thinking defaults to high effort. TopxAI maps legacy disabled-thinking and OpenAI `none` requests to `between_tools` at low effort, and converts manual thinking budgets to effort. Unsupported sampling parameters are removed. Forced tool selection returns a 400 error without a charge; use automatic tool selection. Native thinking signatures and tool-result conversations are preserved.
 
-See the [migration post](https://ai.topxea.com/blog/claude-sonnet-5-5) for supported settings, and the [Claude Code guide](use-topxai-with-claude-code.md) for the model variables to update. Provider-native computer-use clients need Anthropic's new toolset format, described in its [migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide).
+See the [migration post](https://ai.topxea.com/blog/claude-sonnet-5-5) for supported settings, and the [Claude Code guide](docs/use-topxai-with-claude-code.md) for the model variables to update. Provider-native computer-use clients need Anthropic's new toolset format, described in its [migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide).
 
 During the October 2 supplier checks, some `between_tools` requests returned 502, including `medium` on both routes and OpenAI `none` on the official route. Adaptive mode with explicit `low` effort passed on both routes: use `thinking: {"type":"adaptive"}` with `output_config: {"effort":"low"}` for Messages, or `reasoning_effort: "low"` for Chat Completions, when it fits your task. Adaptive mode can still think before answering, and those tokens are billed as output. TopxAI preserves the requested mode rather than silently substituting another one.
 
@@ -299,11 +311,11 @@ Cache reads cost half as much as on GPT-6 Sol; the other standard rates are unch
 
 The context window remains 1,050,000 tokens, with up to 128,000 output tokens. Reasoning levels are `low`, `medium` (default), `high`, `xhigh` and `max`. Reasoning cannot be disabled; legacy `none` and `minimal` are normalized to `low`. Chat Completions and Anthropic-compatible requests use Responses upstream, preserving the client's response format and tools.
 
-The [Codex installer](use-topxai-with-codex-cli.md) uses the new model by default. See the [upgrade guide](https://ai.topxea.com/blog/gpt-6-1-sol) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-sol).
+The [Codex installer](docs/use-topxai-with-codex-cli.md) uses the new model by default. See the [upgrade guide](https://ai.topxea.com/blog/gpt-6-1-sol) and [current prices](https://ai.topxea.com/pricing/gpt-6.1-sol).
 
 ## 2026-09-27 · GLM-5.3-Abliterated publishes its reasoning modes and 1M-token context
 
-[GLM-5.3-Abliterated](glm-5-3-abliterated.md) runs on a deployment with a 1,000,000-token context and three reasoning modes. `/api/pricing` now publishes both: `context_window` 1000000, `max_output` 131072, and the reasoning efforts `low`, `high` and `max`, with `max` as the default. TopxAI Desktop reads the feed, so it now offers the effort picker for this model and plans for the full window. Until now its requests always ran at max and it treated the model as a 128K-token window.
+[GLM-5.3-Abliterated](docs/glm-5-3-abliterated.md) runs on a deployment with a 1,000,000-token context and three reasoning modes. `/api/pricing` now publishes both: `context_window` 1000000, `max_output` 131072, and the reasoning efforts `low`, `high` and `max`, with `max` as the default. TopxAI Desktop reads the feed, so it now offers the effort picker for this model and plans for the full window. Until now its requests always ran at max and it treated the model as a 128K-token window.
 
 Fixed: switching reasoning the way Z.ai's own API does, with `"thinking": {"type": "disabled"}` or `{"type": "enabled"}`, failed with a 400, because this deployment rejects the object. The relay now turns `disabled` into `reasoning_effort: "none"`, which runs as low with the reasoning text left out, and drops `enabled`. The boolean form `"thinking": false` is accepted as well; on every model it used to fail with a JSON error, and other lines now receive it as the object form.
 
@@ -333,13 +345,13 @@ Select `claude-opus-5-5` on the shared or official Claude route. Existing calls 
 
 Prices in USD per million tokens, based on [Anthropic's published standard prices](https://platform.claude.com/docs/en/about-claude/pricing), verified September 23, 2026:
 
-| Category | Shared (50%) | Official (90%) | Anthropic list |
-| --- | --- | --- | --- |
-| Input | $2 | $3.60 | $4 |
-| Output | $10 | $18 | $20 |
-| Cache read | $0.10 | $0.18 | $0.20 |
-| Cache write, 5 minutes | $2.50 | $4.50 | $5 |
-| Cache write, 1 hour | $4 | $7.20 | $8 |
+| Category               | Shared (50%) | Official (90%) | Anthropic list |
+| ---------------------- | ------------ | -------------- | -------------- |
+| Input                  | $2           | $3.60          | $4             |
+| Output                 | $10          | $18            | $20            |
+| Cache read             | $0.10        | $0.18          | $0.20          |
+| Cache write, 5 minutes | $2.50        | $4.50          | $5             |
+| Cache write, 1 hour    | $4           | $7.20          | $8             |
 
 Opus 5.5 supports a 1M-token context and up to 128K output tokens. Adaptive thinking is always enabled; the default effort is medium. Requests that disable thinking are translated to low effort. Other models and their prices are unchanged. Requests already accepted and historical usage retain their captured prices.
 
@@ -351,12 +363,12 @@ Use `gpt-6-sol` on the shared or official OpenAI route. Calls to `gpt-5.6-sol`, 
 
 USD per million tokens, based on [OpenAI's Standard prices](https://developers.openai.com/api/docs/models/gpt-6-sol), checked September 23, 2026:
 
-| Category | Shared (50%) | Official (90%) | OpenAI Standard |
-| --- | --- | --- | --- |
-| Input | $1 | $1.80 | $2 |
-| Output | $5 | $9 | $10 |
-| Cache read | $0.10 | $0.18 | $0.20 |
-| Cache write | $1.25 | $2.25 | $2.50 |
+| Category    | Shared (50%) | Official (90%) | OpenAI Standard |
+| ----------- | ------------ | -------------- | --------------- |
+| Input       | $1           | $1.80          | $2              |
+| Output      | $5           | $9             | $10             |
+| Cache read  | $0.10        | $0.18          | $0.20           |
+| Cache write | $1.25        | $2.25          | $2.50           |
 
 These rates apply up to 272K input tokens. Above that, the whole request bills at the long-context rates, as on OpenAI: input and cache rates double and output rises by half (input, output, cache read and cache write are $2, $7.50, $0.20 and $2.50 on shared, $3.60, $13.50, $0.36 and $4.50 on official). An earlier version of this note said the prices stayed fixed at every context length; that was wrong, see [Long-context prices for GPT-6 Sol and Grok 4.7](https://ai.topxea.com/changelog#long-context-prices-for-gpt-6-sol-and-grok-4-7). Cache writes and reads are separate token categories, not additional fees on top of uncached input. Other models retain their current prices, and accepted requests and historical usage retain their captured prices.
 
@@ -372,11 +384,11 @@ Use `grok-4.7` on either Grok route. Calls to `grok-4.6`, including explicit rea
 
 USD per million tokens, compared with [xAI Standard prices](https://docs.x.ai/developers/models/grok-4.7) below 200K input tokens, verified September 23, 2026:
 
-| Category | Shared (50%) | Official (90%) | xAI Standard |
-| --- | --- | --- | --- |
-| Input | $1 | $1.80 | $2 |
-| Output | $3 | $5.40 | $6 |
-| Cache read | $0.25 | $0.45 | $0.50 |
+| Category   | Shared (50%) | Official (90%) | xAI Standard |
+| ---------- | ------------ | -------------- | ------------ |
+| Input      | $1           | $1.80          | $2           |
+| Output     | $3           | $5.40          | $6           |
+| Cache read | $0.25        | $0.45          | $0.50        |
 
 These rates apply to prompts under 200K tokens. From 200K, the whole request bills at the long-context rates, twice every rate above, as on xAI: input, output and cache read are $2, $6 and $0.50 on shared, $3.60, $10.80 and $0.90 on official. An earlier version of this note said the prices stayed fixed across the context window; that was wrong, see [Long-context prices for GPT-6 Sol and Grok 4.7](https://ai.topxea.com/changelog#long-context-prices-for-gpt-6-sol-and-grok-4-7). Cached input is charged at the cache-read rate instead of the regular input rate. Cache misses use the regular input rate; there is no separate cache-write premium. Reasoning tokens use the output rate. Existing administrator overrides and historical charges are preserved.
 
@@ -390,26 +402,26 @@ The GPT-6 Sol and Grok 4.7 upgrades on September 23 dropped the long-context tie
 
 GPT-6 Sol, input above 272K tokens (from 272,001), USD per million tokens:
 
-| Category | Shared (50%) | Official (90%) | OpenAI Standard |
-| --- | --- | --- | --- |
-| Input | $2 | $3.60 | $4 |
-| Output | $7.50 | $13.50 | $15 |
-| Cache read | $0.20 | $0.36 | $0.40 |
-| Cache write | $2.50 | $4.50 | $5 |
+| Category    | Shared (50%) | Official (90%) | OpenAI Standard |
+| ----------- | ------------ | -------------- | --------------- |
+| Input       | $2           | $3.60          | $4              |
+| Output      | $7.50        | $13.50         | $15             |
+| Cache read  | $0.20        | $0.36          | $0.40           |
+| Cache write | $2.50        | $4.50          | $5              |
 
 Grok 4.7, prompt of 200K tokens or more, USD per million tokens:
 
-| Category | Shared (50%) | Official (90%) | xAI Standard |
-| --- | --- | --- | --- |
-| Input | $2 | $3.60 | $4 |
-| Output | $6 | $10.80 | $12 |
-| Cache read | $0.50 | $0.90 | $1 |
+| Category   | Shared (50%) | Official (90%) | xAI Standard |
+| ---------- | ------------ | -------------- | ------------ |
+| Input      | $2           | $3.60          | $4           |
+| Output     | $6           | $10.80         | $12          |
+| Cache read | $0.50        | $0.90          | $1           |
 
 Rates follow the [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) and [Grok 4.7](https://docs.x.ai/developers/models/grok-4.7) model pages, checked September 23, 2026. The price table on each model page lists both tiers, and the usage log shows which tier a request settled at.
 
 ## 2026-09-22 · Codex CLI downloads and a one-command installer
 
-> **Update — September 30, 2026:** The [downloads page](https://ai.topxea.com/downloads) now provides the TopxAI desktop app. For current Codex CLI downloads, installation scripts and manual configuration, see the [Codex CLI guide](use-topxai-with-codex-cli.md). The announcement below is retained as a historical record.
+> **Update — September 30, 2026:** The [downloads page](https://ai.topxea.com/downloads) now provides the TopxAI desktop app. For current Codex CLI downloads, installation scripts and manual configuration, see the [Codex CLI guide](docs/use-topxai-with-codex-cli.md). The announcement below is retained as a historical record.
 
 Codex CLI users who cannot reach GitHub or npm from their network no longer have to.
 
@@ -435,7 +447,7 @@ It downloads the current package for your system through the mirror, verifies it
 
 ## The guide
 
-The [Codex CLI page](use-topxai-with-codex-cli.md) in the docs now covers the whole path: where to get Codex, what the installer changes, the same setup by hand, models, updating and the usual failures.
+The [Codex CLI page](docs/use-topxai-with-codex-cli.md) in the docs now covers the whole path: where to get Codex, what the installer changes, the same setup by hand, models, updating and the usual failures.
 
 ## 2026-09-22 · DeepSeek V4.1 Flash and V4 Pro join the catalogue, with off-peak and peak hours
 

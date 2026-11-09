@@ -8,6 +8,7 @@ It covers:
 
 - The form
 - The routes
+- Automatic backup switching
 - Three refusals
 
 All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
