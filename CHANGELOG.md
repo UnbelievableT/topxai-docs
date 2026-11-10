@@ -54,6 +54,16 @@ Adaptive thinking is always on and defaults to high effort. TopxAI removes the u
 
 Anthropic lists changes that can break a client moving from Fable 5.1: edited history with replayed thinking blocks is rejected on every account, `computer_20251124` is replaced by `computer_toolset_20260801`, and the advisor tool accepts only Fable 5.2 or Mythos 5.2 as the advisor. See the [migration post](https://ai.topxea.com/blog/claude-fable-5-2) and [Anthropic's migration guide](https://platform.claude.com/docs/en/models/fable-5-2/migration-guide).
 
+## 2026-11-10 · Backup switching now happens at once
+
+Text routes with a configured backup no longer wait 15 minutes before preferring it. By default, three consecutive upstream failures move new requests to the backup at once, and a single failure already starts a background check of the line.
+
+While the primary is out, it is checked in the background and receives no customer requests. After two checks pass, one request at a time may try the primary; two successes at least 30 seconds apart return the line to primary. A line that fails again soon after recovering stays on the backup longer, because each switch rebuilds the prompt cache.
+
+Streaming requests that hang before their first response now move on after two minutes instead of thirty. Where a line lists a backup price, each request still tries the primary first, so the backup price applies only to a request the primary could not answer.
+
+See [the route guide](docs/create-an-api-key-and-choose-a-route.md) for the full behavior and limitations.
+
 ## 2026-11-09 · Automatic backup switching with a visible countdown
 
 Text routes with a configured backup now start a fixed 15-minute observation period after three consecutive upstream failures. Eligible failed requests can retry the backup immediately; after the deadline, new requests prefer the backup until the primary recovers.
