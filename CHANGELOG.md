@@ -2,6 +2,38 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-11-10 · New prices for the three Abliterated models
+
+The three Abliterated models have new prices from November 10, 2026. Model IDs, route IDs, limits and reasoning settings stay the same, and no other model changes price.
+
+## New prices
+
+USD per million tokens on the main deployment, input / cache read / output:
+
+| Model                        | Now                    | Before                |
+| ---------------------------- | ---------------------- | --------------------- |
+| `GLM-5.3-Abliterated`        | $3.00 / $0.45 / $6.00  | $2.00 / $0.30 / $4.00 |
+| `GLM-5.3-Flash-Abliterated`  | $0.36 / $0.075 / $1.50 | $0.24 / $0.08 / $1.00 |
+| `deepseek-flash-Abliterated` | $0.42 / $0.105 / $1.50 | $0.28 / $0.07 / $1.00 |
+
+Input and output rise by half on all three models. Cache reads rise by half on `GLM-5.3-Abliterated` and `deepseek-flash-Abliterated`, and fall from $0.08 to $0.075 on `GLM-5.3-Flash-Abliterated`. The prices are still the same at every hour, with no long-context tier and no cache-write lane.
+
+`kimi-k3.1-pro` and `deepseek-flash-fast`, the two private-deployment models that are not abliterated, keep their prices.
+
+A request accepted before the change keeps the price captured when it was accepted. Historical charges are not recalculated.
+
+## Backup deployment
+
+The backup prices do not change: $4.00 / $0.40 / $7.00 for `GLM-5.3-Abliterated` and $1.20 / $0.15 / $2.40 for `deepseek-flash-Abliterated`. A request is billed at the backup price only when the standby deployment answers because the main one failed, which is rare; its usage-log entry is marked **Backup deployment**.
+
+On `GLM-5.3-Abliterated` the main cache-read price, $0.45, is now above the backup one, $0.40. Input and output are still lower on the main deployment. `GLM-5.3-Flash-Abliterated` has no standby.
+
+## What to do
+
+Nothing changes in your requests. If you keep a budget or a cost estimate for these models, update it with the prices above. The [pricing pages](https://ai.topxea.com/pricing/glm-5.3-abliterated) and `GET /api/pricing` show the current prices. A [blog post](https://ai.topxea.com/blog/abliterated-models-prices-and-usage) sets the new prices beside the launch prices and shows how to call the models.
+
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated` and `deepseek-flash-Abliterated`; the [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies to every model. See the guides for the [GLM models](docs/glm-5-3-abliterated.md) and the [DeepSeek models](docs/deepseek-flash-abliterated.md).
+
 ## 2026-11-09 · Automatic backup switching with a visible countdown
 
 Text routes with a configured backup now start a fixed 15-minute observation period after three consecutive upstream failures. Eligible failed requests can retry the backup immediately; after the deadline, new requests prefer the backup until the primary recovers.
@@ -333,7 +365,7 @@ Past requests to Fable 5 keep their usage-log rows and the prices they were char
 
 `claude-opus-5`, `gpt-5.6-sol` and `grok-4.6` stopped working on September 24. Until now each of them forwarded to its upgraded model. Requests for them are now refused with HTTP 403 and the error code `model_not_offered`, and they no longer appear in `/v1/models` or the price table.
 
-Switch to the new IDs: `claude-opus-5-5`, `gpt-6-sol` and `grok-4.7`. Their prices are in the upgrade notes for [Opus 5.5](https://ai.topxea.com/changelog/claude-opus-5-5), [GPT-6 Sol](https://ai.topxea.com/changelog/gpt-6-sol) and [Grok 4.7](https://ai.topxea.com/changelog/grok-4-7); this change does not touch them.
+Switch to the new IDs: `claude-opus-5-5`, `gpt-6-sol` and `grok-4.7`. Their prices are in the upgrade notes for [Opus 5.5](https://ai.topxea.com/changelog#claude-opus-5-5), [GPT-6 Sol](https://ai.topxea.com/changelog#gpt-6-sol) and [Grok 4.7](https://ai.topxea.com/changelog#grok-4-7); this change does not touch them.
 
 An API key whose model limits name only an old ID can no longer reach the new model. Edit the key's model limits and select the new ID.
 
