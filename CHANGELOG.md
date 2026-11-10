@@ -34,6 +34,26 @@ Nothing changes in your requests. If you keep a budget or a cost estimate for th
 
 Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated` and `deepseek-flash-Abliterated`; the [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies to every model. See the guides for the [GLM models](docs/glm-5-3-abliterated.md) and the [DeepSeek models](docs/deepseek-flash-abliterated.md).
 
+## 2026-11-10 · Claude Fable 5.2 replaces Fable 5.1 at lower prices
+
+Select `claude-fable-5-2` on the Claude shared or official route, or with an Auto-route key. The old `claude-fable-5-1` ID is retired: requests for it return HTTP 403 with the error code `permission_denied`, and it has no forwarding alias. Unrestricted keys can keep using the same key. If a key has an allowed-model list, edit that list to include the new ID.
+
+Default prices in USD per million tokens, checked against [Anthropic's pricing page](https://platform.claude.com/docs/en/about-claude/pricing) on November 10, 2026:
+
+| Category               | Shared (50%) | Official (90%) | Anthropic list |
+| ---------------------- | ------------ | -------------- | -------------- |
+| Input                  | $4           | $7.20          | $8             |
+| Output                 | $20          | $36            | $40            |
+| Cache read             | $0.10        | $0.18          | $0.20          |
+| Cache write, 5 minutes | $5           | $9             | $10            |
+| Cache write, 1 hour    | $8           | $14.40         | $16            |
+
+All five rates are 20% below Fable 5.1 on both routes. The model supports a 1M-token context and up to 128K output tokens, with no long-context price premium. Accepted requests and historical charges keep their captured prices.
+
+Adaptive thinking is always on and defaults to high effort. TopxAI removes the unsupported `temperature`, `top_p` and `top_k` on every protocol. On Chat Completions and Responses, it also keeps a legacy disabled-thinking request adaptive at the default effort and converts manual thinking budgets to effort; native Messages requests keep their `thinking` field as sent. Forced tool selection returns a 400 error without a charge; use automatic tool selection.
+
+Anthropic lists changes that can break a client moving from Fable 5.1: edited history with replayed thinking blocks is rejected on every account, `computer_20251124` is replaced by `computer_toolset_20260801`, and the advisor tool accepts only Fable 5.2 or Mythos 5.2 as the advisor. See the [migration post](https://ai.topxea.com/blog/claude-fable-5-2) and [Anthropic's migration guide](https://platform.claude.com/docs/en/models/fable-5-2/migration-guide).
+
 ## 2026-11-09 · Automatic backup switching with a visible countdown
 
 Text routes with a configured backup now start a fixed 15-minute observation period after three consecutive upstream failures. Eligible failed requests can retry the backup immediately; after the deadline, new requests prefer the backup until the primary recovers.

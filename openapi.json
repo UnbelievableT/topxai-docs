@@ -2,7 +2,7 @@
  "openapi": "3.1.0",
  "info": {
   "title": "TopxAI API",
-  "version": "2026-11-08",
+  "version": "2026-11-10",
   "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
   "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol and gpt-6.1-terra on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
   "termsOfService": "https://ai.topxea.com/user-agreement",
@@ -1154,7 +1154,7 @@
     "type": "string",
     "description": "A catalogue text model.",
     "enum": [
-     "claude-fable-5-1",
+     "claude-fable-5-2",
      "claude-sonnet-5-5",
      "claude-opus-5-5",
      "gpt-6-astra",
