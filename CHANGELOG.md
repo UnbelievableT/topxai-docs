@@ -2,6 +2,30 @@
 
 Every dated change to TopxAI; also at https://ai.topxea.com/changelog with an RSS feed at https://ai.topxea.com/changelog/feed.xml.
 
+## 2026-11-12 · Jev gets a backup line and a new price
+
+From November 12, 2026, `jev-1.14.0` costs $0.055 per million input tokens, and output stays free. Before, it cost $0.04494. The model ID, the route (`typesafe-official`), the aliases `jev-latest` and `jev-preview`, the limits and the request format stay the same.
+
+A request accepted before the change keeps the price captured when it was accepted. Historical charges are not recalculated.
+
+## A backup line for Jev
+
+Jev now runs on two lines. The main line calls TypeSafe's official API, as before. The second is a costlier standby serving the same model. If the main line fails before it answers, the request may move to the standby automatically, and that request is billed at the backup price: $0.058 per million input tokens, output free. This is rare. Until now such a request failed.
+
+Your key and endpoint stay the same. A request that moved to the standby is marked **Backup deployment** in the [usage log](docs/reading-your-usage-log.md), and the price tables list the backup rate in a **Backup deployment** row under the model's price. On the standby, the gateway checks for known jailbreak templates before forwarding, as described in the [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md).
+
+## deepseek-flash-Abliterated backup price
+
+The backup price of `deepseek-flash-Abliterated`, charged only when its standby deployment answers because the main one failed, rises from $1.20 / $0.15 / $2.40 to $1.30 / $0.15 / $2.60 per million tokens (input / cache read / output). The main price does not change: $0.42 / $0.105 / $1.50.
+
+No other model changes price.
+
+## What to do
+
+Nothing changes in your requests. On the API keys page the TypeSafe line's note now reads **Official key · fixed price**. If you keep a budget or a cost estimate for Jev, update it with the price above. The [Jev pricing page](https://ai.topxea.com/pricing/jev-1.14.0), the [Jev guide](docs/jev-typesafe-system-one.md) and `GET /api/pricing` show the current prices.
+
+Because fine-tuning may affect safety alignment, `deepseek-flash-Abliterated` may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. The [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies to every model.
+
 ## 2026-11-10 · New prices for the three Abliterated models
 
 The three Abliterated models have new prices from November 10, 2026. Model IDs, route IDs, limits and reasoning settings stay the same, and no other model changes price.

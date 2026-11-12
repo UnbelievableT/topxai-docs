@@ -12,6 +12,7 @@ It covers:
 - Limits and errors
 - One-line setup
 - Price
+- Backup line
 - Known weak spots
 
 All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
