@@ -58,19 +58,19 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://ai.topxea.com/api/pricing` listed them on 2026-11-12: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://ai.topxea.com/pricing, and prices are not repeated here because they change.
+As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-13: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
-| Anthropic | [`claude-fable-5-2`](https://ai.topxea.com/pricing/claude-fable-5-2) · [`claude-opus-5-5`](https://ai.topxea.com/pricing/claude-opus-5-5) · [`claude-sonnet-5-5`](https://ai.topxea.com/pricing/claude-sonnet-5-5) |
-| OpenAI | [`gpt-6-astra`](https://ai.topxea.com/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://ai.topxea.com/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://ai.topxea.com/pricing/gpt-6.1-terra) · [`gpt-image-2.6-flare`](https://ai.topxea.com/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://ai.topxea.com/pricing/gpt-image-2.6-sunburst) |
-| xAI | [`grok-4.7`](https://ai.topxea.com/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://ai.topxea.com/pricing/grok-imagine-video-1.5) |
-| Zhipu AI | [`GLM-5.3-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-abliterated) (private deployment) · [`GLM-5.3-Flash-Abliterated`](https://ai.topxea.com/pricing/glm-5.3-flash-abliterated) (private deployment) |
-| Moonshot AI | [`kimi-k3.1-pro`](https://ai.topxea.com/pricing/kimi-k3.1-pro) (private deployment) |
-| TypeSafe | [`jev-1.14.0`](https://ai.topxea.com/pricing/jev-1.14.0) |
-| DeepSeek | [`deepseek-flash-Abliterated`](https://ai.topxea.com/pricing/deepseek-flash-abliterated) (private deployment) · [`deepseek-flash-fast`](https://ai.topxea.com/pricing/deepseek-flash-fast) (private deployment) |
+| Anthropic | [`claude-fable-5-2`](https://api.topxai.xyz/pricing/claude-fable-5-2) · [`claude-opus-5-5`](https://api.topxai.xyz/pricing/claude-opus-5-5) · [`claude-sonnet-5-5`](https://api.topxai.xyz/pricing/claude-sonnet-5-5) |
+| OpenAI | [`gpt-6-astra`](https://api.topxai.xyz/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://api.topxai.xyz/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://api.topxai.xyz/pricing/gpt-6.1-terra) · [`gpt-image-2.6-flare`](https://api.topxai.xyz/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://api.topxai.xyz/pricing/gpt-image-2.6-sunburst) |
+| xAI | [`grok-4.7`](https://api.topxai.xyz/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://api.topxai.xyz/pricing/grok-imagine-video-1.5) |
+| Zhipu AI | [`GLM-5.3-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-abliterated) (private deployment) · [`GLM-5.3-Flash-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-flash-abliterated) (private deployment) |
+| Moonshot AI | [`kimi-k3.1-pro`](https://api.topxai.xyz/pricing/kimi-k3.1-pro) (private deployment) |
+| TypeSafe | [`jev-1.14.0`](https://api.topxai.xyz/pricing/jev-1.14.0) |
+| DeepSeek | [`deepseek-flash-Abliterated`](https://api.topxai.xyz/pricing/deepseek-flash-abliterated) (private deployment) · [`deepseek-flash-fast`](https://api.topxai.xyz/pricing/deepseek-flash-fast) (private deployment) |
 
-Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment rather than the provider's own API, at fixed prices that are the same at every hour; the two GLM models and `deepseek-flash-Abliterated` have the refusal alignment removed, and `deepseek-flash-fast` runs the standard weights. They are covered by the same [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy) as every other line.
+Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment rather than the provider's own API, at fixed prices that are the same at every hour; the two GLM models and `deepseek-flash-Abliterated` have the refusal alignment removed, and `deepseek-flash-fast` runs the standard weights. They are covered by the same [Acceptable Use Policy](https://api.topxai.xyz/acceptable-use-policy) as every other line.
 
 ## Documentation
 
@@ -83,24 +83,24 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Integrations
 
-- [Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key](docs/use-topxai-with-claude-code.md) — Point Claude Code at https://ai.topxea.com with two environment variables and pick claude-sonnet-5-5, claude-opus-5-5 or claude-fable-5-2 as its model.
+- [Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key](docs/use-topxai-with-claude-code.md) — Point Claude Code at https://api.topxai.xyz with two environment variables and pick claude-sonnet-5-5, claude-opus-5-5 or claude-fable-5-2 as its model.
 - [Codex CLI custom model provider: model_providers in config.toml for TopxAI](docs/use-topxai-with-codex-cli.md) — Point Codex CLI at TopxAI with a [model_providers.topxai] table in ~/.codex/config.toml and run gpt-6.1-sol, gpt-6-astra or grok-4.7. An npm mirror is included.
-- [Cursor with TopxAI: override the OpenAI base URL](docs/use-topxai-with-cursor.md) — In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://ai.topxea.com/v1 and add the model ids you want to chat with.
-- [Cline and Roo Code with TopxAI: the OpenAI-compatible provider](docs/use-topxai-with-cline-and-roo-code.md) — Set the provider to OpenAI Compatible with base URL https://ai.topxea.com/v1, a TopxAI key and a model id; or the Anthropic provider with a custom base URL.
+- [Cursor with TopxAI: override the OpenAI base URL](docs/use-topxai-with-cursor.md) — In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://api.topxai.xyz/v1 and add the model ids you want to chat with.
+- [Cline and Roo Code with TopxAI: the OpenAI-compatible provider](docs/use-topxai-with-cline-and-roo-code.md) — Set the provider to OpenAI Compatible with base URL https://api.topxai.xyz/v1, a TopxAI key and a model id; or the Anthropic provider with a custom base URL.
 - [Continue with TopxAI: models in config.yaml](docs/use-topxai-with-continue.md) — Add TopxAI models to ~/.continue/config.yaml with provider openai or anthropic and apiBase, then use them for chat, edit and agent mode in VS Code or JetBrains.
 - [Zed with TopxAI: OpenAI- and Anthropic-compatible providers](docs/use-topxai-with-zed.md) — Add TopxAI to Zed as an openai_compatible provider for GPT, Grok, Kimi and GLM, and as an anthropic_compatible provider for Claude, in settings.json.
-- [Aider with TopxAI: OPENAI_API_BASE and the model name](docs/use-topxai-with-aider.md) — Run aider against TopxAI with OPENAI_API_BASE=https://ai.topxea.com/v1 and --model openai/claude-sonnet-5-5, or the Anthropic variables for the Claude line.
+- [Aider with TopxAI: OPENAI_API_BASE and the model name](docs/use-topxai-with-aider.md) — Run aider against TopxAI with OPENAI_API_BASE=https://api.topxai.xyz/v1 and --model openai/claude-sonnet-5-5, or the Anthropic variables for the Claude line.
 - [opencode with TopxAI: a custom provider in opencode.json](docs/use-topxai-with-opencode.md) — Declare TopxAI in opencode.json with @ai-sdk/openai-compatible, the base URL and the model ids, then pick them with /models.
-- [Open WebUI with TopxAI: one OpenAI connection, every model](docs/use-topxai-with-open-webui.md) — Add https://ai.topxea.com/v1 as an OpenAI API connection in Open WebUI; the model list fills from /v1/models and every text model is ready to chat.
-- [LobeChat with TopxAI: the OpenAI proxy address](docs/use-topxai-with-lobechat.md) — Set OpenAI’s API proxy address to https://ai.topxea.com/v1 in LobeChat, or OPENAI_PROXY_URL for a deployment, and fetch the model list.
+- [Open WebUI with TopxAI: one OpenAI connection, every model](docs/use-topxai-with-open-webui.md) — Add https://api.topxai.xyz/v1 as an OpenAI API connection in Open WebUI; the model list fills from /v1/models and every text model is ready to chat.
+- [LobeChat with TopxAI: the OpenAI proxy address](docs/use-topxai-with-lobechat.md) — Set OpenAI’s API proxy address to https://api.topxai.xyz/v1 in LobeChat, or OPENAI_PROXY_URL for a deployment, and fetch the model list.
 - [Cherry Studio with TopxAI: first chat and endpoint setup](docs/use-topxai-with-cherry-studio.md) — Connect a route-scoped TopxAI key to Cherry Studio, choose the right endpoint, and diagnose the first request without guessing URL suffixes.
-- [ChatBox with TopxAI: a custom provider](docs/use-topxai-with-chatbox.md) — In ChatBox, add a custom provider in OpenAI API compatible mode with host https://ai.topxea.com and path /v1/chat/completions, then add the model ids.
+- [ChatBox with TopxAI: a custom provider](docs/use-topxai-with-chatbox.md) — In ChatBox, add a custom provider in OpenAI API compatible mode with host https://api.topxai.xyz and path /v1/chat/completions, then add the model ids.
 - [LangChain with TopxAI: ChatTopxAI from the langchain-topxai package](docs/use-topxai-with-langchain.md) — Call TopxAI chat models from LangChain in Python with ChatTopxAI from langchain-topxai. ChatOpenAI with a base URL still works, also for the Responses API.
-- [Vercel AI SDK with TopxAI: createOpenAI, createAnthropic and openai-compatible](docs/use-topxai-with-vercel-ai-sdk.md) — Create an AI SDK provider with baseURL https://ai.topxea.com/v1 and a TopxAI key, then use generateText or streamText with any catalogue model.
-- [LiteLLM with TopxAI: proxy config and the Python SDK](docs/use-topxai-with-litellm.md) — Route LiteLLM to TopxAI with model openai/<id> and api_base https://ai.topxea.com/v1, in the proxy’s model_list or a completion() call.
-- [Dify with TopxAI: the OpenAI-API-compatible provider](docs/use-topxai-with-dify.md) — Add each TopxAI model to Dify through the OpenAI-API-compatible provider with endpoint https://ai.topxea.com/v1, your key and the model id.
-- [n8n with TopxAI: an OpenAI credential with a base URL](docs/use-topxai-with-n8n.md) — Create an OpenAI credential in n8n with base URL https://ai.topxea.com/v1 and a TopxAI key, then use any catalogue model in the Chat Model and AI Agent nodes.
-- [llm CLI with TopxAI: extra-openai-models.yaml](docs/use-topxai-with-llm-cli.md) — Register TopxAI models in llm’s extra-openai-models.yaml with api_base https://ai.topxea.com/v1, store the key with llm keys set, and prompt from the shell.
+- [Vercel AI SDK with TopxAI: createOpenAI, createAnthropic and openai-compatible](docs/use-topxai-with-vercel-ai-sdk.md) — Create an AI SDK provider with baseURL https://api.topxai.xyz/v1 and a TopxAI key, then use generateText or streamText with any catalogue model.
+- [LiteLLM with TopxAI: proxy config and the Python SDK](docs/use-topxai-with-litellm.md) — Route LiteLLM to TopxAI with model openai/<id> and api_base https://api.topxai.xyz/v1, in the proxy’s model_list or a completion() call.
+- [Dify with TopxAI: the OpenAI-API-compatible provider](docs/use-topxai-with-dify.md) — Add each TopxAI model to Dify through the OpenAI-API-compatible provider with endpoint https://api.topxai.xyz/v1, your key and the model id.
+- [n8n with TopxAI: an OpenAI credential with a base URL](docs/use-topxai-with-n8n.md) — Create an OpenAI credential in n8n with base URL https://api.topxai.xyz/v1 and a TopxAI key, then use any catalogue model in the Chat Model and AI Agent nodes.
+- [llm CLI with TopxAI: extra-openai-models.yaml](docs/use-topxai-with-llm-cli.md) — Register TopxAI models in llm’s extra-openai-models.yaml with api_base https://api.topxai.xyz/v1, store the key with llm keys set, and prompt from the shell.
 
 ### Routes and pricing
 
@@ -120,7 +120,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Payments and credit
 
-- [Top up with a card](docs/top-up-with-a-card.md) — Add USD credit with a card, Apple Pay, Google Pay or a local e-wallet; the checkout runs on topxea.com through Waffo.
+- [Top up with a card](docs/top-up-with-a-card.md) — Add USD credit with a card, Apple Pay, Google Pay or a local e-wallet; you pay on the Waffo checkout that the Wallet page opens.
 - [Pay with crypto](docs/pay-with-crypto.md) — Top up with USDT or USDC through a NOWPayments invoice: what to send, how long confirmation takes, and what happens if you send too little.
 - [Gift cards and credit codes](docs/gift-cards-and-credit-codes.md) — Buy a single-use credit code, redeem one on any account, and what the User Agreement says about refunds.
 
@@ -128,7 +128,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 - [Common error responses](docs/common-error-responses.md) — What each HTTP status and error code from the gateway means, and what to change before you retry.
 - [The model works in curl but not in my tool](docs/the-model-works-in-curl-but-not-in-my-tool.md) — Seven places where a tool differs from the working curl: base URL, auth header, model id, key route and limits, IP whitelist, GLM and Jev endpoints, timeouts.
-- [Sign-in and account](docs/sign-in-and-account.md) — How sign-in is shared with topxea.com, how sessions, devices and TopxAI Desktop sign-ins work, the regional service notice, and how to reach support.
+- [Sign-in and account](docs/sign-in-and-account.md) — How sign-in works, how sessions, devices and TopxAI Desktop sign-ins are managed, the regional service notice, and how to reach support.
 
 ### Comparisons
 

@@ -2,7 +2,7 @@
 
 > Request and response content passes through memory only; here is what the usage log, account and payment records keep, and for how long.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/what-topxai-stores-and-what-it-never-stores (in Chinese: https://ai.topxea.com/docs/what-topxai-stores-and-what-it-never-stores?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/what-topxai-stores-and-what-it-never-stores (in Chinese: https://api.topxai.xyz/docs/what-topxai-stores-and-what-it-never-stores?lang=zh).
 
 It covers:
 
@@ -12,4 +12,4 @@ It covers:
 - Retention
 - What you can do
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

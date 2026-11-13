@@ -2,7 +2,7 @@
 
 > One base URL, 16 models on seven lines and prepaid USD credit. TopxAI does not store prompts or completions.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/what-topxai-is (in Chinese: https://ai.topxea.com/docs/what-topxai-is?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/what-topxai-is (in Chinese: https://api.topxai.xyz/docs/what-topxai-is?lang=zh).
 
 It covers:
 
@@ -13,4 +13,4 @@ It covers:
 - Zero retention
 - Support
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

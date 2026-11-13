@@ -4,28 +4,28 @@
   "title": "TopxAI API",
   "version": "2026-11-12",
   "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
-  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/messages to claude-fable-5-2, where temperature, top_p and top_k are removed, on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol and gpt-6.1-terra on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://ai.topxea.com/v1. Base URL for the Anthropic SDK: https://ai.topxea.com. Prompts, completions and files are relayed in memory and never stored. Prices: https://ai.topxea.com/pricing and https://ai.topxea.com/api/pricing.",
-  "termsOfService": "https://ai.topxea.com/user-agreement",
+  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/messages to claude-fable-5-2, where temperature, top_p and top_k are removed, on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.1-sol and gpt-6.1-terra on every endpoint, gpt-6-astra on /v1/responses) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://api.topxai.xyz/v1. Base URL for the Anthropic SDK: https://api.topxai.xyz. Prompts, completions and files are relayed in memory and never stored. Prices: https://api.topxai.xyz/pricing and https://api.topxai.xyz/api/pricing.",
+  "termsOfService": "https://api.topxai.xyz/user-agreement",
   "contact": {
    "name": "TopxAI support",
-   "email": "support@topxea.com",
-   "url": "https://ai.topxea.com/docs"
+   "email": "support@topxai.xyz",
+   "url": "https://api.topxai.xyz/docs"
   },
   "x-logo": {
-   "url": "https://ai.topxea.com/favicon.svg"
+   "url": "https://api.topxai.xyz/favicon.svg"
   },
   "license": {
    "name": "Terms of use",
-   "url": "https://ai.topxea.com/user-agreement"
+   "url": "https://api.topxai.xyz/user-agreement"
   }
  },
  "externalDocs": {
   "description": "Documentation",
-  "url": "https://ai.topxea.com/docs"
+  "url": "https://api.topxai.xyz/docs"
  },
  "servers": [
   {
-   "url": "https://ai.topxea.com",
+   "url": "https://api.topxai.xyz",
    "description": "Production"
   }
  ],
@@ -1074,7 +1074,7 @@
     "operationId": "getPricing",
     "security": [],
     "summary": "The price table",
-    "description": "Every model with its route prices in USD (per 1M tokens, per image by size, per second by resolution), the routes it is enabled on, the endpoints that serve it, the provider's list price for comparison and the route an Auto-route key would pick. The same data as https://ai.topxea.com/pricing.",
+    "description": "Every model with its route prices in USD (per 1M tokens, per image by size, per second by resolution), the routes it is enabled on, the endpoints that serve it, the provider's list price for comparison and the route an Auto-route key would pick. The same data as https://api.topxai.xyz/pricing.",
     "responses": {
      "200": {
       "description": "The catalogue.",
@@ -1116,7 +1116,7 @@
    "bearerAuth": {
     "type": "http",
     "scheme": "bearer",
-    "description": "A TopxAI API key (sk-...) as Authorization: Bearer <key>. Keys are created at https://ai.topxea.com/keys."
+    "description": "A TopxAI API key (sk-...) as Authorization: Bearer <key>. Keys are created at https://api.topxai.xyz/keys."
    },
    "anthropicKey": {
     "type": "apiKey",
@@ -1134,7 +1134,7 @@
       "properties": {
        "message": {
         "type": "string",
-        "description": "Ends with a request id to quote to support@topxea.com."
+        "description": "Ends with a request id to quote to support@topxai.xyz."
        },
        "type": {
         "type": "string"

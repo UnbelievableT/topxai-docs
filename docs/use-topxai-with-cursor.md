@@ -1,8 +1,8 @@
 # Cursor with TopxAI: override the OpenAI base URL
 
-> In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://ai.topxea.com/v1 and add the model ids you want to chat with.
+> In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://api.topxai.xyz/v1 and add the model ids you want to chat with.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-cursor (in Chinese: https://ai.topxea.com/docs/use-topxai-with-cursor?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/use-topxai-with-cursor (in Chinese: https://api.topxai.xyz/docs/use-topxai-with-cursor?lang=zh).
 
 It covers:
 
@@ -10,4 +10,4 @@ It covers:
 - What to expect
 - If it fails
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

@@ -2,7 +2,7 @@
 
 > The two DeepSeek V4.1 Flash 1017 models on a private deployment, abliterated or on standard weights: limits, four reasoning settings and fixed prices.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/deepseek-flash-abliterated (in Chinese: https://ai.topxea.com/docs/deepseek-flash-abliterated?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/deepseek-flash-abliterated (in Chinese: https://api.topxai.xyz/docs/deepseek-flash-abliterated?lang=zh).
 
 It covers:
 
@@ -15,4 +15,4 @@ It covers:
 - Replacing the old model
 - Compliance notice
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

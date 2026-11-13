@@ -2,7 +2,7 @@
 
 > Every endpoint TopxAI serves, what each accepts and returns, the two ways to send the key, and the OpenAPI 3.1 file at /openapi.json for API tools.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/api-reference (in Chinese: https://ai.topxea.com/docs/api-reference?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/api-reference (in Chinese: https://api.topxai.xyz/docs/api-reference?lang=zh).
 
 It covers:
 
@@ -15,4 +15,4 @@ It covers:
 - Using the specification
 - Not served
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

@@ -2,7 +2,7 @@
 
 > Seven places where a tool differs from the working curl: base URL, auth header, model id, key route and limits, IP whitelist, GLM and Jev endpoints, timeouts.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/the-model-works-in-curl-but-not-in-my-tool (in Chinese: https://ai.topxea.com/docs/the-model-works-in-curl-but-not-in-my-tool?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/the-model-works-in-curl-but-not-in-my-tool (in Chinese: https://api.topxai.xyz/docs/the-model-works-in-curl-but-not-in-my-tool?lang=zh).
 
 It covers:
 
@@ -14,4 +14,4 @@ It covers:
 - 6. GLM, Kimi and Jev
 - 7. Timeouts, streaming and video
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

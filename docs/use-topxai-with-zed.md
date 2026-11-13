@@ -2,7 +2,7 @@
 
 > Add TopxAI to Zed as an openai_compatible provider for GPT, Grok, Kimi and GLM, and as an anthropic_compatible provider for Claude, in settings.json.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-zed (in Chinese: https://ai.topxea.com/docs/use-topxai-with-zed?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/use-topxai-with-zed (in Chinese: https://api.topxai.xyz/docs/use-topxai-with-zed?lang=zh).
 
 It covers:
 
@@ -10,4 +10,4 @@ It covers:
 - Notes
 - If it fails
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

@@ -1,8 +1,8 @@
 # ChatBox with TopxAI: a custom provider
 
-> In ChatBox, add a custom provider in OpenAI API compatible mode with host https://ai.topxea.com and path /v1/chat/completions, then add the model ids.
+> In ChatBox, add a custom provider in OpenAI API compatible mode with host https://api.topxai.xyz and path /v1/chat/completions, then add the model ids.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-chatbox (in Chinese: https://ai.topxea.com/docs/use-topxai-with-chatbox?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/use-topxai-with-chatbox (in Chinese: https://api.topxai.xyz/docs/use-topxai-with-chatbox?lang=zh).
 
 It covers:
 
@@ -10,4 +10,4 @@ It covers:
 - Notes
 - If it fails
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

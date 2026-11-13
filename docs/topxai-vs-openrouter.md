@@ -2,7 +2,7 @@
 
 > Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the scope of the private-deployment prices.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/topxai-vs-openrouter (in Chinese: https://ai.topxea.com/docs/topxai-vs-openrouter?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/topxai-vs-openrouter (in Chinese: https://api.topxai.xyz/docs/topxai-vs-openrouter?lang=zh).
 
 It covers:
 
@@ -12,4 +12,4 @@ It covers:
 - Where OpenRouter is the better fit
 - Using both
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

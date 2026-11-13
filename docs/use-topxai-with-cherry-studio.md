@@ -2,7 +2,7 @@
 
 > Connect a route-scoped TopxAI key to Cherry Studio, choose the right endpoint, and diagnose the first request without guessing URL suffixes.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-cherry-studio (in Chinese: https://ai.topxea.com/docs/use-topxai-with-cherry-studio?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/use-topxai-with-cherry-studio (in Chinese: https://api.topxai.xyz/docs/use-topxai-with-cherry-studio?lang=zh).
 
 It covers:
 
@@ -11,4 +11,4 @@ It covers:
 - Diagnose the boundary that failed
 - Verification scope and sources
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs

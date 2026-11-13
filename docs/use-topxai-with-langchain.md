@@ -2,7 +2,7 @@
 
 > Call TopxAI chat models from LangChain in Python with ChatTopxAI from langchain-topxai. ChatOpenAI with a base URL still works, also for the Responses API.
 
-The full page is on the TopxAI site: https://ai.topxea.com/docs/use-topxai-with-langchain (in Chinese: https://ai.topxea.com/docs/use-topxai-with-langchain?lang=zh).
+The full page is on the TopxAI site: https://api.topxai.xyz/docs/use-topxai-with-langchain (in Chinese: https://api.topxai.xyz/docs/use-topxai-with-langchain?lang=zh).
 
 It covers:
 
@@ -15,4 +15,4 @@ It covers:
 - Embeddings
 - If it fails
 
-All documentation: [README](../README.md#documentation) · https://ai.topxea.com/docs
+All documentation: [README](../README.md#documentation) · https://api.topxai.xyz/docs
