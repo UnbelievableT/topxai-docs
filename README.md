@@ -1,17 +1,19 @@
 # TopxAI — one API endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev
 
-[TopxAI](https://ai.topxea.com?utm_source=github&utm_medium=readme&utm_campaign=topxai-docs) is the model API service run by [TopXEA](https://topxea.com). Claude, GPT, Grok, GLM, Kimi, DeepSeek and TypeSafe's Jev are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
+[TopxAI](https://api.topxai.xyz?utm_source=github&utm_medium=readme&utm_campaign=topxai-docs) is a model API service. Claude, GPT, Grok, GLM, Kimi, DeepSeek and TypeSafe's Jev are served through OpenAI- and Anthropic-compatible endpoints at fixed USD prices, on prepaid credit, and nothing you send is stored.
 
-This repository indexes the public documentation: each page under [docs/](docs/) summarizes a page of **https://ai.topxea.com/docs**, where the full text is published in English and Chinese.
+This repository indexes the public documentation: each page under [docs/](docs/) summarizes a page of **https://api.topxai.xyz/docs**, where the full text is published in English and Chinese.
 
-- Sign in and create a key: https://ai.topxea.com/keys
-- Models and prices: https://ai.topxea.com/pricing
-- Documentation: https://ai.topxea.com/docs
-- Every model's price on its own page: https://ai.topxea.com/pricing · price calculator: https://ai.topxea.com/tools/price-calculator
-- API reference and OpenAPI 3.1: https://ai.topxea.com/docs/api-reference · [openapi.json](openapi.json)
-- Changelog: https://ai.topxea.com/changelog · [CHANGELOG.md](CHANGELOG.md) · RSS https://ai.topxea.com/changelog/feed.xml
-- Blog: https://ai.topxea.com/blog
-- Support: the help button at the bottom right of any page, or support@topxea.com
+The site moved to api.topxai.xyz on 2026-11-13. The old address redirects, but most HTTP clients drop the `Authorization` header when a redirect changes host and the call fails with 401, so set the base URL to `https://api.topxai.xyz/v1` (or `https://api.topxai.xyz` for Anthropic SDKs).
+
+- Sign in and create a key: https://api.topxai.xyz/keys
+- Models and prices: https://api.topxai.xyz/pricing
+- Documentation: https://api.topxai.xyz/docs
+- Every model's price on its own page: https://api.topxai.xyz/pricing · price calculator: https://api.topxai.xyz/tools/price-calculator
+- API reference and OpenAPI 3.1: https://api.topxai.xyz/docs/api-reference · [openapi.json](openapi.json)
+- Changelog: https://api.topxai.xyz/changelog · [CHANGELOG.md](CHANGELOG.md) · RSS https://api.topxai.xyz/changelog/feed.xml
+- Blog: https://api.topxai.xyz/blog
+- Support: the help button at the bottom right of any page, or support@topxai.xyz
 
 ## Quick start
 
@@ -20,7 +22,7 @@ Point the SDK you already use at TopxAI; the key goes where the provider's key w
 ```python
 from openai import OpenAI
 
-client = OpenAI(base_url="https://ai.topxea.com/v1", api_key="sk-...")
+client = OpenAI(base_url="https://api.topxai.xyz/v1", api_key="sk-...")
 reply = client.chat.completions.create(
     model="claude-sonnet-5-5",
     messages=[{"role": "user", "content": "Say hello in one sentence."}],
@@ -31,7 +33,7 @@ print(reply.choices[0].message.content)
 ```python
 from anthropic import Anthropic
 
-client = Anthropic(base_url="https://ai.topxea.com", api_key="sk-...")
+client = Anthropic(base_url="https://api.topxai.xyz", api_key="sk-...")
 reply = client.messages.create(
     model="claude-sonnet-5-5",
     max_tokens=256,
@@ -141,15 +143,15 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ## Retention and policies
 
-Prompts, completions and uploaded files are relayed in memory and never written to disk; the usage log keeps token counts, model names, routes and request ids. Details: [Privacy Policy](https://ai.topxea.com/privacy-policy), [User Agreement](https://ai.topxea.com/user-agreement), [Acceptable Use Policy](https://ai.topxea.com/acceptable-use-policy).
+Prompts, completions and uploaded files are relayed in memory and never written to disk; the usage log keeps token counts, model names, routes and request ids. Details: [Privacy Policy](https://api.topxai.xyz/privacy-policy), [User Agreement](https://api.topxai.xyz/user-agreement), [Acceptable Use Policy](https://api.topxai.xyz/acceptable-use-policy).
 
-## About TopXEA
+## About TopxAI
 
-TopXEA (https://topxea.com) sells MetaTrader expert advisors, parameter sets and equity research, and runs TopxAI as its model API. Announcements: [X @topxea](https://x.com/topxea), [Telegram @topxea](https://t.me/topxea).
+TopxAI makes this model API and TopxAI Desktop, the Mac app at https://topxai.xyz/. Announcements: [X @Topx_AI](https://x.com/Topx_AI).
 
 ## Contributing
 
-The summaries here are generated from the site's sources, so a correction belongs on the page it summarizes: open an issue or write to support@topxea.com.
+The summaries here are generated from the site's sources, so a correction belongs on the page it summarizes: open an issue or write to support@topxai.xyz.
 
 ## License
 

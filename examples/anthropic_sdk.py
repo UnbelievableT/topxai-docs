@@ -4,7 +4,7 @@ The SDK appends /v1/messages itself, so the base URL is the origin.
 """
 from anthropic import Anthropic
 
-client = Anthropic(base_url="https://ai.topxea.com", api_key="sk-...")
+client = Anthropic(base_url="https://api.topxai.xyz", api_key="sk-...")
 reply = client.messages.create(
     model="claude-sonnet-5",
     max_tokens=256,
