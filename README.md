@@ -58,7 +58,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-13: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
+As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-16: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
@@ -120,7 +120,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 ### Payments and credit
 
-- [Top up with a card](docs/top-up-with-a-card.md) — Add USD credit with a card, Apple Pay, Google Pay or a local e-wallet; you pay on the Waffo checkout that the Wallet page opens.
+- [Top up with a card, Alipay or WeChat Pay](docs/top-up-with-a-card.md) — Add USD credit with Visa, Mastercard, Alipay, WeChat Pay, Apple Pay or Google Pay on the Waffo checkout that the Wallet page opens.
 - [Pay with crypto](docs/pay-with-crypto.md) — Top up with USDT or USDC through a NOWPayments invoice: what to send, how long confirmation takes, and what happens if you send too little.
 - [Gift cards and credit codes](docs/gift-cards-and-credit-codes.md) — Buy a single-use credit code, redeem one on any account, and what the User Agreement says about refunds.
 

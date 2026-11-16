@@ -1,6 +1,6 @@
-# Top up with a card
+# Top up with a card, Alipay or WeChat Pay
 
-> Add USD credit with a card, Apple Pay, Google Pay or a local e-wallet; you pay on the Waffo checkout that the Wallet page opens.
+> Add USD credit with Visa, Mastercard, Alipay, WeChat Pay, Apple Pay or Google Pay on the Waffo checkout that the Wallet page opens.
 
 The full page is on the TopxAI site: https://api.topxai.xyz/docs/top-up-with-a-card (in Chinese: https://api.topxai.xyz/docs/top-up-with-a-card?lang=zh).
 
