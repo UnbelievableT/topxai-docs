@@ -2,6 +2,12 @@
 
 Every dated change to TopxAI; also at https://api.topxai.xyz/changelog with an RSS feed at https://api.topxai.xyz/changelog/feed.xml.
 
+## 2026-11-18 · GPT-6.2 Astra and GPT-6.2 Sol replace the previous versions
+
+Use `gpt-6.2-astra` in place of `gpt-6-astra` and `gpt-6.2-sol` in place of `gpt-6.1-sol`. Update your client's model setting and any model allowlist on your key. The old IDs return HTTP 403 with `permission_denied`.
+
+Per million ordinary input / output tokens, Astra now costs $4 / $20 on the shared route and $7.20 / $36 on the official route. Sol stays at $1 / $5 and $1.80 / $9 on those routes. Both models use whole-request long-context rates above 272,000 input tokens. Use Responses for function calling. [Migration guide and cache prices](https://api.topxai.xyz/blog/gpt-6-2-astra-and-sol)
+
 ## 2026-11-12 · Jev gets a backup line and a new price
 
 From November 12, 2026, `jev-1.14.0` costs $0.055 per million input tokens, and output stays free. Before, it cost $0.04494. The model ID, the route (`typesafe-official`), the aliases `jev-latest` and `jev-preview`, the limits and the request format stay the same.

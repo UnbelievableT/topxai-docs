@@ -49,7 +49,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | Path | Dialect | Models |
 | --- | --- | --- |
 | `POST /v1/chat/completions` | OpenAI Chat Completions | every text model except Jev |
-| `POST /v1/responses` | OpenAI Responses | `gpt-6-astra`, `gpt-6.1-sol`, `gpt-6.1-terra`, `grok-4.7`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated`, `deepseek-flash-fast` |
+| `POST /v1/responses` | OpenAI Responses | `gpt-6.2-astra`, `gpt-6.2-sol`, `gpt-6.1-terra`, `grok-4.7`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated`, `deepseek-flash-fast` |
 | `POST /v1/messages` | Anthropic Messages | every text model except Jev |
 | `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.6-sunburst`, `gpt-image-2.6-flare` |
 | `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` | OpenAI Videos | `grok-imagine-video-1.5` |
@@ -58,12 +58,12 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-16: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
+As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-18: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
 | Anthropic | [`claude-fable-5-2`](https://api.topxai.xyz/pricing/claude-fable-5-2) · [`claude-opus-5-5`](https://api.topxai.xyz/pricing/claude-opus-5-5) · [`claude-sonnet-5-5`](https://api.topxai.xyz/pricing/claude-sonnet-5-5) |
-| OpenAI | [`gpt-6-astra`](https://api.topxai.xyz/pricing/gpt-6-astra) · [`gpt-6.1-sol`](https://api.topxai.xyz/pricing/gpt-6.1-sol) · [`gpt-6.1-terra`](https://api.topxai.xyz/pricing/gpt-6.1-terra) · [`gpt-image-2.6-flare`](https://api.topxai.xyz/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://api.topxai.xyz/pricing/gpt-image-2.6-sunburst) |
+| OpenAI | [`gpt-6.1-terra`](https://api.topxai.xyz/pricing/gpt-6.1-terra) · [`gpt-6.2-astra`](https://api.topxai.xyz/pricing/gpt-6.2-astra) · [`gpt-6.2-sol`](https://api.topxai.xyz/pricing/gpt-6.2-sol) · [`gpt-image-2.6-flare`](https://api.topxai.xyz/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://api.topxai.xyz/pricing/gpt-image-2.6-sunburst) |
 | xAI | [`grok-4.7`](https://api.topxai.xyz/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://api.topxai.xyz/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-abliterated) (private deployment) · [`GLM-5.3-Flash-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-flash-abliterated) (private deployment) |
 | Moonshot AI | [`kimi-k3.1-pro`](https://api.topxai.xyz/pricing/kimi-k3.1-pro) (private deployment) |
@@ -84,7 +84,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 ### Integrations
 
 - [Claude Code with TopxAI: ANTHROPIC_BASE_URL and the key](docs/use-topxai-with-claude-code.md) — Point Claude Code at https://api.topxai.xyz with two environment variables and pick claude-sonnet-5-5, claude-opus-5-5 or claude-fable-5-2 as its model.
-- [Codex CLI custom model provider: model_providers in config.toml for TopxAI](docs/use-topxai-with-codex-cli.md) — Point Codex CLI at TopxAI with a [model_providers.topxai] table in ~/.codex/config.toml and run gpt-6.1-sol, gpt-6-astra or grok-4.7. An npm mirror is included.
+- [Codex CLI custom model provider: model_providers in config.toml for TopxAI](docs/use-topxai-with-codex-cli.md) — Configure Codex CLI for TopxAI with an API key and a model such as gpt-6.2-sol, gpt-6.2-astra or grok-4.7. Includes the installer and manual setup.
 - [Cursor with TopxAI: override the OpenAI base URL](docs/use-topxai-with-cursor.md) — In Cursor, paste a TopxAI key as the OpenAI key, turn on the base URL override with https://api.topxai.xyz/v1 and add the model ids you want to chat with.
 - [Cline and Roo Code with TopxAI: the OpenAI-compatible provider](docs/use-topxai-with-cline-and-roo-code.md) — Set the provider to OpenAI Compatible with base URL https://api.topxai.xyz/v1, a TopxAI key and a model id; or the Anthropic provider with a custom base URL.
 - [Continue with TopxAI: models in config.yaml](docs/use-topxai-with-continue.md) — Add TopxAI models to ~/.continue/config.yaml with provider openai or anthropic and apiBase, then use them for chat, edit and agent mode in VS Code or JetBrains.
