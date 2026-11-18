@@ -70,7 +70,7 @@ As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-18: 16 models
 | TypeSafe | [`jev-1.14.0`](https://api.topxai.xyz/pricing/jev-1.14.0) |
 | DeepSeek | [`deepseek-flash-Abliterated`](https://api.topxai.xyz/pricing/deepseek-flash-abliterated) (private deployment) · [`deepseek-flash-fast`](https://api.topxai.xyz/pricing/deepseek-flash-fast) (private deployment) |
 
-Prices are fixed in USD per model and route: the shared pool, the official line, and auto route, which picks the lowest-priced line that serves the model ([how the routes work](docs/shared-pool-official-line-and-auto-route.md)). Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment rather than the provider's own API, at fixed prices that are the same at every hour; the two GLM models and `deepseek-flash-Abliterated` have the refusal alignment removed, and `deepseek-flash-fast` runs the standard weights. They are covered by the same [Acceptable Use Policy](https://api.topxai.xyz/acceptable-use-policy) as every other line.
+Prices are fixed in USD per model. Claude, GPT and Grok are sold on one route per provider at 80% of the provider's list price; a key is set to one route or to Auto route, which bills each model on that model's route ([routes and the auto route](docs/routes-and-the-auto-route.md)). Every model on the GLM, Kimi and DeepSeek lines is served from a private deployment rather than the provider's own API, at fixed prices that are the same at every hour; the two GLM models and `deepseek-flash-Abliterated` have the refusal alignment removed, and `deepseek-flash-fast` runs the standard weights. They are covered by the same [Acceptable Use Policy](https://api.topxai.xyz/acceptable-use-policy) as every other line.
 
 ## Documentation
 
@@ -101,12 +101,15 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 - [Dify with TopxAI: the OpenAI-API-compatible provider](docs/use-topxai-with-dify.md) — Add each TopxAI model to Dify through the OpenAI-API-compatible provider with endpoint https://api.topxai.xyz/v1, your key and the model id.
 - [n8n with TopxAI: an OpenAI credential with a base URL](docs/use-topxai-with-n8n.md) — Create an OpenAI credential in n8n with base URL https://api.topxai.xyz/v1 and a TopxAI key, then use any catalogue model in the Chat Model and AI Agent nodes.
 - [llm CLI with TopxAI: extra-openai-models.yaml](docs/use-topxai-with-llm-cli.md) — Register TopxAI models in llm’s extra-openai-models.yaml with api_base https://api.topxai.xyz/v1, store the key with llm keys set, and prompt from the shell.
+- [Hosted MCP servers: models, images and video in any MCP client](docs/mcp-servers.md) — Three MCP servers put the catalogue in Claude Code, Cursor, VS Code and other MCP clients with your API key. Setup, tools and what a call costs.
 
 ### Routes and pricing
 
-- [Shared pool, official line and auto route](docs/shared-pool-official-line-and-auto-route.md) — Same models, different routing and price: what each API-key route means and how Auto route picks one for you.
+- [Routes and the auto route](docs/routes-and-the-auto-route.md) — One route per provider: what each API-key route sells, its price next to the provider list price, and how one Auto-route key covers every model.
 - [How requests are billed](docs/how-requests-are-billed.md) — Billing units, long-context tiers, the up-front reservation and what happens to it when a request fails.
 - [Reading your usage log](docs/reading-your-usage-log.md) — What each row of the usage log shows, how to filter it, and what is never recorded.
+- [Web search: which models search and what a search costs](docs/web-search.md) — Claude, GPT-6 and Grok 4.7 can search the web. Each search costs the provider’s own fee, $0.01 or $0.005, on top of the tokens.
+- [Prompt caching: the automatic Claude cache and how to turn it off](docs/prompt-caching.md) — TopxAI turns on Claude’s five-minute prompt cache when a request sets none. How cache reads and writes are billed, and the header that declines it.
 
 ### Models
 
@@ -123,6 +126,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 - [Top up with a card, Alipay or WeChat Pay](docs/top-up-with-a-card.md) — Add USD credit with Visa, Mastercard, Alipay, WeChat Pay, Apple Pay or Google Pay on the Waffo checkout that the Wallet page opens.
 - [Pay with crypto](docs/pay-with-crypto.md) — Top up with USDT or USDC through a NOWPayments invoice: what to send, how long confirmation takes, and what happens if you send too little.
 - [Gift cards and credit codes](docs/gift-cards-and-credit-codes.md) — Buy a single-use credit code, redeem one on any account, and what the User Agreement says about refunds.
+- [Monthly plans: credit, weekly unlocks and renewal](docs/monthly-plans.md) — Four monthly plans give more credit than they cost. How the credit unlocks, what it pays for, renewal, cancelling and the 48-hour refund.
 
 ### Troubleshooting
 
@@ -134,7 +138,7 @@ Prices are fixed in USD per model and route: the shared pool, the official line,
 
 - [TopxAI vs OpenRouter: what is the same and what differs](docs/topxai-vs-openrouter.md) — Compare TopxAI and OpenRouter model prices, routes and API formats, with dated sources and the scope of the private-deployment prices.
 - [TopxAI vs the providers' own APIs: price, retention and what stays direct](docs/topxai-vs-the-providers-own-apis.md) — What changes when Claude, GPT or Grok go through TopxAI: the price per token, one key and one balance, zero retention, and what stays with the provider.
-- [TopxAI vs Vercel AI Gateway: list price with no markup, or half of it](docs/topxai-vs-vercel-ai-gateway.md) — Vercel AI Gateway charges the provider list price with no markup; TopxAI shared routes charge 50% of it for Claude, GPT and Grok. What else differs.
+- [TopxAI vs Vercel AI Gateway: list price with no markup, or 80% of it](docs/topxai-vs-vercel-ai-gateway.md) — Vercel AI Gateway charges the provider list price with no markup; TopxAI charges 80% of it for Claude, GPT and Grok. What else differs.
 
 ### Privacy and policies
 

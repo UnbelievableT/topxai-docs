@@ -8,6 +8,30 @@ Use `gpt-6.2-astra` in place of `gpt-6-astra` and `gpt-6.2-sol` in place of `gpt
 
 Per million ordinary input / output tokens, Astra now costs $4 / $20 on the shared route and $7.20 / $36 on the official route. Sol stays at $1 / $5 and $1.80 / $9 on those routes. Both models use whole-request long-context rates above 272,000 input tokens. Use Responses for function calling. [Migration guide and cache prices](https://api.topxai.xyz/blog/gpt-6-2-astra-and-sol)
 
+## 2026-11-18 · Claude, OpenAI and Grok: one route each at 80% of list price
+
+From November 18, 2026, Claude, OpenAI and Grok models are sold on one route per provider, at 80% of the provider's list price in every lane: input, output, cache read and cache write. Every price table on the site now shows the provider's list price next to the TopxAI price.
+
+Per million input / output tokens: Claude Opus 5.5 $3.20 / $16, Claude Sonnet 5.5 $1.60 / $8, Claude Fable 5.2 $6.40 / $32, GPT-6.2 Astra $6.40 / $32, GPT-6.2 Sol $1.60 / $8, GPT-6.1 Terra $0.80 / $4 and Grok 4.7 $1.60 / $4.80. Until now the shared routes cost 50% of the list price and the official routes 90%. Long-context tiers keep the same ratio; web search stays at the provider's own price.
+
+Keys on the former official routes (`claude-official`, `openai-official`) moved to their provider's route on their own, and Auto-route keys need no change. `grok-official` now carries only Grok Imagine Video, at unchanged per-second prices. The Claude models and GPT-6.1 Terra keep a backup line at the same price, which takes over when the main line fails before it answers; GPT-6.2 Astra, GPT-6.2 Sol and Grok 4.7 run on one line for now. Requests made before the change keep the prices recorded with them in the usage log. Prices of the GLM, Kimi, DeepSeek, Jev and image models did not change. [Routes and the auto route](docs/routes-and-the-auto-route.md)
+
+## 2026-11-17 · Decline the automatic Claude prompt cache with one header
+
+TopxAI turns on Claude's five-minute prompt cache for every Claude request that sets no cache of its own. That saves money on repeated prompts, but a prompt sent only once is billed as a cache write that is never read.
+
+From November 17, 2026, a request with the header `X-TopxAI-Prompt-Cache: off` goes to Claude without that default, on `/v1/messages`, `/v1/chat/completions` and `/v1/responses`. Cache breakpoints you set in the request are kept, and any other value of the header leaves the default on. Requests without the header behave as before.
+
+TopxAI Desktop now sends the header for its one-off prompts, such as chat titles. The [prompt caching guide](docs/prompt-caching.md) explains how cache reads and writes are billed.
+
+## 2026-11-17 · Web searches are charged per search; GPT-6 and Grok can search
+
+From November 17, 2026, a model that searches the web during a request pays a fee for each search, the same fee its provider charges: $0.01 per search on `claude-fable-5-2`, `claude-sonnet-5-5`, `claude-opus-5-5`, `gpt-6.2-astra`, `gpt-6.2-sol` and `gpt-6.1-terra`, and $0.005 on `grok-4.7`. The pages a model reads are billed as input tokens, as before. Token prices do not change.
+
+The GPT-6 models and `grok-4.7` can now search: add the `web_search` tool on `/v1/responses`, or send `web_search_options` on `/v1/chat/completions`. Claude searches with Anthropic's `web_search_20250305` tool on `/v1/messages`. The other models do not search.
+
+The usage log lists the searches of a request in **Billing Details**, and the model pages show each model's fee per 1,000 searches. A request that fails before any output is not charged for its searches. The [web search guide](docs/web-search.md) has an example.
+
 ## 2026-11-12 · Jev gets a backup line and a new price
 
 From November 12, 2026, `jev-1.14.0` costs $0.055 per million input tokens, and output stays free. Before, it cost $0.04494. The model ID, the route (`typesafe-official`), the aliases `jev-latest` and `jev-preview`, the limits and the request format stay the same.
