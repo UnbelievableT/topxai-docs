@@ -13,6 +13,7 @@ It covers:
 - Parameters
 - Structured output on GLM-5.3-Abliterated
 - Price
+- Deployment note
 - Backup deployment
 - Compliance notice
 

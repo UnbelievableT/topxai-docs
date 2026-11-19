@@ -2,6 +2,38 @@
 
 Every dated change to TopxAI; also at https://api.topxai.xyz/changelog with an RSS feed at https://api.topxai.xyz/changelog/feed.xml.
 
+## 2026-11-19 · kimi-k3.1-pro-Abliterated replaces kimi-k3.1-pro
+
+On November 19, 2026 the Kimi line moves to an abliterated model, deepseek-flash-Abliterated moves to a faster deployment at lower prices, and the four Abliterated models start each request with a short TopxAI deployment note.
+
+## kimi-k3.1-pro-Abliterated
+
+`kimi-k3.1-pro-Abliterated` is Moonshot's Kimi K3.1 Pro with the refusal alignment removed, on a private deployment. It replaces `kimi-k3.1-pro` on the same `kimi-official` route, so existing Kimi and Auto-route keys reach it. The old ID returns 403 from now on, with no alias; `/pricing/kimi-k3.1-pro` and the old guide redirect to the new pages.
+
+USD per million tokens, input / cache read / output:
+
+| Model                       | Price                   |
+| --------------------------- | ----------------------- |
+| `kimi-k3.1-pro-Abliterated` | $3.25 / $0.325 / $6.50  |
+| `kimi-k3.1-pro` (retired)   | $0.50 / $0.30 / $5.00   |
+
+Context (1,048,576 tokens), maximum output (131,072), image input and the reasoning efforts (`low` by default, `high`, `max`) stay as they were. In TopxAI's tests `stop` and `json_schema` now work on this model; the [guide](docs/kimi-k3-1-pro-abliterated.md) lists the parameters. The model has no standby deployment, so the backup price of the old model no longer applies: a request the deployment cannot answer fails and is not charged. It joins the Abliterated group on the price list and carries the same compliance notice as the other Abliterated models.
+
+## deepseek-flash-Abliterated
+
+`deepseek-flash-Abliterated` now runs on a faster private deployment. Its price falls from $0.42 / $0.105 / $1.50 to $0.36 / $0.075 / $1.35. The model ID, limits, reasoning settings and the backup price ($1.30 / $0.15 / $2.60) do not change.
+
+## Deployment note on the Abliterated models
+
+Every request to `GLM-5.3-Abliterated`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro-Abliterated` and `deepseek-flash-Abliterated` now starts with a note from TopxAI, ahead of your own system prompt. It names the model and says that TopxAI runs it on a private deployment. When a user asks who the model is, who hosts it or how to deploy such a model privately, the model adds one sentence saying that TopxAI privately deployed it and that private deployments can be requested at support@topxai.xyz. Otherwise it does not mention the note, and a name or persona set in your system prompt is kept. The note is about 190 tokens, billed as input, and usually a cache hit after the first request.
+
+## What to do
+
+- Replace `kimi-k3.1-pro` with `kimi-k3.1-pro-Abliterated` in client configurations, and add the new ID to any key whose model list names the old one. TopxAI does not change key allowlists for you.
+- Update budgets for the new Kimi and Flash prices. A request accepted before the change keeps the price captured when it was accepted.
+
+Because fine-tuning may affect safety alignment, the model may produce biased, offensive or locally unlawful content. Users bear full responsibility for compliance and legal consequences. This notice applies to all four Abliterated models; the [Acceptable Use Policy](docs/acceptable-use-and-abuse-reports.md) applies to every model.
+
 ## 2026-11-18 · GPT-6.2 Astra and GPT-6.2 Sol replace the previous versions
 
 Use `gpt-6.2-astra` in place of `gpt-6-astra` and `gpt-6.2-sol` in place of `gpt-6.1-sol`. Update your client's model setting and any model allowlist on your key. The old IDs return HTTP 403 with `permission_denied`.

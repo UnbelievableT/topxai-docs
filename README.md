@@ -49,7 +49,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 | Path | Dialect | Models |
 | --- | --- | --- |
 | `POST /v1/chat/completions` | OpenAI Chat Completions | every text model except Jev |
-| `POST /v1/responses` | OpenAI Responses | `gpt-6.2-astra`, `gpt-6.2-sol`, `gpt-6.1-terra`, `grok-4.7`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro`, `deepseek-flash-Abliterated`, `deepseek-flash-fast` |
+| `POST /v1/responses` | OpenAI Responses | `gpt-6.2-astra`, `gpt-6.2-sol`, `gpt-6.1-terra`, `grok-4.7`, `GLM-5.3-Flash-Abliterated`, `kimi-k3.1-pro-Abliterated`, `deepseek-flash-Abliterated`, `deepseek-flash-fast` |
 | `POST /v1/messages` | Anthropic Messages | every text model except Jev |
 | `POST /v1/images/generations`, `POST /v1/images/edits` | OpenAI Images | `gpt-image-2.6-sunburst`, `gpt-image-2.6-flare` |
 | `POST /v1/videos/generations`, `GET /v1/videos/{request_id}` | OpenAI Videos | `grok-imagine-video-1.5` |
@@ -58,7 +58,7 @@ More in [examples/](examples/) and in [Connect your SDK](docs/connect-your-sdk.m
 
 ## Models
 
-As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-18: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
+As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-19: 16 models from 7 providers. Each id links to its page with the current price on every route; the full table is at https://api.topxai.xyz/pricing, and prices are not repeated here because they change.
 
 | Provider | Models |
 | --- | --- |
@@ -66,7 +66,7 @@ As `GET https://api.topxai.xyz/api/pricing` listed them on 2026-11-18: 16 models
 | OpenAI | [`gpt-6.1-terra`](https://api.topxai.xyz/pricing/gpt-6.1-terra) · [`gpt-6.2-astra`](https://api.topxai.xyz/pricing/gpt-6.2-astra) · [`gpt-6.2-sol`](https://api.topxai.xyz/pricing/gpt-6.2-sol) · [`gpt-image-2.6-flare`](https://api.topxai.xyz/pricing/gpt-image-2.6-flare) · [`gpt-image-2.6-sunburst`](https://api.topxai.xyz/pricing/gpt-image-2.6-sunburst) |
 | xAI | [`grok-4.7`](https://api.topxai.xyz/pricing/grok-4.7) · [`grok-imagine-video-1.5`](https://api.topxai.xyz/pricing/grok-imagine-video-1.5) |
 | Zhipu AI | [`GLM-5.3-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-abliterated) (private deployment) · [`GLM-5.3-Flash-Abliterated`](https://api.topxai.xyz/pricing/glm-5.3-flash-abliterated) (private deployment) |
-| Moonshot AI | [`kimi-k3.1-pro`](https://api.topxai.xyz/pricing/kimi-k3.1-pro) (private deployment) |
+| Moonshot AI | [`kimi-k3.1-pro-Abliterated`](https://api.topxai.xyz/pricing/kimi-k3.1-pro-abliterated) (private deployment) |
 | TypeSafe | [`jev-1.14.0`](https://api.topxai.xyz/pricing/jev-1.14.0) |
 | DeepSeek | [`deepseek-flash-Abliterated`](https://api.topxai.xyz/pricing/deepseek-flash-abliterated) (private deployment) · [`deepseek-flash-fast`](https://api.topxai.xyz/pricing/deepseek-flash-fast) (private deployment) |
 
@@ -118,7 +118,7 @@ Prices are fixed in USD per model. Claude, GPT and Grok are sold on one route pe
 - [Image generation](docs/image-generation.md) — gpt-image-2.6-sunburst and -flare: the two endpoints, the 1K and 2K per-image prices, how the size tier is chosen, and where the image link comes from.
 - [Video generation](docs/video-generation.md) — grok-imagine-video-1.5: submit a job, poll it, per-second prices by resolution, refunds on failure, and how forgotten jobs are refunded after 24 hours.
 - [deepseek-flash-Abliterated and deepseek-flash-fast](docs/deepseek-flash-abliterated.md) — The two DeepSeek V4.1 Flash 1017 models on a private deployment, abliterated or on standard weights: limits, four reasoning settings and fixed prices.
-- [Kimi K3.1 Pro](docs/kimi-k3-1-pro.md) — Call kimi-k3.1-pro on TopxAI: a private deployment with fixed token prices, always-on reasoning (default low), output caps, and image and parameter limits.
+- [kimi-k3.1-pro-Abliterated](docs/kimi-k3-1-pro-abliterated.md) — Call kimi-k3.1-pro-Abliterated: Kimi K3.1 Pro with the refusal alignment removed, on a private deployment. Prices, reasoning, limits and parameters.
 - [Claude Opus 5.5 special offer](docs/claude-opus-5-5-special-offer.md) — A temporary, low-priced Claude Opus 5.5 line that is often unavailable: prices, how to create a key for it, the extra tokens it adds and its terms.
 
 ### Payments and credit

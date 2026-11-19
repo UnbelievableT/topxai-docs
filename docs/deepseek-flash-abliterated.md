@@ -11,6 +11,7 @@ It covers:
 - Reasoning
 - Parameters
 - Fixed prices
+- Deployment note
 - Backup deployment
 - Replacing the old model
 - Compliance notice

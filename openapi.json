@@ -4,7 +4,7 @@
   "title": "TopxAI API",
   "version": "2026-11-18",
   "summary": "One OpenAI- and Anthropic-compatible endpoint for Claude, GPT, Grok, GLM, Kimi, DeepSeek and Jev.",
-  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/messages to claude-fable-5-2, where temperature, top_p and top_k are removed, on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.2-sol and gpt-6.1-terra on every endpoint, gpt-6.2-astra on /v1/responses or with tools) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Base URL for OpenAI-style SDKs: https://api.topxai.xyz/v1. Base URL for the Anthropic SDK: https://api.topxai.xyz. Prompts, completions and files are relayed in memory and never stored. Prices: https://api.topxai.xyz/pricing and https://api.topxai.xyz/api/pricing.",
+  "description": "TopxAI relays requests to the model providers at fixed USD prices on prepaid credit. The request body is forwarded unchanged and the response is returned unchanged, except where a request in another format has to be converted for the model (for example /v1/messages to a model other than Claude), on /v1/messages to claude-fable-5-2, where temperature, top_p and top_k are removed, on /v1/responses, where the echoes of the request and members the upstream adds are rewritten, and on /v1/chat/completions, where provider_specific_fields, a member some upstream capacity adds, is removed; parameters not listed here pass through to the provider. A request without a system prompt that reaches the GPT provider's Responses API (gpt-6.2-sol and gpt-6.1-terra on every endpoint, gpt-6.2-astra on /v1/responses or with tools) is sent the instructions \"You are a helpful assistant.\", so the provider does not add its own longer prompt; a request with its own system prompt or instructions is forwarded as sent. Requests to the Abliterated models (GLM-5.3-Abliterated, GLM-5.3-Flash-Abliterated, kimi-k3.1-pro-Abliterated and deepseek-flash-Abliterated) start their system prompt with a short TopxAI deployment note, ahead of the caller's own; the model mentions it only when asked who it is, who hosts it or about private deployment, and its tokens count as input. Base URL for OpenAI-style SDKs: https://api.topxai.xyz/v1. Base URL for the Anthropic SDK: https://api.topxai.xyz. Prompts, completions and files are relayed in memory and never stored. Prices: https://api.topxai.xyz/pricing and https://api.topxai.xyz/api/pricing.",
   "termsOfService": "https://api.topxai.xyz/user-agreement",
   "contact": {
    "name": "TopxAI support",
@@ -166,7 +166,7 @@
     ],
     "operationId": "createResponse",
     "summary": "Responses",
-    "description": "OpenAI Responses API for gpt-6.2-astra, gpt-6.2-sol, gpt-6.1-terra, grok-4.7, GLM-5.3-Flash-Abliterated, kimi-k3.1-pro, deepseek-flash-Abliterated and deepseek-flash-fast. Codex CLI uses this endpoint. The last four are private deployments: send the full conversation in input, since persistent conversation workflows on them have not been verified.",
+    "description": "OpenAI Responses API for gpt-6.2-astra, gpt-6.2-sol, gpt-6.1-terra, grok-4.7, GLM-5.3-Flash-Abliterated, kimi-k3.1-pro-Abliterated, deepseek-flash-Abliterated and deepseek-flash-fast. Codex CLI uses this endpoint. The last four are private deployments: send the full conversation in input, since persistent conversation workflows on them have not been verified.",
     "requestBody": {
      "required": true,
      "content": {
@@ -1163,7 +1163,7 @@
      "grok-4.7",
      "GLM-5.3-Abliterated",
      "GLM-5.3-Flash-Abliterated",
-     "kimi-k3.1-pro",
+     "kimi-k3.1-pro-Abliterated",
      "deepseek-flash-Abliterated",
      "deepseek-flash-fast"
     ]
@@ -1338,7 +1338,7 @@
        "gpt-6.1-terra",
        "grok-4.7",
        "GLM-5.3-Flash-Abliterated",
-       "kimi-k3.1-pro",
+       "kimi-k3.1-pro-Abliterated",
        "deepseek-flash-Abliterated",
        "deepseek-flash-fast"
       ]
@@ -1359,7 +1359,7 @@
      },
      "instructions": {
       "type": "string",
-      "description": "The system prompt. When it is missing or blank, input has no system or developer item and no stored prompt is named, gpt-6.2-astra, gpt-6.2-sol and gpt-6.1-terra are sent \"You are a helpful assistant.\" so the provider does not add its own longer prompt; the answer still echoes the value the request sent."
+      "description": "The system prompt. When it is missing or blank, input has no system or developer item and no stored prompt is named, gpt-6.2-astra, gpt-6.2-sol and gpt-6.1-terra are sent \"You are a helpful assistant.\" so the provider does not add its own longer prompt. On the Abliterated models a short TopxAI deployment note goes ahead of these instructions. Either way the answer echoes the value the request sent."
      },
      "stream": {
       "type": "boolean"
@@ -1417,7 +1417,7 @@
       }
      },
      "system": {
-      "description": "A system prompt as a string or content blocks. TopxAI adds none of its own, except that a GPT request converted to Responses without a system prompt is sent the instructions \"You are a helpful assistant.\" so the provider does not add its own longer prompt.",
+      "description": "A system prompt as a string or content blocks. TopxAI adds none of its own, except that a GPT request converted to Responses without a system prompt is sent the instructions \"You are a helpful assistant.\" so the provider does not add its own longer prompt, and that the Abliterated models get a short TopxAI deployment note ahead of this prompt.",
       "oneOf": [
        {
         "type": "string"
